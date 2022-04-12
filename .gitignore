@@ -5,6 +5,6 @@ __pycache__/
 .DS_Store
 .vscode/
 node_modules/
-.gitsolo
-.gitshared
+.gits
+.gitj
 # comment
