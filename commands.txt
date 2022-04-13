@@ -1,0 +1,78 @@
+************ install dependencies ************
+pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+
+pipenv install psycopg2-binary
+
+************ ALSO GO TO react-app DIRECTORY AND DO THIS: ************
+1) npm install
+2) add .env based on the .env.example
+
+************ psql ************
+
+CREATE USER owok_user WITH PASSWORD 'password' CREATEDB;
+CREATE DATABASE owok_db WITH OWNER owok_user;
+
+DROP DATABASE owok_db;
+DROP USER owok_user;
+
+************ .env file ************
+
+FLASK_APP=app
+FLASK_ENV=development
+SECRET_KEY=
+DATABASE_URL=postgresql://owok_user:password@localhost/owok_db
+
+pipenv shell
+flask db init
+flask db migrate
+flask db upgrade
+flask db downgrade
+flask seed all
+flask run
+
+************ seeding data directly to heroku (without having to push to main) ************
+- make sure you're in pipenv shell, then run:
+heroku run -a <herokuappname> flask seed all
+
+(error I got when running above command.. something about my account already using up free size dynos)):
+    Error: Cannot run more than 1 Free size dynos.
+    ›
+    ›   Error ID: cannot_run_above_limit
+    ›   See https://devcenter.heroku.com/articles/dyno-types#default-scaling-limits for more information.
+
+
+
+*********** git commands *************
+to access another branch that someone else pushed upstream:
+git fetch
+git checkout <<branch name>>
+
+git branch -D (DELETE BRANCH PERMANENTLY - BE CAREFUL!)
+
+
+*********** heroku commands *************
+DELETE HEROKU POSTGRES EXTENSION ON HEROKU (if db changes were made)
+
+heroku run -a  <herokuappname> flask db upgrade
+heroku run -a  <herokuappname> flask seed all
+
+
+** start from scratch (db) **
+
+psql:
+DROP DATABASE owok_db;
+CREATE DATABASE owok_db WITH OWNER owok_user;
+
+<<DELETE MIGRATIONS DIRECTORY>>
+
+pipenv shell
+flask db init
+flask db migrate
+flask db upgrade
+flask seed all
+flask run
+
+
+** to reseed **
+flask seed undo
+flask seed all
