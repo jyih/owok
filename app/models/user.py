@@ -18,16 +18,26 @@ class User(db.Model, UserMixin):
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
-    # games = db.relationship(
-    #     'Game', back_populates='user')
 
     comments = db.relationship(
-        'Comment')
+        'Comment',
+        back_populates='user',
+        # order_by='Comment.id',
+    )
 
-    player_one = db.relationship(
-        'Game', backref='user_player_one', foreign_keys="Game.player_one_id")
-    player_two = db.relationship(
-        'Game', backref='user_player_two', foreign_keys="Game.player_two_id")
+    games_player_one = db.relationship(
+        'Game',
+        foreign_keys='Game.player_one_id',
+        back_populates='player_one',
+        lazy='dynamic'
+    )
+
+    games_player_two = db.relationship(
+        'Game',
+        foreign_keys='Game.player_two_id',
+        back_populates='player_two',
+        lazy='dynamic'
+    )
 
     @property
     def password(self):
@@ -53,7 +63,8 @@ class User(db.Model, UserMixin):
             'updated_at': self.updated_at
         }
 
-    # def get_games(self):
-    #     return {
-    #         'games': [g.to_dict() for g in self.games]
-    #     }
+    def get_games(self):
+        return {
+            'games-one': [g.to_dict() for g in self.games_player_one],
+            'games-two': [g.to_dict() for g in self.games_player_two]
+        }
