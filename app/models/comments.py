@@ -10,14 +10,14 @@ class Comment(db.Model):
         db.Integer, db.ForeignKey('games.id'), nullable=False)
     player_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
-    username = db.Column(db.String(20), nullable=False, unique=True)
+    username = db.Column(db.String(20), nullable=False)
     content = db.Column(db.String(12000), nullable=False)
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
-    user = db.relationship('User', backref='comments')
+    user = db.relationship('User', back_populates='comments')
 
-    game = db.relationship('Game', backref='comments')
+    game = db.relationship('Game', back_populates='comments')
 
     def to_dict(self):
         return {

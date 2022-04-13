@@ -2,6 +2,7 @@ from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy import DateTime
+from .game_user import game_users
 
 
 class User(db.Model, UserMixin):
@@ -22,12 +23,13 @@ class User(db.Model, UserMixin):
     #     'Game', back_populates='user')
 
     comments = db.relationship(
-        'Comment')
+        'Comment', back_populates='user')
 
-    player_one = db.relationship(
-        'Game', backref='user_player_one', foreign_keys="Game.player_one_id")
-    player_two = db.relationship(
-        'Game', backref='user_player_two', foreign_keys="Game.player_two_id")
+    join_game_users = db.relationship(
+        "Game",
+        secondary=game_users,
+        back_populates="users"
+    )
 
     @property
     def password(self):
@@ -50,7 +52,8 @@ class User(db.Model, UserMixin):
             'draws': self.draws,
             'sprite_id': self.sprite_id,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'join_game_users': [u.info() for u in self.join_game_users]
         }
 
     # def get_games(self):

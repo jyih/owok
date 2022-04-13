@@ -29,12 +29,17 @@ def seed_all():
     db.session.add(cecilia)
 
     # seed games
-    game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
-                 moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512", is_private_one=False, is_private_two=False)
-    game2 = Game(player_one_id=1, player_two_id=3, winner_id=1,
-                 moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707", is_private_one=False, is_private_two=False)
-    game3 = Game(player_one_id=4, player_two_id=1, winner_id=1,
-                 moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810", is_private_one=False, is_private_two=False)
+    game1 = Game(moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512")
+    game2 = Game(
+        moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707")
+    game3 = Game(
+        moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810")
+    # game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
+    #              moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512", is_private_one=False, is_private_two=False)
+    # game2 = Game(player_one_id=1, player_two_id=3, winner_id=1,
+    #              moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707", is_private_one=False, is_private_two=False)
+    # game3 = Game(player_one_id=4, player_two_id=1, winner_id=1,
+    #              moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810", is_private_one=False, is_private_two=False)
 
     db.session.add(game1)
     db.session.add(game2)
