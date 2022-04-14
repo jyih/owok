@@ -5,18 +5,27 @@
     display: flex;
 }
 
-.SignUpFormImages {
+.SignUpFormBackground {
     background-color: rgb(72, 200, 255);
+    width: 70vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.SignUpFormImages {
+    width: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
-    min-width: 70vw;
-    height: 100%;
+    justify-content: flex-end;
 }
 
 .SignUpFormLogo {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 50px;
 }
 
 .SignUpFormPBandYeti {
@@ -26,9 +35,250 @@
 }
 
 .SignUpFormPBandYeti img {
-    max-height: 30vh;
+    width: 40%;
 }
 
 #pinkBean {
     transform: scaleX(-1);
+}
+
+.SignUpFormBox {
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.SignUpForm {
+    background-color: rgb(72, 200, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 60%; */
+    max-width: 300px;
+    border-radius: 20px;
+    padding: 50px 50px 0 50px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.SignUpFormErrors {
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+    padding-bottom: 10px;
+}
+
+.SignUpForm > input {
+    height: 45px;
+    width: 90%;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    padding: 0 10px;
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+    font-size: 20px;
+}
+
+/* .SignUpForm > button {
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: rgb(255, 247, 83);
+    border: 1px solid gray;
+    cursor: pointer;
+} */
+
+.SignUpForm > button {
+  background-color: rgb(165, 159, 40);
+  /* background-color: #1899D6; */
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #3f3f3f;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.SignUpForm > button:after {
+  background-clip: padding-box;
+  background-color: rgb(255, 247, 83);
+  /* background-color: #1CB0F6; */
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.SignUpForm > button:main,
+.SignUpForm > button:focus {
+  user-select: auto;
+}
+
+.SignUpForm > button:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+/* .SignUpForm > button:disabled {
+  cursor: not-allowed;
+} */
+
+.SignUpSpriteSelection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px 0;
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+}
+
+.SignUpSpriteContainer {
+    overflow-x: scroll;
+    display: flex;
+}
+
+.SignUpSpriteContainer label {
+    width: 90px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SignUpSpriteContainer [type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.SignUpSpriteContainer [type=radio] + img {
+    cursor: pointer;
+    margin: 0 10px;
+    border: 3px solid transparent;
+}
+
+.SignUpSpriteContainer [type=radio]:checked + img {
+    border-radius: 20px;
+    border: 3px dashed rgb(255, 247, 83);
+}
+
+.SignUpForm > a {
+    text-decoration: none;
+    margin: 25px 0 40px 0;
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+}
+
+.SignUpForm > a:hover {
+    color: rgb(92, 92, 92);
+}
+
+.DemoButton {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.DemoButton > button {
+    background-color: rgb(165, 159, 40);
+    /* background-color: #1899D6; */
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #3f3f3f;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round,sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .DemoButton > button:after {
+    background-clip: padding-box;
+    background-color: rgb(255, 247, 83);
+    /* background-color: #1CB0F6; */
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+
+  .DemoButton > button:main,
+  .DemoButton > button:focus {
+    user-select: auto;
+  }
+
+  .DemoButton > button:hover:not(:disabled) {
+    filter: brightness(1.15);
+  }
+
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 75, 75, 0.5);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(56, 56, 56);
 }
