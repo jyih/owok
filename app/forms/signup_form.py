@@ -19,9 +19,14 @@ def username_exists(form, field):
     if user:
         raise ValidationError('Username is already in use.')
 
+def valid_sprite(form, field):
+    # Checking if sprite url is valid
+    url = field.data
+    
 
 class SignUpForm(FlaskForm):
     username = StringField(
         'username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists])
     password = StringField('password', validators=[DataRequired()])
+    sprite_id = StringField('sprite_id', validators=[])

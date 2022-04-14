@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     wins = db.Column(db.Integer, nullable=False, default=0)
     losses = db.Column(db.Integer, nullable=False, default=0)
     draws = db.Column(db.Integer, nullable=False, default=0)
-    sprite_id = db.Column(db.Integer, nullable=False)
+    sprite_id = db.Column(db.Integer, nullable=False, default='https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png')
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
