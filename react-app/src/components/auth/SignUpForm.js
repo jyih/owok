@@ -9,7 +9,9 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [spriteId, setSpriteId] = useState(1);
+  const [spriteId, setSpriteId] = useState(
+    "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+  );
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
@@ -37,6 +39,10 @@ const SignUpForm = () => {
 
   const updateRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
+  };
+
+  const updateSpriteId = (e) => {
+    setSpriteId(e.target.value);
   };
 
   if (user) {
@@ -89,32 +95,84 @@ const SignUpForm = () => {
       </div>
       <div>
         <label>Sprite Id</label>
-        <div>
-          <div onClick={() => setSpriteId(1)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(2)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(3)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(4)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(5)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(6)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(7)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png"></img>
-          </div>
-          <div onClick={() => setSpriteId(8)}>
-            <img src="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png"></img>
-          </div>
-        </div>
+        <label>
+          <input
+            type="radio"
+            value="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+            checked={
+              spriteId ===
+              "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+            }
+            onChange={updateSpriteId}
+          />
+          <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png"
+            checked={
+              spriteId ===
+              "https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png"
+            }
+            onChange={updateSpriteId}
+          />
+          <img src="https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png" />
+        </label>
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png"
+          }
+          onChange={updateSpriteId}
+        />
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png"
+          }
+          onChange={updateSpriteId}
+        />
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png"
+          }
+          onChange={updateSpriteId}
+        />
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png"
+          }
+          onChange={updateSpriteId}
+        />
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png"
+          }
+          onChange={updateSpriteId}
+        />
+        <input
+          type="radio"
+          value="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png"
+          checked={
+            spriteId ===
+            "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png"
+          }
+          onChange={updateSpriteId}
+        />
       </div>
       <button type="submit">Sign Up</button>
     </form>

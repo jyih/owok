@@ -47,7 +47,8 @@ def seed_all():
                        username="jojo", content="winner gets 5mil")
     comment3 = Comment(game_id=1, player_id=4, username="xXj0ngyXx",
                        content="T>FAME@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    comment4 = Comment(game_id=1, player_id=3, username="milk", content="nub")
+    comment4 = Comment(game_id=1, player_id=3,
+                       username="milk", content="nub f3")
     comment5 = Comment(game_id=2, player_id=1, username="xD3m0",
                        content="S>10atk FS 80mil@@@@@@@@@@")
     comment6 = Comment(game_id=3, player_id=1, username="xD3m0",
