@@ -1,0 +1,11 @@
+.board_layout {
+    display: grid;
+    height: 800px;
+    width: 800px;
+    grid-template-columns: repeat(19, 1fr);
+    grid-template-rows: repeat(19, 1fr);
+}
+
+.grid {
+    border: 1px solid gray;
+}

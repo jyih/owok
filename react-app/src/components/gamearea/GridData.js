@@ -5,7 +5,7 @@ for (let i = 0; i < boardSize; i++) {
   }
 }
 
-const GridData = [
+export const GridData = [
   "00-00",
   "01-00",
   "02-00",
@@ -368,5 +368,3 @@ const GridData = [
   "17-18",
   "18-18",
 ];
-
-export default GridData;
