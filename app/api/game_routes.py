@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, Game, Comment
-# from app.forms import
+# from app.forms import GameForm
 
 game_routes = Blueprint('games', __name__)
 
@@ -17,3 +17,31 @@ def game(id):
   if not game:
     return {'errors': 'Game not found'}
   return {**game.to_dict()}
+
+@game_routes.route('/', methods=['POST'])
+# @login_required
+def game_create():
+  data = request.json
+  # form = GameForm()
+  # form['csrf_token'].data = request.cookies['csrf_token']
+  # if form.validate_on_submit():
+  game = Game(
+      player_one_id = data['player_one_id'],
+      player_two_id = data['player_one_id'],
+      winner_id = data['winner_id'],
+      moves = data['moves'],
+  )
+  db.session.add(game)
+  db.session.commit()
+  return game.to_dict()
+
+@game_routes.route('/<int:id>', methods=['PUT'])
+def game_update(id):
+  data = request.json
+  game = Game.query.get(id)
+  if not game:
+    return {'errors': 'Game not found'}
+  game.is_private_one = data['is_private_one']
+  game.is_private_two = data['is_private_two']
+  db.session.commit()
+  return game.to_dict()
