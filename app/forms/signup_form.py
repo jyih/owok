@@ -19,10 +19,24 @@ def username_exists(form, field):
     if user:
         raise ValidationError('Username is already in use.')
 
+def valid_sprite(form, field):
+    # Checking if sprite url is valid
+    url = field.data
+    valid_sprites = [
+        'https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png',
+        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png',
+    ]
+    if not url in valid_sprites:
+        raise ValidationError('Not a valid sprite url')
 
 class SignUpForm(FlaskForm):
-    username = StringField(
-        'username', validators=[DataRequired(), username_exists])
+    username = StringField('username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists])
     password = StringField('password', validators=[DataRequired()])
-    sprite_id = IntegerField('sprite_id', validators=[DataRequired()])
+    sprite_url = StringField('sprite_url', validators=[valid_sprite])

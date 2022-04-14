@@ -26,7 +26,7 @@ def upgrade():
     sa.Column('wins', sa.Integer(), nullable=False),
     sa.Column('losses', sa.Integer(), nullable=False),
     sa.Column('draws', sa.Integer(), nullable=False),
-    sa.Column('sprite_id', sa.Integer(), nullable=False),
+    sa.Column('sprite_url', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),

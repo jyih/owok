@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     wins = db.Column(db.Integer, nullable=False, default=0)
     losses = db.Column(db.Integer, nullable=False, default=0)
     draws = db.Column(db.Integer, nullable=False, default=0)
-    sprite_id = db.Column(db.Integer, nullable=False)
+    sprite_url = db.Column(db.String(255), nullable=False, default='https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png')
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
@@ -57,7 +57,7 @@ class User(db.Model, UserMixin):
             'wins': self.wins,
             'losses': self.losses,
             'draws': self.draws,
-            'sprite_id': self.sprite_id,
+            'sprite_url': self.sprite_url,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
