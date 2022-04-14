@@ -14,10 +14,9 @@ class User(db.Model, UserMixin):
     wins = db.Column(db.Integer, nullable=False)
     losses = db.Column(db.Integer, nullable=False)
     draws = db.Column(db.Integer, nullable=False)
-    sprite_id = db.Column(db.Integer, nullable=False)
+    sprite_id = db.Column(db.String(255), nullable=False)
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
-
 
     comments = db.relationship(
         'Comment',
