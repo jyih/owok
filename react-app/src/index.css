@@ -4,3 +4,8 @@ html, body, div, span, nav, ul, li, fieldset {
     padding: 0;
     border: 0;
 }
+
+@font-face {
+    font-family: MaplestoryOTFLight;
+    src: url("./components/font/MaplestoryOTFLight.otf");
+}

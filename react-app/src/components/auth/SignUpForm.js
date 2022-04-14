@@ -15,7 +15,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [spriteId, setSpriteId] = useState(
+  const [spriteUrl, setSpriteUrl] = useState(
     "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
   );
   const user = useSelector((state) => state.session.user);
@@ -59,7 +59,9 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password, spriteId));
+      const data = await dispatch(
+        signUp(username, email.toLowerCase(), password, spriteUrl)
+      );
       if (data) {
         setErrors(data);
       }
@@ -82,8 +84,8 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  const updateSpriteId = (e) => {
-    setSpriteId(e.target.value);
+  const updateSpriteUrl = (e) => {
+    setSpriteUrl(e.target.value);
   };
 
   if (user) {
@@ -92,72 +94,68 @@ const SignUpForm = () => {
 
   return (
     <div className="SignUpFormContainer">
-      <div className="SignUpFormImages">
-        <div className="SignUpFormLogo">
-          <img src={owok} />
-        </div>
-        <div className="SignUpFormPBandYeti">
-          <img id="pinkBean" src={pinkBean} />
-          <img src={yeti} />
+      <div className="SignUpFormBackground">
+        <div className="SignUpFormImages">
+          <div className="SignUpFormLogo">
+            <img src={owok} />
+          </div>
+          <div className="SignUpFormPBandYeti">
+            <img id="pinkBean" src={pinkBean} />
+            <img src={yeti} />
+          </div>
         </div>
       </div>
       <div className="SignUpFormBox">
-        <form onSubmit={onSignUp}>
+        <form onSubmit={onSignUp} className="SignUpForm">
           <div>
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
             ))}
           </div>
-          <div>
-            <label>User Name</label>
-            <input
-              type="text"
-              name="username"
-              onChange={updateUsername}
-              value={username}
-            ></input>
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              type="text"
-              name="email"
-              onChange={updateEmail}
-              value={email}
-            ></input>
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              onChange={updatePassword}
-              value={password}
-            ></input>
-          </div>
-          <div>
-            <label>Repeat Password</label>
-            <input
-              type="password"
-              name="repeat_password"
-              onChange={updateRepeatPassword}
-              value={repeatPassword}
-              required={true}
-            ></input>
-          </div>
-          <div>
-            <label>Choose a character</label>
-            {spriteData.map((sprite) => (
-              <label key={sprite.name}>
-                <input
-                  type="radio"
-                  value={sprite.url}
-                  checked={spriteId === sprite.url}
-                  onChange={updateSpriteId}
-                />
-                <img src={sprite.url} alt={sprite.name} />
-              </label>
-            ))}
+          <input
+            type="text"
+            name="username"
+            placeholder="username"
+            onChange={updateUsername}
+            value={username}
+          ></input>
+          <input
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={updateEmail}
+            value={email}
+          ></input>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            onChange={updatePassword}
+            value={password}
+          ></input>
+          <input
+            type="password"
+            name="repeat_password"
+            placeholder="repeat password"
+            onChange={updateRepeatPassword}
+            value={repeatPassword}
+            required={true}
+          ></input>
+          <div className="SignUpSpriteSelection">
+            <label>Choose your character:</label>
+            <div className="SignUpSpriteContainer">
+              {spriteData.map((sprite) => (
+                <label key={sprite.name}>
+                  <input
+                    type="radio"
+                    value={sprite.url}
+                    checked={spriteUrl === sprite.url}
+                    onChange={updateSpriteUrl}
+                  />
+                  <img src={sprite.url} alt={sprite.name} />
+                </label>
+              ))}
+            </div>
           </div>
           <button type="submit">Sign Up</button>
         </form>
