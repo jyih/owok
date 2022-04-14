@@ -11,8 +11,8 @@ class Game(db.Model):
     winner_id = db.Column(db.Integer, nullable=True)
     moves = db.Column(db.String(12000), nullable=False)
 
-    is_private_one = db.Column(db.Boolean, nullable=False)
-    is_private_two = db.Column(db.Boolean, nullable=False)
+    is_private_one = db.Column(db.Boolean, nullable=False, default=False)
+    is_private_two = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
