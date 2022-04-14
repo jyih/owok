@@ -40,4 +40,4 @@ class SignUpForm(FlaskForm):
         'username', validators=[DataRequired(), username_exists])
     email = StringField('email', validators=[DataRequired(), user_exists])
     password = StringField('password', validators=[DataRequired()])
-    sprite_id = StringField('sprite_id', validators=[valid_sprite])
+    sprite_url = StringField('sprite_url', validators=[valid_sprite])

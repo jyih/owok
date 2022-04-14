@@ -6,19 +6,19 @@ from app.models import db, Comment
 def seed_all():
     # seed users
     demo = User(
-        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     jojo = User(
-        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     sharon = User(
-        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     jason = User(
-        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     paul = User(
-        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     chris = User(
-        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
     cecilia = User(
-        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url=1)
 
     db.session.add(demo)
     db.session.add(jojo)
