@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
@@ -65,6 +65,8 @@ const SignUpForm = () => {
       if (data) {
         setErrors(data);
       }
+    } else {
+      setErrors(["PASSWORDS DONT MATCH o(￣o￣*)ゞ"]);
     }
   };
 
@@ -107,7 +109,7 @@ const SignUpForm = () => {
       </div>
       <div className="SignUpFormBox">
         <form onSubmit={onSignUp} className="SignUpForm">
-          <div>
+          <div className="SignUpFormErrors">
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
             ))}
@@ -118,6 +120,7 @@ const SignUpForm = () => {
             placeholder="username"
             onChange={updateUsername}
             value={username}
+            required={true}
           ></input>
           <input
             type="text"
@@ -125,6 +128,7 @@ const SignUpForm = () => {
             placeholder="email"
             onChange={updateEmail}
             value={email}
+            required={true}
           ></input>
           <input
             type="password"
@@ -132,6 +136,7 @@ const SignUpForm = () => {
             placeholder="password"
             onChange={updatePassword}
             value={password}
+            required={true}
           ></input>
           <input
             type="password"

@@ -56,18 +56,27 @@
     flex-direction: column;
     align-items: center;
     width: 60%;
-    max-width: 400px;
+    max-width: 380px;
     border-radius: 20px;
     padding: 50px;
 }
 
+.SignUpFormErrors {
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+    padding-bottom: 10px;
+}
+
 .SignUpForm > input {
     height: 45px;
-    width: 100%;
+    width: 90%;
     margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid gray;
-    padding: 0 5px;
+    padding: 0 10px;
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+    font-size: 20px;
 }
 
 /* .SignUpForm > button {
@@ -136,9 +145,9 @@
   filter: brightness(1.15);
 }
 
-.SignUpForm > button:disabled {
-  cursor: auto;
-}
+/* .SignUpForm > button:disabled {
+  cursor: not-allowed;
+} */
 
 .SignUpSpriteSelection {
     display: flex;
@@ -171,7 +180,7 @@
 
 .SignUpSpriteContainer [type=radio] + img {
     cursor: pointer;
-    margin: 0 15px;
+    margin: 0 10px;
     border: 3px solid transparent;
 }
 
