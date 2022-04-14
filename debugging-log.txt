@@ -1,6 +1,6 @@
 (04-13-2022)
-Bug:
-Multiple foreign keys in Game referencing User (player_one and player_two)
+Issue:
+Could not implement multiple foreign keys in Game referencing User (player_one and player_two)
 
 Solution:
 Implemented.
