@@ -18,7 +18,6 @@ class User(db.Model, UserMixin):
     created_at = db.Column(DateTime())
     updated_at = db.Column(DateTime())
 
-
     comments = db.relationship(
         'Comment',
         back_populates='user',

@@ -6,19 +6,19 @@ from app.models import db, Comment
 def seed_all():
     # seed users
     demo = User(
-        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
     jojo = User(
-        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png")
     sharon = User(
-        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
     jason = User(
-        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
     paul = User(
-        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
     chris = User(
-        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
     cecilia = User(
-        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_id=1)
+        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
 
     db.session.add(demo)
     db.session.add(jojo)
@@ -47,7 +47,8 @@ def seed_all():
                        username="jojo", content="winner gets 5mil")
     comment3 = Comment(game_id=1, player_id=4, username="xXj0ngyXx",
                        content="T>FAME@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    comment4 = Comment(game_id=1, player_id=3, username="milk", content="nub")
+    comment4 = Comment(game_id=1, player_id=3,
+                       username="milk", content="nub f3")
     comment5 = Comment(game_id=2, player_id=1, username="xD3m0",
                        content="S>10atk FS 80mil@@@@@@@@@@")
     comment6 = Comment(game_id=3, player_id=1, username="xD3m0",
