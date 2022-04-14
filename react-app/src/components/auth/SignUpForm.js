@@ -15,6 +15,41 @@ const SignUpForm = () => {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
+  const spriteData = [
+    {
+      name: "noobm1",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+    },
+    {
+      name: "noobm2",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png"
+    },
+    {
+      name: "noobf1",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png"
+    },
+    {
+      name: "noobf2",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png"
+    },
+    {
+      name: "nxhoem1",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png"
+    },
+    {
+      name: "nxhoem2",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png"
+    },
+    {
+      name: "nxhoef1",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png"
+    },
+    {
+      name: "nxhoef2",
+      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png"
+    },
+  ]
+
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
@@ -95,7 +130,22 @@ const SignUpForm = () => {
       </div>
       <div>
         <label>Sprite Id</label>
-        <label>
+        {spriteData.map(sprite => {
+          <label>
+            <input
+              type="radio"
+              value={sprite.url}
+              checked={
+                spriteId ===
+                sprite.url
+              }
+              onChange={updateSpriteId}
+            />
+            <img src={sprite.url} />
+          </label>
+        })}
+
+        {/* <label>
           <input
             type="radio"
             value="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
@@ -172,7 +222,8 @@ const SignUpForm = () => {
             "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png"
           }
           onChange={updateSpriteId}
-        />
+        /> */}
+        
       </div>
       <button type="submit">Sign Up</button>
     </form>
