@@ -22,14 +22,14 @@ def game(id):
 
 
 @game_routes.route('/user/<int:user_id>')
-def game(user_id):
+def games_user(user_id):
   #Get all games played by user_id
   user = User.query.get(user_id)
   games = user.get_games()
   print('game:', games)
   if not games:
     return {'errors': 'Games not found'}
-  return {game.to_dict()['id']:game.to_dict() for game in games}
+  return {game['id']:game for game in games}
 
 
 @game_routes.route('/', methods=['POST'])

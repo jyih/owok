@@ -65,4 +65,6 @@ class User(db.Model, UserMixin):
     def get_games(self):
         games_one = [g.to_dict() for g in self.games_player_one]
         games_two =  [g.to_dict() for g in self.games_player_two]
-        return games_one + games_two
+        games = games_one + games_two
+        print('games: ',games)
+        return games
