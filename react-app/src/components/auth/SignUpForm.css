@@ -47,6 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin: 0 20px;
 }
 
@@ -55,10 +56,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
-    max-width: 380px;
+    /* width: 60%; */
+    max-width: 300px;
     border-radius: 20px;
-    padding: 50px;
+    padding: 50px 50px 0 50px;
 }
 
 .SignUpFormErrors {
@@ -188,6 +189,79 @@
     border-radius: 20px;
     border: 3px dashed rgb(255, 247, 83);
 }
+
+.SignUpForm > a {
+    text-decoration: none;
+    margin: 25px 0 40px 0;
+    font-family: MaplestoryOTFLight;
+    color: rgb(43, 43, 43);
+}
+
+.SignUpForm > a:hover {
+    color: rgb(92, 92, 92);
+}
+
+.DemoButton {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.DemoButton > button {
+    background-color: rgb(165, 159, 40);
+    /* background-color: #1899D6; */
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #3f3f3f;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round,sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .DemoButton > button:after {
+    background-clip: padding-box;
+    background-color: rgb(255, 247, 83);
+    /* background-color: #1CB0F6; */
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+
+  .DemoButton > button:main,
+  .DemoButton > button:focus {
+    user-select: auto;
+  }
+
+  .DemoButton > button:hover:not(:disabled) {
+    filter: brightness(1.15);
+  }
+
 
 ::-webkit-scrollbar {
     width: 20px;

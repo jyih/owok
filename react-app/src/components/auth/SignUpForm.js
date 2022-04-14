@@ -163,6 +163,7 @@ const SignUpForm = () => {
             </div>
           </div>
           <button type="submit">Sign Up</button>
+          <a href="/login">Already have an account?</a>
         </form>
       </div>
     </div>

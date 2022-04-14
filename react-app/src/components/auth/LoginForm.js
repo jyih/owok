@@ -34,6 +34,16 @@ const LoginForm = () => {
     return <Redirect to="/" />;
   }
 
+  const demoLogin = async () => {
+    await dispatch(login("demo@aa.io", "password"));
+    return <Redirect to="/" />;
+  };
+
+  const demoButton = (e) => {
+    e.preventDefault();
+    demoLogin();
+  };
+
   return (
     <div className="SignUpFormContainer">
       <div className="SignUpFormBackground">
@@ -73,6 +83,10 @@ const LoginForm = () => {
             required={true}
           />
           <button type="submit">Login</button>
+          <div className="DemoButton">
+            <button onClick={demoButton}>Demo Login</button>
+          </div>
+          <a href="/sign-up">Want to make an account?</a>
         </form>
       </div>
     </div>
