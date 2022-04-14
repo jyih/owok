@@ -56,6 +56,8 @@ def game_update(id):
   game = Game.query.get(id)
   if not game:
     return {'errors': 'Game not found'}
+  if data['moves']:
+    game.moves = data['moves']
   game.is_private_one = data['is_private_one']
   game.is_private_two = data['is_private_two']
   db.session.commit()
