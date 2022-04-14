@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField
+from wtforms import StringField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
@@ -9,7 +9,13 @@ def user_exists(form, field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if user:
-        raise ValidationError('Email address is already in use.')
+        raise ValidationError('already in use.')
+
+
+def valid_email(form, field):
+    email = field.data
+    if "@" or "." not in email:
+        raise ValidationError('not valid ⊙﹏⊙∥')
 
 
 def username_exists(form, field):
@@ -17,7 +23,25 @@ def username_exists(form, field):
     username = field.data
     user = User.query.filter(User.username == username).first()
     if user:
-        raise ValidationError('Username is already in use.')
+        raise ValidationError('taken (っ °Д °;)っ')
+
+
+def username_min_length(form, field):
+    username = field.data
+    if len(username) < 3:
+        raise ValidationError('too short (っ °Д °;)っ')
+
+
+def email_min_length(form, field):
+    email = field.data
+    if len(email) < 4:
+        raise ValidationError('too short (っ °Д °;)っ')
+
+
+def password_min_length(form, field):
+    password = field.data
+    if len(password) < 4:
+        raise ValidationError('too short o(￣o￣*)ゞ')
 
 def valid_sprite(form, field):
     # Checking if sprite url is valid
@@ -36,7 +60,10 @@ def valid_sprite(form, field):
         raise ValidationError('Not a valid sprite url')
 
 class SignUpForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), username_exists])
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[DataRequired()])
-    sprite_url = StringField('sprite_url', validators=[valid_sprite])
+    username = StringField(
+        'username', validators=[DataRequired(), username_exists, username_min_length])
+    email = StringField('email', validators=[
+                        DataRequired(), user_exists, email_min_length, valid_email])
+    password = StringField('password', validators=[
+                           DataRequired(), password_min_length])
+    sprite_url = StringField('sprite_url', validators=[DataRequired(), valid_sprite])

@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { login } from '../../store/session';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { login } from "../../store/session";
+
+import pinkBean from "../images/pinkbean.png";
+import yeti from "../images/yeti.png";
+import owok from "../images/owok.png";
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
@@ -27,38 +31,65 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to="/" />;
   }
 
+  const demoLogin = async () => {
+    await dispatch(login("demo@aa.io", "password"));
+    return <Redirect to="/" />;
+  };
+
+  const demoButton = (e) => {
+    e.preventDefault();
+    demoLogin();
+  };
+
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+    <div className="SignUpFormContainer">
+      <div className="SignUpFormBackground">
+        <div className="SignUpFormImages">
+          <div className="SignUpFormLogo">
+            <img src={owok} />
+          </div>
+          <div className="SignUpFormPBandYeti">
+            <img id="pinkBean" src={pinkBean} />
+            <img src={yeti} />
+          </div>
+        </div>
       </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
+      <div className="SignUpFormBox">
+        <form onSubmit={onLogin} className="SignUpForm">
+          <div className="SignUpFormErrors">
+            {errors.map((error, ind) => (
+              <div key={ind}>{error}</div>
+            ))}
+          </div>
+
+          <input
+            name="email"
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={updateEmail}
+            required={true}
+          />
+
+          <input
+            name="password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={updatePassword}
+            required={true}
+          />
+          <button type="submit">Login</button>
+          <div className="DemoButton">
+            <button onClick={demoButton}>Demo Login</button>
+          </div>
+          <a href="/sign-up">Want to make an account?</a>
+        </form>
       </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
-    </form>
+    </div>
   );
 };
 
