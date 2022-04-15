@@ -8,7 +8,7 @@ const GameArea = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const sessionUserId = sessionUser.id;
   return (
-    <div>
+    <div className="GameAreaContainer">
       <h1>hi from gamearea, {sessionUser.username}</h1>
       <Board />
     </div>
