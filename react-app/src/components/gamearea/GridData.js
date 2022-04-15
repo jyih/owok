@@ -1,9 +1,9 @@
-const boardSize = 19;
-for (let i = 0; i < boardSize; i++) {
-  for (let j = 0; j < boardSize; j++) {
-    console.log(`"${("0" + i).slice(-2)}-${("0" + j).slice(-2)}",`);
-  }
-}
+// const boardSize = 19;
+// for (let i = 0; i < boardSize; i++) {
+//   for (let j = 0; j < boardSize; j++) {
+//     console.log(`"${("0" + i).slice(-2)}-${("0" + j).slice(-2)}",`);
+//   }
+// }
 
 export const GridData = [
   "00-00",

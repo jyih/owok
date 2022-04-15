@@ -4,6 +4,7 @@
     width: 800px;
     grid-template-columns: repeat(19, 1fr);
     grid-template-rows: repeat(19, 1fr);
+    background-color: white;
 }
 
 .grid {
