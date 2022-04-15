@@ -1,7 +1,7 @@
 .board_layout {
     display: grid;
-    height: 800px;
-    width: 800px;
+    height: 500px;
+    width: 500px;
     grid-template-columns: repeat(19, 1fr);
     grid-template-rows: repeat(19, 1fr);
     background-color: white;
