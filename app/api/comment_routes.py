@@ -22,7 +22,7 @@ def comment(id):
 
 @comment_routes.route('/<int:game_id>', methods=['POST'])
 # @login_required
-def comment_create():
+def comment_create(game_id):
   data = request.json
   # form = CommentForm()
   # form['csrf_token'].data = request.cookies['csrf_token']

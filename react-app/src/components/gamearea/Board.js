@@ -23,6 +23,7 @@ const Board = () => {
 
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
+  const moves = [];
 
   const placePiece = (e) => {
     // let r = coord.slice(0, 2)
@@ -32,14 +33,16 @@ const Board = () => {
     let square = document.getElementById(e.target.id);
     console.log(square);
     if (square && !square.children.length) {
-      let piece = document.createElement("img");
+      let piece = document.createElement('img')
       // change style background image to the img (might be better for performance)
       // bc not adding nodes to dom, just updating the node's style
-      piece.src = currPiece;
-      square.appendChild(piece);
-      swapPiece();
+      piece.src = currPiece
+      square.appendChild(piece)
+      moves.push(`${e.target.id.slice(0,2)}${e.target.id.slice(-2)}`)
+      console.log('moves',moves)
+      swapPiece()
     }
-  };
+  }
 
   const swapPiece = () => {
     console.log("Click!");

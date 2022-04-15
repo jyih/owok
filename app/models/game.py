@@ -47,5 +47,5 @@ class Game(db.Model):
             'updated_at': self.updated_at,
             'user_player_one': self.player_one.to_dict(),
             'user_player_two': self.player_two.to_dict(),
-            'comments': [c.to_dict() for c in self.comments]
+            'comments': {c.to_dict()['id']:c.to_dict() for c in self.comments}
         }
