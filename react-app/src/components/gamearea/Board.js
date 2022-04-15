@@ -19,6 +19,7 @@ const Board = () => {
 
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
+  const moves = [];
 
   const placePiece = (e) => {
     // let r = coord.slice(0, 2)
@@ -31,8 +32,11 @@ const Board = () => {
       let piece = document.createElement('img')
       piece.src = currPiece
       square.appendChild(piece)
+      moves.push(`${e.target.id.slice(0,2)}${e.target.id.slice(-2)}`)
+      console.log('moves',moves)
       swapPiece()
     }
+
   }
 
   const swapPiece = () => {
