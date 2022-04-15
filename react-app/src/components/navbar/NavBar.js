@@ -1,7 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import LogoutButton from "./auth/LogoutButton";
+import LogoutButton from "../auth/LogoutButton";
+
+import "./NavBar.css";
 
 const NavBar = () => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -9,7 +11,7 @@ const NavBar = () => {
   let sessionElements;
   if (sessionUser) {
     sessionElements = (
-      <div>
+      <div className="NavBarContainer">
         <ul>
           <li>
             <NavLink to="/" exact={true} activeClassName="active">

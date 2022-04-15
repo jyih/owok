@@ -1,0 +1,12 @@
+.board_layout {
+    display: grid;
+    height: 420px;
+    width: 420px;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    background-color: white;
+}
+
+.grid {
+    border: 1px solid gray;
+}
