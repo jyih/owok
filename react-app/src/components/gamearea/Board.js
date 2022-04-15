@@ -1,8 +1,8 @@
 import React from "react";
 import { GridData } from "./GridData";
 
-import omok_piece_mushroom from "../images/omok_piece_mushroom.png"
-import omok_piece_slime from "../images/omok_piece_slime.png"
+import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
+import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
@@ -23,37 +23,43 @@ const Board = () => {
   const placePiece = (e) => {
     // let r = coord.slice(0, 2)
     // let c = coord.slice(-2)
-    console.log("e.target.tagName", e.target.tagName)
-    console.log("e.target.id", e.target.id)
-    let square = document.getElementById(e.target.id)
-    console.log(square)
+    console.log("e.target.tagName", e.target.tagName);
+    console.log("e.target.id", e.target.id);
+    let square = document.getElementById(e.target.id);
+    console.log(square);
     if (square && !square.children.length) {
-      let piece = document.createElement('img')
-      piece.src = currPiece
-      square.appendChild(piece)
-      swapPiece()
+      let piece = document.createElement("img");
+      piece.src = currPiece;
+      square.appendChild(piece);
+      swapPiece();
     }
-  }
+  };
 
   const swapPiece = () => {
-    console.log("Click!")
+    console.log("Click!");
     if (currPiece === omok_piece_mushroom) {
-      console.log("click 1")
-      currPiece = omok_piece_slime
-      oppPiece = omok_piece_mushroom
+      console.log("click 1");
+      currPiece = omok_piece_slime;
+      oppPiece = omok_piece_mushroom;
     } else {
-      console.log("click 2")
-      currPiece = omok_piece_mushroom
-      oppPiece = omok_piece_slime
+      console.log("click 2");
+      currPiece = omok_piece_mushroom;
+      oppPiece = omok_piece_slime;
     }
-  }
+  };
 
   return (
-    <div className="board_layout">
-      {GridData.map((coord, index) => (
-        <div key={coord} id={`${coord}`} className={`grid ${coord}`} onClick={e => placePiece(e)}>
-        </div>
-      ))}
+    <div className="board_container">
+      <div className="board_layout">
+        {GridData.map((coord, index) => (
+          <div
+            key={coord}
+            id={`${coord}`}
+            className={`grid ${coord}`}
+            onClick={(e) => placePiece(e)}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 };

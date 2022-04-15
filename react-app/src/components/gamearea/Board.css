@@ -1,12 +1,28 @@
+.board_container {
+    background-image: url("../images/board.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-position: center; */
+    width: 855px;
+    height: 500px;
+    /* display: flex;
+    justify-content: center; */
+}
+
 .board_layout {
     display: grid;
     height: 420px;
     width: 420px;
     grid-template-columns: repeat(15, 1fr);
     grid-template-rows: repeat(15, 1fr);
-    background-color: white;
+    margin-left: 21px;
+    padding-top: 28px;
+    /* background-color: white; */
 }
 
 .grid {
     border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
