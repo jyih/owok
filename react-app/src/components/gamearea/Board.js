@@ -17,6 +17,10 @@ const Board = () => {
   // for diagonal, need to shift every i-th row (have to do once left and once right?)
   // by i squares to make it all line up and be vertical.
 
+  // mathmatical vectors, define array that is eight 0 and 1 and -1 combinations, calculate neighbors
+  // with map of vectors added to indecies of the board grid, and then do the test. return number
+  // of neighbors and do this (after doing second paragraph)
+
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
@@ -29,6 +33,8 @@ const Board = () => {
     console.log(square);
     if (square && !square.children.length) {
       let piece = document.createElement("img");
+      // change style background image to the img (might be better for performance)
+      // bc not adding nodes to dom, just updating the node's style
       piece.src = currPiece;
       square.appendChild(piece);
       swapPiece();
