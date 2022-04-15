@@ -1,0 +1,43 @@
+.player_one_rotate {
+    transform: scaleX(-1);
+}
+
+.BrowseReplaysContainer {
+    width: 100vw;
+    height: 100vh;
+    font-family: MaplestoryOTFLight;
+    background-image: url("../images/mulung.jpg");
+    /* background-image: url("../images/herbtown.jpg"); */
+    background-size: cover;
+    background-repeat: repeat-y;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.BrowseReplaysBody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 100px;
+    width: 60%;
+    height: 100vh;
+}
+
+.GamesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 33.333333%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.SingleGameContainer {
+    width: 200px;
+}
+
+.SingleGameContainer > a {
+    text-decoration: none;
+    color: purple;
+}

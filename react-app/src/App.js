@@ -48,7 +48,7 @@ function App() {
         <ProtectedRoute path="/replays/:gameId" exact={true}>
           <h1>Hi from single replay page</h1>
         </ProtectedRoute>
-        <ProtectedRoute path="/replays/user/:userId" exact={true}>
+        <ProtectedRoute path="/profile/:userId" exact={true}>
           <h1>Hi from personal replays page</h1>
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
