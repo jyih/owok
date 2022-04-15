@@ -4,5 +4,7 @@
     background-image: url("../images/i15717734747.jpg");
     background-size: cover;
     background-repeat: repeat-y;
-    /* display: flex; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

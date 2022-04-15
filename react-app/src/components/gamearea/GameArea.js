@@ -10,7 +10,6 @@ const GameArea = () => {
   return (
     <div className="GameAreaContainer">
       <div>
-        <h1>hi from gamearea, {sessionUser.username}</h1>
         <Board />
       </div>
     </div>

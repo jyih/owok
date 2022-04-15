@@ -12,13 +12,20 @@ const NavBar = () => {
   if (sessionUser) {
     sessionElements = (
       <div className="NavBarContainer">
-        <ul>
-          <li>
-            <NavLink to="/" exact={true} activeClassName="active">
-              Home
-            </NavLink>
-          </li>
-          {/* <li>
+        <NavLink to="/" exact={true} activeClassName="active">
+          Home
+        </NavLink>
+        <NavLink to="/browse" exact={true} activeClassName="active">
+          Browse
+        </NavLink>
+        <NavLink
+          to="/replays/user/:userId"
+          exact={true}
+          activeClassName="active"
+        >
+          Replays
+        </NavLink>
+        {/* <li>
             <NavLink to="/login" exact={true} activeClassName="active">
               Login
             </NavLink>
@@ -33,10 +40,8 @@ const NavBar = () => {
               Users
             </NavLink>
           </li> */}
-          <li>
-            <LogoutButton />
-          </li>
-        </ul>
+
+        <LogoutButton />
       </div>
     );
   }

@@ -21,7 +21,7 @@
 }
 
 .grid {
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     display: flex;
     align-items: center;
     justify-content: center;

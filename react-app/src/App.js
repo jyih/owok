@@ -9,6 +9,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import GameArea from "./components/gamearea/GameArea";
 import { authenticate } from "./store/session";
+import BrowseReplays from "./components/replays/BrowseReplays";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -40,6 +41,15 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
+        </ProtectedRoute>
+        <ProtectedRoute path="/browse" exact={true}>
+          <BrowseReplays />
+        </ProtectedRoute>
+        <ProtectedRoute path="/replays/:gameId" exact={true}>
+          <h1>Hi from single replay page</h1>
+        </ProtectedRoute>
+        <ProtectedRoute path="/replays/user/:userId" exact={true}>
+          <h1>Hi from personal replays page</h1>
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
           <GameArea />
