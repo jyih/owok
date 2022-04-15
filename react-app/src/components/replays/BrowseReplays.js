@@ -20,14 +20,20 @@ const BrowseReplays = () => {
     return (
       <div key={game.id} className="SingleGameContainer">
         <NavLink to={`/replays/${game.id}`}>
-          <h1>
-            {game.user_player_one.username} vs. {game.user_player_two.username}
-          </h1>
-          <img
-            src={game.user_player_one.sprite_url}
-            className="player_one_rotate"
-          />
-          <img src={game.user_player_two.sprite_url} />
+          <div className="BrowsePlayerImages">
+            <div className="BrowseGamePlayerOne">
+              {game.user_player_one.username}
+              <img
+                src={game.user_player_one.sprite_url}
+                className="player_one_rotate"
+              />
+            </div>
+            vs.
+            <div className="BrowseGamePlayerOne">
+              {game.user_player_two.username}
+              <img src={game.user_player_two.sprite_url} />
+            </div>
+          </div>
         </NavLink>
       </div>
     );
