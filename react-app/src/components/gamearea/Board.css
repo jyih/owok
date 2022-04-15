@@ -1,9 +1,9 @@
 .board_layout {
     display: grid;
-    height: 532px;
-    width: 532px;
-    grid-template-columns: repeat(19, 1fr);
-    grid-template-rows: repeat(19, 1fr);
+    height: 420px;
+    width: 420px;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
     background-color: white;
 }
 
