@@ -23,33 +23,35 @@ const Board = () => {
   const placePiece = (e) => {
     // let r = coord.slice(0, 2)
     // let c = coord.slice(-2)
-    console.log(e)
-    console.log(e.target.id)
+    console.log("e.target.tagName", e.target.tagName)
+    console.log("e.target.id", e.target.id)
     let square = document.getElementById(e.target.id)
     console.log(square)
-    let piece = document.createElement('img')
-    piece.src = currPiece
-    square.appendChild(piece)
-    swapPiece()
+    if (square && !square.children.length) {
+      let piece = document.createElement('img')
+      piece.src = currPiece
+      square.appendChild(piece)
+      swapPiece()
+    }
   }
 
   const swapPiece = () => {
     console.log("Click!")
-    if  (currPiece === omok_piece_mushroom) {
+    if (currPiece === omok_piece_mushroom) {
       console.log("click 1")
       currPiece = omok_piece_slime
       oppPiece = omok_piece_mushroom
     } else {
       console.log("click 2")
       currPiece = omok_piece_mushroom
-      oppPiece =omok_piece_slime
+      oppPiece = omok_piece_slime
     }
   }
 
   return (
     <div className="board_layout">
       {GridData.map((coord, index) => (
-        <div key={coord} id={`${coord}`} className={`grid ${coord}`} onClick={e=>placePiece(e)}>
+        <div key={coord} id={`${coord}`} className={`grid ${coord}`} onClick={e => placePiece(e)}>
         </div>
       ))}
     </div>
