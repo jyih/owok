@@ -1,4 +1,6 @@
+from email.policy import default
 from .db import db
+import datetime
 from sqlalchemy import DateTime
 
 
@@ -10,9 +12,8 @@ class Comment(db.Model):
     player_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     username = db.Column(db.String(20), nullable=False)
     content = db.Column(db.String(12000), nullable=False)
-    created_at = db.Column(DateTime())
-    updated_at = db.Column(DateTime())
-
+    created_at = db.Column(DateTime, default=datetime.datetime.now())
+    updated_at = db.Column(DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
     user = db.relationship('User', back_populates='comments')
 
     game = db.relationship('Game', back_populates='comments')
