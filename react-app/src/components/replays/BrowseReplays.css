@@ -30,7 +30,6 @@
     flex-basis: 33.333333%;
     justify-content: space-between;
     width: 999px;
-    overflow-y: scroll;
 }
 
 .SingleGameContainer {
@@ -41,6 +40,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .SingleGameContainer:hover {
