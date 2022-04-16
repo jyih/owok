@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import * as replayActions from "../../store/replays"
+import { useSelector, useDispatch } from "react-redux";
+import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
 
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
@@ -10,7 +10,7 @@ import "./Board.css";
 
 const Board = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user)
+  const user = useSelector((state) => state.session.user);
   // function for player one and player two placing moves taking turns
   // this function also pushes each players moves to their own moves array for win calculations
   // win calculator function
@@ -25,22 +25,22 @@ const Board = () => {
   // with map of vectors added to indecies of the board grid, and then do the test. return number
   // of neighbors and do this (after doing second paragraph)
 
-  let currPiece = 'mushroom';
-  let oppPiece = 'slime';
+  let currPiece = "mushroom";
+  let oppPiece = "slime";
   let gameOver = false;
   let lastMove = null;
   const notation = [];
   const pieces = {
     mushroom: omok_piece_mushroom,
-    slime: omok_piece_slime
-  }
+    slime: omok_piece_slime,
+  };
   const board = {};
   const move = {
     up: -100,
     down: 100,
     left: -1,
     right: 1,
-  }
+  };
   // const board = Array(15*15).fill('');
 
   const placePiece = (coord) => {
@@ -50,27 +50,27 @@ const Board = () => {
       // let c = coord.slice(-2)
       let square = document.getElementById(coord);
       if (square && !square.children.length) {
-        let piece = document.createElement('img')
+        let piece = document.createElement("img");
         // change style background image to the img (might be better for performance)
         // bc not adding nodes to dom, just updating the node's style
-        piece.src = pieces[currPiece]
-        square.appendChild(piece)
+        piece.src = pieces[currPiece];
+        square.appendChild(piece);
 
         lastMove = parseInt(coord);
 
-        notation.push(coord)
+        notation.push(coord);
         board[lastMove] = currPiece;
 
-        console.log('moves:', notation)
-        console.log('board:', board)
-        swapPiece()
+        console.log("moves:", notation);
+        console.log("board:", board);
+        swapPiece();
         checkGame();
-        console.log('gameStatus:', gameOver)
+        console.log("gameStatus:", gameOver);
       }
     } else {
-      console.log("Game has finished!")
+      console.log("Game has finished!");
     }
-  }
+  };
 
   const swapPiece = () => {
     console.log("Swap!");
@@ -89,16 +89,19 @@ const Board = () => {
   };
 
   const checkGame = () => {
+    //check if piece is same piece
     let lastPiece = board[lastMove];
-    console.log('lastmove:', lastMove)
-    console.log('piece logic check:', lastPiece === oppPiece)
+    console.log("lastmove:", lastMove);
+    console.log("piece logic check:", lastPiece === oppPiece);
 
     //check vertical
     let countNS = 1;
     //check up
     let countN = 0;
+    //lookMove: looking ahead to see what the piece placed is
     let lookMove = lastMove + move.up;
     let lookPiece = board[lookMove];
+    //as soon as hit 4, the piece placed will be 5th one
     while (lookPiece === lastPiece && countN < 4 && countNS < 5) {
       countN++;
       lookMove += move.up;
@@ -130,7 +133,7 @@ const Board = () => {
       lookMove += move.left;
       lookPiece = board[lookMove];
     }
-    countWE += countW
+    countWE += countW;
 
     //check right
     let countE = 0;
@@ -154,7 +157,7 @@ const Board = () => {
       lookMove = lookMove + move.right + move.up;
       lookPiece = board[lookMove];
     }
-    countNESW += countNE
+    countNESW += countNE;
 
     //check bot left
     let countSW = 0;
@@ -178,7 +181,7 @@ const Board = () => {
       lookMove = lookMove + move.left + move.up;
       lookPiece = board[lookMove];
     }
-    countNWSE += countNW
+    countNWSE += countNW;
 
     //check bot left
     let countSE = 0;
@@ -191,16 +194,10 @@ const Board = () => {
     }
     countNWSE += countSE;
 
-
-    if (
-      countNS >= 5 ||
-      countWE >= 5 ||
-      countNESW >= 5 ||
-      countNWSE >= 5
-    ) {
+    if (countNS >= 5 || countWE >= 5 || countNESW >= 5 || countNWSE >= 5) {
       endGame(lastPiece);
-    };
-  }
+    }
+  };
 
   const endGame = (winningPiece) => {
     //need to get player_two data
@@ -211,14 +208,14 @@ const Board = () => {
       player_two_id: user.id,
       winner_id: user.id,
       moves: notation,
-    }
+    };
 
     const data = dispatch(replayActions.saveGame(gameData));
 
     if (data?.errors) {
-      console.log(data.errors)
+      console.log(data.errors);
     }
-  }
+  };
 
   return (
     <div className="board_container">
@@ -231,6 +228,13 @@ const Board = () => {
             onClick={(e) => placePiece(e.target.id)}
           ></div>
         ))}
+      </div>
+      <img src={user.sprite_url} className="board_player_one" />
+      <img src={user.sprite_url} className="board_player_two" />
+      <div className="board_stats">
+        <p>{user.wins}</p>
+        <p>{user.losses}</p>
+        <p>{user.draws}</p>
       </div>
     </div>
   );
