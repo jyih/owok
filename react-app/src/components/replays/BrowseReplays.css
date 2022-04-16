@@ -1,0 +1,72 @@
+.player_one_rotate {
+    transform: scaleX(-1);
+}
+
+.BrowseReplaysContainer {
+    width: 100vw;
+    height: 100vh;
+    font-family: MaplestoryOTFLight;
+    background-image: url("../images/mulung.jpg");
+    /* background-image: url("../images/herbtown.jpg"); */
+    background-size: cover;
+    background-repeat: repeat-y;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.BrowseReplaysBody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 100px;
+    width: 60%;
+    height: 100vh;
+}
+
+.GamesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 33.333333%;
+    justify-content: space-between;
+    width: 999px;
+    overflow-y: scroll;
+}
+
+.SingleGameContainer {
+    width: 300px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.253);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SingleGameContainer:hover {
+    background-color: rgba(255, 255, 255, 0.596);
+    cursor: pointer;
+}
+
+.SingleGameContainer > a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.BrowsePlayerImages {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.BrowseGamePlayerOne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
