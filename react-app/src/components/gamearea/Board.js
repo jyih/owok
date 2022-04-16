@@ -39,13 +39,11 @@ const Board = () => {
   }
   // const board = Array(15*15).fill('');
 
-  const placePiece = (e) => {
+  const placePiece = (coord) => {
+    console.log("Place!");
     // let r = coord.slice(0, 2)
     // let c = coord.slice(-2)
-    console.log("e.target.tagName", e.target.tagName);
-    console.log("e.target.id", e.target.id);
-    let square = document.getElementById(e.target.id);
-    console.log(square);
+    let square = document.getElementById(coord);
     if (square && !square.children.length) {
       let piece = document.createElement('img')
       // change style background image to the img (might be better for performance)
@@ -53,10 +51,9 @@ const Board = () => {
       piece.src = pieces[currPiece]
       square.appendChild(piece)
 
-      let noHyphen = `${e.target.id.slice(0, 2)}${e.target.id.slice(-2)}`;
-      lastMove = parseInt(noHyphen);
+      lastMove = parseInt(coord);
 
-      notation.push(noHyphen)
+      notation.push(coord)
       board[lastMove] = currPiece;
 
       console.log('moves:', notation)
@@ -68,7 +65,7 @@ const Board = () => {
   }
 
   const swapPiece = () => {
-    console.log("Click!");
+    console.log("Swap!");
     let temp = currPiece;
     currPiece = oppPiece;
     oppPiece = temp;
@@ -203,7 +200,7 @@ const Board = () => {
             key={coord}
             id={`${coord}`}
             className={`grid ${coord}`}
-            onClick={(e) => placePiece(e)}
+            onClick={(e) => placePiece(e.target.id)}
           ></div>
         ))}
       </div>
