@@ -18,12 +18,8 @@ const NavBar = () => {
         <NavLink to="/browse" exact={true} activeClassName="active">
           Browse
         </NavLink>
-        <NavLink
-          to="/replays/user/:userId"
-          exact={true}
-          activeClassName="active"
-        >
-          Replays
+        <NavLink to="/profile/:userId" exact={true} activeClassName="active">
+          Profile
         </NavLink>
         {/* <li>
             <NavLink to="/login" exact={true} activeClassName="active">

@@ -9,9 +9,7 @@ const GameArea = () => {
   const sessionUserId = sessionUser.id;
   return (
     <div className="GameAreaContainer">
-      <div>
-        <Board />
-      </div>
+      <Board />
     </div>
   );
 };
