@@ -5,7 +5,7 @@ import replaysReducer from "./replays";
 
 const rootReducer = combineReducers({
   session,
-  games: replaysReducer,
+  current_game: replaysReducer,
 });
 
 let enhancer;

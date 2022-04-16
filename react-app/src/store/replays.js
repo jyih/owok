@@ -1,29 +1,36 @@
-// const GET_ALL_GAMES = "games/GET_ALL_GAMES";
+const GET_GAME = "games/GET_GAME";
 
-// const loadAllGames = (games) => ({
-//   type: GET_ALL_GAMES,
-//   games,
-// });
+const loadGame = (game) => ({
+  type: GET_GAME,
+  game,
+});
 
-// export const fetchGames = () => async (dispatch) => {
-//   const res = await fetch("/api/games");
-//   const games = await res.json();
+export const fetchGame = (game_id) => async (dispatch) => {
+  const res = await fetch(`/api/games/${game_id}`);
 
-//   dispatch(loadAllGames(games));
-//   return games;
-// };
+  if (res.ok) {
+    const game = await res.json();
 
-// let initialState = {};
+    dispatch(loadGame(game));
+    return game;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
 
-// const replaysReducer = (state = initialState, action) => {
-//   let newState = { ...state };
-//   switch (action.type) {
-//     case GET_ALL_GAMES:
-//       action.games.forEach((game) => (newState[game.id] = game));
-//       return newState;
-//     default:
-//       return state;
-//   }
-// };
+let initialState = {};
 
-// export default replaysReducer;
+const replaysReducer = (state = initialState, action) => {
+  let newState = { ...state };
+  switch (action.type) {
+    case GET_GAME:
+      newState = action.game;
+
+      return newState;
+    default:
+      return state;
+  }
+};
+
+export default replaysReducer;
