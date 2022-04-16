@@ -25,12 +25,15 @@ const SingleReplay = () => {
           <ReplayBoard game={game} />
         </div>
         <div className="CommentsAreaContainer">
-          {comments?.map((comment) => (
-            <div key={comment.id}>
-              {comment.username}
-              {comment.content}
-            </div>
-          ))}
+          <div className="CommentsContainer">
+            {comments?.map((comment) => (
+              <div key={comment.id} className="SingleComment">
+                <h3>{comment.username}</h3>
+                <p>{comment.content}</p>
+              </div>
+            ))}
+          </div>
+          <div className="CommentBox"></div>
         </div>
       </div>
     </div>
