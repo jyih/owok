@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import * as replayActions from "../../store/replays"
 import { GridData } from "./GridData";
 
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
@@ -7,8 +9,10 @@ import omok_piece_slime from "../images/omok_piece_slime.png";
 import "./Board.css";
 
 const Board = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user)
   // function for player one and player two placing moves taking turns
-  //this function also pushes each players moves to their own moves array for win calculations
+  // this function also pushes each players moves to their own moves array for win calculations
   // win calculator function
 
   // 3 boards, 1 main board with both moves and that the player clicks, when a player's turn clicks
@@ -23,7 +27,7 @@ const Board = () => {
 
   let currPiece = 'mushroom';
   let oppPiece = 'slime';
-  let gameStatus = null;
+  let gameOver = false;
   let lastMove = null;
   const notation = [];
   const pieces = {
@@ -40,27 +44,31 @@ const Board = () => {
   // const board = Array(15*15).fill('');
 
   const placePiece = (coord) => {
-    console.log("Place!");
-    // let r = coord.slice(0, 2)
-    // let c = coord.slice(-2)
-    let square = document.getElementById(coord);
-    if (square && !square.children.length) {
-      let piece = document.createElement('img')
-      // change style background image to the img (might be better for performance)
-      // bc not adding nodes to dom, just updating the node's style
-      piece.src = pieces[currPiece]
-      square.appendChild(piece)
+    if (!gameOver) {
+      console.log("Place!");
+      // let r = coord.slice(0, 2)
+      // let c = coord.slice(-2)
+      let square = document.getElementById(coord);
+      if (square && !square.children.length) {
+        let piece = document.createElement('img')
+        // change style background image to the img (might be better for performance)
+        // bc not adding nodes to dom, just updating the node's style
+        piece.src = pieces[currPiece]
+        square.appendChild(piece)
 
-      lastMove = parseInt(coord);
+        lastMove = parseInt(coord);
 
-      notation.push(coord)
-      board[lastMove] = currPiece;
+        notation.push(coord)
+        board[lastMove] = currPiece;
 
-      console.log('moves:', notation)
-      console.log('board:', board)
-      swapPiece()
-      checkGame();
-      console.log('gameStatus:', gameStatus)
+        console.log('moves:', notation)
+        console.log('board:', board)
+        swapPiece()
+        checkGame();
+        console.log('gameStatus:', gameOver)
+      }
+    } else {
+      console.log("Game has finished!")
     }
   }
 
@@ -189,7 +197,27 @@ const Board = () => {
       countWE >= 5 ||
       countNESW >= 5 ||
       countNWSE >= 5
-    ) gameStatus = lastPiece;
+    ) {
+      endGame(lastPiece);
+    };
+  }
+
+  const endGame = (winningPiece) => {
+    //need to get player_two data
+    gameOver = true;
+
+    const gameData = {
+      player_one_id: user.id,
+      player_two_id: user.id,
+      winner_id: user.id,
+      moves: notation,
+    }
+
+    const data = dispatch(replayActions.saveGame(gameData));
+
+    if (data?.errors) {
+      console.log(data.errors)
+    }
   }
 
   return (
