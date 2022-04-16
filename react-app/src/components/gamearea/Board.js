@@ -94,6 +94,12 @@ const Board = () => {
     console.log("lastmove:", lastMove);
     console.log("piece logic check:", lastPiece === oppPiece);
 
+    /**
+     * 1. refactor/DRY checks
+     * 2. implement short circuit boolean to skip lower checks 
+     *    if 5 in row has been found
+     */
+
     //check vertical
     let countNS = 1;
     //check up
@@ -107,9 +113,7 @@ const Board = () => {
       lookMove += move.up;
       lookPiece = board[lookMove];
     }
-
     countNS += countN;
-
     //check down
     let countS = 0;
     lookMove = lastMove + move.down;
@@ -119,8 +123,8 @@ const Board = () => {
       lookMove += move.down;
       lookPiece = board[lookMove];
     }
-
     countNS += countS;
+
 
     //check horizontal
     let countWE = 1;
@@ -146,6 +150,7 @@ const Board = () => {
     }
     countWE += countE;
 
+
     //check NESW diag
     let countNESW = 1;
     //check top right
@@ -169,6 +174,7 @@ const Board = () => {
       lookPiece = board[lookMove];
     }
     countNESW += countSW;
+
 
     //check NESW diag
     let countNWSE = 1;
@@ -194,6 +200,8 @@ const Board = () => {
     }
     countNWSE += countSE;
 
+
+    //check if there's 5 anywhere
     if (countNS >= 5 || countWE >= 5 || countNESW >= 5 || countNWSE >= 5) {
       endGame(lastPiece);
     }
@@ -201,6 +209,9 @@ const Board = () => {
 
   const endGame = (winningPiece) => {
     //need to get player_two data
+    //increment winner win count
+    //increment loser loss count
+    //if draw, increment both players' draw count
     gameOver = true;
 
     const gameData = {
