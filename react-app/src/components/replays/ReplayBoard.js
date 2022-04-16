@@ -7,7 +7,8 @@ const ReplayBoard = ({ game }) => {
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
-  const movesArr = game?.moves?.split(",");
+  const movesArr = game?.moves?.slice(1, -1).split(",");
+  console.log('movesArr', movesArr)
 
   const swapPiece = () => {
     // console.log("Click!");
@@ -26,6 +27,7 @@ const ReplayBoard = ({ game }) => {
   const replayClick = (e) => {
     e.preventDefault();
     let coord = movesArr[moveNumber];
+    console.log("ReplayClick Coord", coord);
     let square = document.getElementById(coord);
     console.log("ReplayClick Square", square);
     if (square && !square.children.length) {
