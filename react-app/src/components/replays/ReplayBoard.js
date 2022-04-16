@@ -1,35 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchGame } from "../../store/replays";
+import React from "react";
 import { GridData } from "../gamearea/GridData";
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
 import omok_piece_slime from "../images/omok_piece_slime.png";
 
-const ReplayBoard = () => {
-  const dispatch = useDispatch();
-  const { gameId } = useParams();
-
-  useEffect(() => {
-    dispatch(fetchGame(gameId));
-  }, [dispatch, gameId]);
-
-  const game = useSelector((state) => state.current_game);
-  console.log(game);
-
+const ReplayBoard = ({ game }) => {
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
   const movesArr = game?.moves?.split(",");
 
   const swapPiece = () => {
-    console.log("Click!");
+    // console.log("Click!");
     if (currPiece === omok_piece_mushroom) {
-      console.log("click 1");
+      //   console.log("click 1");
       currPiece = omok_piece_slime;
       oppPiece = omok_piece_mushroom;
     } else {
-      console.log("click 2");
+      //   console.log("click 2");
       currPiece = omok_piece_mushroom;
       oppPiece = omok_piece_slime;
     }

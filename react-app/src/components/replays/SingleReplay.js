@@ -9,6 +9,7 @@ const SingleReplay = () => {
   const { gameId } = useParams();
 
   const game = useSelector((state) => state.current_game);
+  const comments = Object.values(game.comments);
 
   useEffect(() => {
     dispatch(fetchGame(gameId));
@@ -16,8 +17,17 @@ const SingleReplay = () => {
 
   return (
     <div className="SingleReplayContainer">
-      <ReplayBoard />
-      <h1>{gameId}</h1>
+      <div className="ReplayBoardArea">
+        <ReplayBoard game={game} />
+      </div>
+      <div className="CommentsAreaContainer">
+        {comments.map((comment) => (
+          <div>
+            {comment.username}
+            {comment.content}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
