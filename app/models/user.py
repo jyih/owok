@@ -1,6 +1,7 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import datetime
 from sqlalchemy import DateTime
 
 
@@ -15,8 +16,8 @@ class User(db.Model, UserMixin):
     losses = db.Column(db.Integer, nullable=False, default=0)
     draws = db.Column(db.Integer, nullable=False, default=0)
     sprite_url = db.Column(db.String(255), nullable=False, default='https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png')
-    created_at = db.Column(DateTime())
-    updated_at = db.Column(DateTime())
+    created_at = db.Column(DateTime, default=datetime.datetime.now())
+    updated_at = db.Column(DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     comments = db.relationship(
         'Comment',

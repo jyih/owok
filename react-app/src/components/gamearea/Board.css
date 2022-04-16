@@ -26,6 +26,36 @@
     justify-content: center;
 }
 
+.board_player_one {
+    transform: scaleX(-1);
+    position: absolute;
+    top: 100px;
+    right: 315px;
+}
+
+.board_player_two {
+    position: absolute;
+    top: 100px;
+    right: 215px;
+    width: 50px;
+}
+
+.board_stats {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    position: absolute;
+    top: 219px;
+    right: 310px;
+}
+
+.board_stats > p {
+    margin: 0;
+    width: 100%;
+    text-align: right;
+    font-size: 13px;
+}
+
 .TestButton {
     position: absolute;
     top: 100px;
