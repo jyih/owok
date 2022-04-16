@@ -19,17 +19,23 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 100px;
     width: 60%;
-    height: 100vh;
+    height: calc(100vh - 100px);
+    position: absolute;
+    bottom: 0;
 }
 
 .GamesContainer {
     display: flex;
     flex-wrap: wrap;
     flex-basis: 33.333333%;
-    justify-content: space-between;
-    width: 999px;
+    align-items: center;
+    width: 980px;
+    overflow-y: scroll;
+    height: calc(100vh - 220px);
+    position: absolute;
+    bottom: 20px;
+    margin-left: 20px;
 }
 
 .SingleGameContainer {
@@ -40,7 +46,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
+    margin: 0 10px 30px 10px;
 }
 
 .SingleGameContainer:hover {

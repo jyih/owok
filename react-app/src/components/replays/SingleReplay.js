@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { fetchGame } from "../../store/replays";
 import ReplayBoard from "./ReplayBoard";
 
+import "./SingleReplay.css";
+
 const SingleReplay = () => {
   const dispatch = useDispatch();
   const { gameId } = useParams();
@@ -17,17 +19,19 @@ const SingleReplay = () => {
   }, [dispatch, gameId]);
 
   return (
-    <div className="SingleReplayContainer">
-      <div className="ReplayBoardArea">
-        <ReplayBoard game={game} />
-      </div>
-      <div className="CommentsAreaContainer">
-        {comments?.map((comment) => (
-          <div key={comment.id}>
-            {comment.username}
-            {comment.content}
-          </div>
-        ))}
+    <div className="SingleReplayWrapper">
+      <div className="SingleReplayBody">
+        <div className="ReplayBoardArea">
+          <ReplayBoard game={game} />
+        </div>
+        <div className="CommentsAreaContainer">
+          {comments?.map((comment) => (
+            <div key={comment.id}>
+              {comment.username}
+              {comment.content}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

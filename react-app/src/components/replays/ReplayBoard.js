@@ -8,7 +8,6 @@ const ReplayBoard = ({ game }) => {
   let oppPiece = omok_piece_slime;
 
   const movesArr = game?.moves?.slice(1, -1).split(",");
-  console.log('movesArr', movesArr)
 
   const swapPiece = () => {
     // console.log("Click!");
@@ -43,17 +42,45 @@ const ReplayBoard = ({ game }) => {
 
   // onclick if move = square id, place piece
   return (
-    <div>
-      <div className="board_container">
-        <div className="board_layout">
+    <div className="replay_board_wrapper">
+      <h1>
+        Replay of {game?.user_player_one?.username} vs.{" "}
+        {game?.user_player_two?.username}
+      </h1>
+      <div className="replay_board_container">
+        <div className="replay_board_layout">
           {GridData.map((coord, index) => (
-            <div key={coord} id={`${coord}`} className={`grid ${coord}`}></div>
+            <div
+              key={coord}
+              id={`${coord}`}
+              className={`replay_grid ${coord}`}
+            ></div>
           ))}
         </div>
+        <img
+          src={game?.user_player_one?.sprite_url}
+          className="replay_player_one"
+        />
+        <img
+          src={game?.user_player_two?.sprite_url}
+          className="replay_player_two"
+        />
+        <div className="replay_board_stats_one">
+          <p>{game?.user_player_one?.wins}</p>
+          <p>{game?.user_player_one?.losses}</p>
+          <p>{game?.user_player_one?.draws}</p>
+        </div>
+        <div className="replay_board_stats_two">
+          <p>{game?.user_player_two?.wins}</p>
+          <p>{game?.user_player_two?.losses}</p>
+          <p>{game?.user_player_two?.draws}</p>
+        </div>
       </div>
-      <button onClick={(e) => replayClick(e)} className="TestButton">
-        Next Move
-      </button>
+      <div className="replay_button_container">
+        <button onClick={(e) => replayClick(e)} className="replay_next_button">
+          Next Move
+        </button>
+      </div>
     </div>
   );
 };
