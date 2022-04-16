@@ -23,7 +23,7 @@ const SingleReplay = () => {
       </div>
       <div className="CommentsAreaContainer">
         {comments?.map((comment) => (
-          <div>
+          <div key={comment.id}>
             {comment.username}
             {comment.content}
           </div>
