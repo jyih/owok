@@ -22,7 +22,7 @@ const BrowseReplays = () => {
         <NavLink to={`/replays/${game.id}`}>
           <div className="BrowsePlayerImages">
             <div className="BrowseGamePlayerOne">
-              {game.user_player_one.username}
+              <p>{game.user_player_one.username}</p>
               <img
                 src={game.user_player_one.sprite_url}
                 className="player_one_rotate"
@@ -30,7 +30,7 @@ const BrowseReplays = () => {
             </div>
             vs.
             <div className="BrowseGamePlayerOne">
-              {game.user_player_two.username}
+              <p>{game.user_player_two.username}</p>
               <img src={game.user_player_two.sprite_url} />
             </div>
           </div>

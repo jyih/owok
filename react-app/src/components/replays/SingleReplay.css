@@ -60,14 +60,14 @@
 .replay_player_one {
     transform: scaleX(-1);
     position: absolute;
-    top: 180px;
+    bottom: 675px;
     right: 315px;
 }
 
 .replay_player_two {
     position: absolute;
-    top: 180px;
-    right: 210px;
+    bottom: 675px;
+    right: 180px;
 }
 
 .replay_board_stats_one {

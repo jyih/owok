@@ -11,6 +11,7 @@ import GameArea from "./components/gamearea/GameArea";
 import { authenticate } from "./store/session";
 import BrowseReplays from "./components/replays/BrowseReplays";
 import SingleReplay from "./components/replays/SingleReplay";
+import ProfilePage from "./components/profile/ProfilePage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -50,7 +51,7 @@ function App() {
           <SingleReplay />
         </ProtectedRoute>
         <ProtectedRoute path="/profile/:userId" exact={true}>
-          <h1>Hi from personal replays page</h1>
+          <ProfilePage />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
           <GameArea />

@@ -6,19 +6,21 @@ from app.models import db, Comment
 def seed_all():
     # seed users
     demo = User(
-        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png")
     jojo = User(
-        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png")
+        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png")
     sharon = User(
-        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
+        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
     jason = User(
-        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/jason2.png")
     paul = User(
-        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     chris = User(
-        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     cecilia = User(
-        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
+        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png")
+    alyssa = User(
+        username='Aly', email='alyssasaccount@aa.io', password='alyspassword', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/alyssa2.png")
 
     db.session.add(demo)
     db.session.add(jojo)
@@ -27,6 +29,7 @@ def seed_all():
     db.session.add(paul)
     db.session.add(chris)
     db.session.add(cecilia)
+    db.session.add(alyssa)
 
     # seed games
     game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
