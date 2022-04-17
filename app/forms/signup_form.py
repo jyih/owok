@@ -47,14 +47,18 @@ def valid_sprite(form, field):
     # Checking if sprite url is valid
     url = field.data
     valid_sprites = [
-        'https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png',
-        'https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/noobm2_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/noobf1_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/noobf2_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoem2_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoef3_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoef4_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoem4_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png',
+        'https://owok.s3.us-west-1.amazonaws.com/nxhoef2_2.png',
     ]
     if not url in valid_sprites:
         raise ValidationError('Not a valid sprite url')
