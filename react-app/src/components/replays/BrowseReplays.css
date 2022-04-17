@@ -62,34 +62,43 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .BrowsePlayerImages {
     width: 150px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.BrowseGamePlayerOne {
-    display: flex;
     flex-direction: column;
+}
+
+.BrowseSprites {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    position: absolute;
+    left: -65px;
+    bottom: -60px;
+    text-align: center;
 }
 
-.BrowseGamePlayerOne > p {
-    position: absolute;
-    bottom: 30px;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.555);
+.BrowseVsP {
+    margin-top: 80px;
+}
+
+.BrowsePlayerOne > img {
+    padding-left: 20px;
+}
+
+.BrowsePlayerTwo > img {
+    padding-left: 20px;
+}
+
+.BrowsePlayerOne > p, .BrowsePlayerTwo > p {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.267);
     color: white;
-    padding: 2px 5px;
-    font-size: 15px;
-}
-
-.BrowseGamePlayerOne > img {
-    position: absolute;
-    bottom: 70px;
-    z-index: 2;
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 13px;
 }
