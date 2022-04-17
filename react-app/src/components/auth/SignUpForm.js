@@ -16,7 +16,7 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [spriteUrl, setSpriteUrl] = useState(
-    "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+    "https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png"
   );
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();

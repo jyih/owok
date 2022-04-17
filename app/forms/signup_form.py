@@ -14,8 +14,14 @@ def user_exists(form, field):
 
 def valid_email(form, field):
     email = field.data
-    if "@" or "." not in email:
+    if "@" not in email or "." not in email:
         raise ValidationError('not valid ⊙﹏⊙∥')
+
+
+def check_space(form, field):
+    to_check = field.data
+    if " " in to_check:
+        raise ValidationError('no spaces pls X﹏X')
 
 
 def username_exists(form, field):
@@ -61,13 +67,13 @@ def valid_sprite(form, field):
         'https://owok.s3.us-west-1.amazonaws.com/nxhoef2_2.png',
     ]
     if not url in valid_sprites:
-        raise ValidationError('Not a valid sprite url')
+        raise ValidationError('Not a valid sprite!')
 
 class SignUpForm(FlaskForm):
     username = StringField(
-        'username', validators=[DataRequired(), username_exists, username_min_length])
+        'username', validators=[DataRequired(), username_exists, username_min_length, check_space])
     email = StringField('email', validators=[
-                        DataRequired(), user_exists, email_min_length, valid_email])
+                        DataRequired(), user_exists, email_min_length, valid_email, check_space])
     password = StringField('password', validators=[
-                           DataRequired(), password_min_length])
+                           DataRequired(), password_min_length, check_space])
     sprite_url = StringField('sprite_url', validators=[DataRequired(), valid_sprite])
