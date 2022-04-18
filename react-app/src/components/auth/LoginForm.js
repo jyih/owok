@@ -49,11 +49,11 @@ const LoginForm = () => {
       <div className="SignUpFormBackground">
         <div className="SignUpFormImages">
           <div className="SignUpFormLogo">
-            <img src={owok} />
+            <img src={owok} alt="owok" />
           </div>
           <div className="SignUpFormPBandYeti">
-            <img id="pinkBean" src={pinkBean} />
-            <img src={yeti} />
+            <img id="pinkBean" src={pinkBean} alt="pink bean" />
+            <img src={yeti} alt="yeti" />
           </div>
         </div>
       </div>

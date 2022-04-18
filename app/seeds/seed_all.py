@@ -6,19 +6,21 @@ from app.models import db, Comment
 def seed_all():
     # seed users
     demo = User(
-        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png")
     jojo = User(
-        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png")
+        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png")
     sharon = User(
-        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
+        username='uwu', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
     jason = User(
-        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/jason2.png")
     paul = User(
-        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='paulx3', email='paul@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     chris = User(
-        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png")
+        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     cecilia = User(
-        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png")
+        username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png")
+    alyssa = User(
+        username='Aly', email='alyssasaccount@aa.io', password='alyspassword', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/alyssa2.png")
 
     db.session.add(demo)
     db.session.add(jojo)
@@ -27,14 +29,15 @@ def seed_all():
     db.session.add(paul)
     db.session.add(chris)
     db.session.add(cecilia)
+    db.session.add(alyssa)
 
     # seed games
     game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
-                 moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512", is_private_one=False, is_private_two=False)
+                 moves="{0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512}", is_private_one=False, is_private_two=False)
     game2 = Game(player_one_id=1, player_two_id=3, winner_id=1,
-                 moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707", is_private_one=False, is_private_two=False)
+                 moves="{0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707}", is_private_one=False, is_private_two=False)
     game3 = Game(player_one_id=4, player_two_id=1, winner_id=1,
-                 moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810", is_private_one=False, is_private_two=False)
+                 moves="{0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810}", is_private_one=False, is_private_two=False)
 
     db.session.add(game1)
     db.session.add(game2)
@@ -48,7 +51,7 @@ def seed_all():
     comment3 = Comment(game_id=1, player_id=4, username="xXj0ngyXx",
                        content="T>FAME@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     comment4 = Comment(game_id=1, player_id=3,
-                       username="milk", content="nub f3")
+                       username="uwu", content="nub f3")
     comment5 = Comment(game_id=2, player_id=1, username="xD3m0",
                        content="S>10atk FS 80mil@@@@@@@@@@")
     comment6 = Comment(game_id=3, player_id=1, username="xD3m0",

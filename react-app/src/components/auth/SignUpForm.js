@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
@@ -16,7 +16,7 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [spriteUrl, setSpriteUrl] = useState(
-    "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png"
+    "https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png"
   );
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
@@ -24,35 +24,63 @@ const SignUpForm = () => {
   const spriteData = [
     {
       name: "noobm1",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/noobm1_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png",
     },
     {
       name: "noobm2",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobm2.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/noobm2_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/noobm2_2.png",
     },
     {
       name: "noobf1",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobf1.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/noobf1_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/noobf1_2.png",
     },
     {
       name: "noobf2",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/noobf2.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/noobf2_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/noobf2_2.png",
     },
     {
       name: "nxhoem1",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem1.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoem1_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png",
     },
     {
       name: "nxhoem2",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoem2.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoem2_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoem2_2.png",
+    },
+    {
+      name: "nxhoef3",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoef3_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoef3_2.png",
+    },
+    {
+      name: "nxhoef4",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoef4_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoef4_2.png",
+    },
+    {
+      name: "nxhoem3",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoem3_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png",
+    },
+    {
+      name: "nxhoem4",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoem4_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoem4_2.png",
     },
     {
       name: "nxhoef1",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef1.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoef1_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png",
     },
     {
       name: "nxhoef2",
-      url: "https://islandracnh.s3.us-west-1.amazonaws.com/nxhoef2.png",
+      display: "https://owok.s3.us-west-1.amazonaws.com/nxhoef2_1.png",
+      url: "https://owok.s3.us-west-1.amazonaws.com/nxhoef2_2.png",
     },
   ];
 
@@ -99,11 +127,11 @@ const SignUpForm = () => {
       <div className="SignUpFormBackground">
         <div className="SignUpFormImages">
           <div className="SignUpFormLogo">
-            <img src={owok} />
+            <img src={owok} alt="logo" />
           </div>
           <div className="SignUpFormPBandYeti">
-            <img id="pinkBean" src={pinkBean} />
-            <img src={yeti} />
+            <img id="pinkBean" src={pinkBean} alt="pink bean" />
+            <img src={yeti} alt="yeti" />
           </div>
         </div>
       </div>
@@ -157,7 +185,7 @@ const SignUpForm = () => {
                     checked={spriteUrl === sprite.url}
                     onChange={updateSpriteUrl}
                   />
-                  <img src={sprite.url} alt={sprite.name} />
+                  <img src={sprite.display} alt={sprite.name} />
                 </label>
               ))}
             </div>

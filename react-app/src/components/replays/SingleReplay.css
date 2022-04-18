@@ -1,0 +1,145 @@
+.SingleReplayWrapper {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../images/mulung.jpg");
+    /* background-image: url("../images/herbtown.jpg"); */
+    background-size: cover;
+    background-repeat: repeat-y;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SingleReplayBody {
+    height: calc(100vh - 100px);
+    width: 890px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.SingleReplayBody:hover {
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
+    overflow: overlay;
+}
+
+/* REPLAY BOARD */
+.replay_board_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.replay_board_wrapper > h1 {
+    font-family: MaplestoryOTFLight;
+}
+
+.replay_board_container {
+    background-image: url("../images/board.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 855px;
+    height: 500px;
+    /* position: absolute;
+    top: 200px; */
+}
+
+.replay_board_layout {
+    display: grid;
+    height: 420px;
+    width: 420px;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    margin-left: 21px;
+    padding-top: 28px;
+    /* background-color: white; */
+}
+
+.replay_grid {
+    /* border: 1px solid gray; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.replay_player_one {
+    transform: scaleX(-1);
+    position: absolute;
+    top: 109px;
+    right: 320px;
+}
+
+.replay_player_two {
+    position: absolute;
+    top: 109px;
+    right: 190px;
+}
+
+.replay_board_stats_one {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    position: absolute;
+    top: 299px;
+    right: 330px;
+}
+
+.replay_board_stats_two {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    position: absolute;
+    top: 300px;
+    right: 230px;
+}
+
+.replay_board_stats_two > p, .replay_board_stats_one > p {
+    margin: 0;
+    width: 100%;
+    text-align: right;
+    font-size: 13px;
+}
+
+.replay_button_container {
+    margin-top: 20px;
+}
+
+.replay_next_button {
+    /* background-color: #FCCDD9; */
+    background-color: rgb(255, 247, 83);
+    font-family: MaplestoryOTFLight;
+    border: none;
+    color: #111;
+    font-weight: bolder;
+    padding: 17px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 16px;
+    box-shadow: 0px 6px 0px rgb(207, 203, 117);
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.replay_next_button:hover {
+    background-color: rgb(255, 248, 108);
+    box-shadow: 0px 6px 0px rgb(187, 182, 96);
+}
+
+/* Comments Container */
+.CommentsAreaContainer {
+    width: calc(100% - 40px);
+    height: calc(100vh - 800px);
+    margin-left: 20px;
+    min-height: 400px;
+    background-color: rgba(255, 255, 255, 0.521);
+}
+
+.SingleComment {
+    width: 100%;
+    overflow-wrap: break-word;
+}

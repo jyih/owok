@@ -96,7 +96,7 @@ const Board = () => {
 
     /**
      * 1. refactor/DRY checks
-     * 2. implement short circuit boolean to skip lower checks 
+     * 2. implement short circuit boolean to skip lower checks
      *    if 5 in row has been found
      */
 
@@ -125,7 +125,6 @@ const Board = () => {
     }
     countNS += countS;
 
-
     //check horizontal
     let countWE = 1;
     //check left
@@ -149,7 +148,6 @@ const Board = () => {
       lookPiece = board[lookMove];
     }
     countWE += countE;
-
 
     //check NESW diag
     let countNESW = 1;
@@ -175,7 +173,6 @@ const Board = () => {
     }
     countNESW += countSW;
 
-
     //check NESW diag
     let countNWSE = 1;
     //check top right
@@ -199,7 +196,6 @@ const Board = () => {
       lookPiece = board[lookMove];
     }
     countNWSE += countSE;
-
 
     //check if there's 5 anywhere
     if (countNS >= 5 || countWE >= 5 || countNESW >= 5 || countNWSE >= 5) {
@@ -240,8 +236,8 @@ const Board = () => {
           ></div>
         ))}
       </div>
-      <img src={user.sprite_url} className="board_player_one" />
-      <img src={user.sprite_url} className="board_player_two" />
+      <img src={user.sprite_url} className="board_player_one" alt="player one sprite" />
+      {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
       <div className="board_stats">
         <p>{user.wins}</p>
         <p>{user.losses}</p>

@@ -19,28 +19,35 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 100px;
-    width: 60%;
-    height: 100vh;
+    width: 1000px;
+    height: calc(100vh - 100px);
+    position: absolute;
+    top: 100px;
 }
 
 .GamesContainer {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap;
     flex-basis: 33.333333%;
-    justify-content: space-between;
-    width: 999px;
+    align-items: center; */
+    width: 100%;
+    flex-wrap: wrap;
     overflow-y: scroll;
+    max-height: calc(100vh - 220px);
+    position: absolute;
+    top: 100px;
+    margin-left: 20px;
 }
 
 .SingleGameContainer {
-    width: 300px;
-    height: 150px;
+    min-width: 300px;
+    height: 160px;
     background-color: rgba(255, 255, 255, 0.253);
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 10px 30px 10px;
 }
 
 .SingleGameContainer:hover {
@@ -55,18 +62,43 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .BrowsePlayerImages {
     width: 150px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
-.BrowseGamePlayerOne {
+.BrowseSprites {
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    position: absolute;
+    left: -65px;
+    bottom: -60px;
+    text-align: center;
+}
+
+.BrowseVsP {
+    margin-top: 80px;
+}
+
+.BrowsePlayerOne > img {
+    padding-left: 20px;
+}
+
+.BrowsePlayerTwo > img {
+    padding-left: 20px;
+}
+
+.BrowsePlayerOne > p, .BrowsePlayerTwo > p {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.459);
+    color: white;
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 13px;
 }

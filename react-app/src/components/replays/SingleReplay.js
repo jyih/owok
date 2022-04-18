@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchGame } from "../../store/replays";
 import ReplayBoard from "./ReplayBoard";
+
+import "./SingleReplay.css";
 
 const SingleReplay = () => {
   const dispatch = useDispatch();
@@ -17,17 +19,22 @@ const SingleReplay = () => {
   }, [dispatch, gameId]);
 
   return (
-    <div className="SingleReplayContainer">
-      <div className="ReplayBoardArea">
-        <ReplayBoard game={game} />
-      </div>
-      <div className="CommentsAreaContainer">
-        {comments?.map((comment) => (
-          <div>
-            {comment.username}
-            {comment.content}
+    <div className="SingleReplayWrapper">
+      <div className="SingleReplayBody">
+        <div className="ReplayBoardArea">
+          <ReplayBoard game={game} />
+        </div>
+        <div className="CommentsAreaContainer">
+          <div className="CommentsContainer">
+            {comments?.map((comment) => (
+              <div key={comment.id} className="SingleComment">
+                <h3>{comment.username}</h3>
+                <p>{comment.content}</p>
+              </div>
+            ))}
           </div>
-        ))}
+          <div className="CommentBox"></div>
+        </div>
       </div>
     </div>
   );
