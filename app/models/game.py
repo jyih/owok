@@ -1,7 +1,6 @@
 from email.policy import default
 from .db import db
-import datetime
-from sqlalchemy import DateTime
+from datetime import datetime
 
 
 class Game(db.Model):
@@ -15,8 +14,8 @@ class Game(db.Model):
 
     is_private_one = db.Column(db.Boolean, nullable=False, default=False)
     is_private_two = db.Column(db.Boolean, nullable=False, default=False)
-    created_at = db.Column(DateTime, default=datetime.datetime.now())
-    updated_at = db.Column(DateTime, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow(), onupdate=datetime.utcnow(), nullable=False)
 
     player_one = db.relationship(
         'User',

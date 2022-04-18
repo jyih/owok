@@ -57,6 +57,13 @@ heroku run -a  <herokuappname> flask db upgrade
 heroku run -a  <herokuappname> flask seed all
 
 
+WHEN CHANGE MODELS:
+flask db migrate
+flask db upgrade
+flask seed undo
+flask seed all
+
+
 ** start from scratch (db) **
 
 psql:
