@@ -104,7 +104,7 @@ const Board = () => {
     let countNS = 1;
     //check up
     let countN = 0;
-    //lookMove: looking ahead to see what the piece placed is
+    //lookMove: looking ahead to see what the coord above is
     let lookMove = lastMove + move.up;
     let lookPiece = board[lookMove];
     //as soon as hit 4, the piece placed will be 5th one
@@ -236,7 +236,11 @@ const Board = () => {
           ></div>
         ))}
       </div>
-      <img src={user.sprite_url} className="board_player_one" alt="player one sprite" />
+      <img
+        src={user.sprite_url}
+        className="board_player_one"
+        alt="player one sprite"
+      />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
       <div className="board_stats">
         <p>{user.wins}</p>
