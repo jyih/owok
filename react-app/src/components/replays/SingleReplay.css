@@ -24,6 +24,19 @@
     overflow: overlay;
 }
 
+#privateButton {
+    font-size: 18px;
+    position: absolute;
+    top: 100px;
+    right: 35px;
+    color: gray;
+}
+
+#privateButton:hover {
+    color: rgb(54, 54, 54);
+    cursor: pointer;
+}
+
 /* REPLAY BOARD */
 .replay_board_wrapper {
     display: flex;

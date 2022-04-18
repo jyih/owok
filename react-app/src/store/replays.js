@@ -19,6 +19,24 @@ export const fetchGame = (game_id) => async (dispatch) => {
   }
 };
 
+export const editGame = (privateData) => async (dispatch) => {
+  const res = await fetch(`/api/games/${privateData.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(privateData),
+  });
+
+  if (!res.ok) {
+    return res.errors;
+  }
+  const updatedGame = await res.json();
+  console.log("thunk privateData", privateData);
+  console.log("thunk updatedGame", updatedGame);
+
+  dispatch(loadGame(updatedGame));
+  return updatedGame;
+};
+
 export const saveGame = (payload) => async (dispatch) => {
   const res = await fetch(`/api/games/`, {
     method: "POST",
@@ -30,16 +48,16 @@ export const saveGame = (payload) => async (dispatch) => {
       winner_id = data['winner_id'],
       moves = data['moves'],
      */
-  })
+  });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadGame(data))
+    dispatch(loadGame(data));
   } else {
     const errors = await res.json();
     return errors;
   }
-}
+};
 
 let initialState = {};
 
