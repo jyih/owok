@@ -12,9 +12,16 @@
 
 .SingleReplayBody {
     height: calc(100vh - 100px);
-    width: 855px;
+    width: 890px;
     position: absolute;
     bottom: 0;
+    overflow: hidden;
+}
+
+.SingleReplayBody:hover {
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
+    overflow: overlay;
 }
 
 /* REPLAY BOARD */
@@ -60,14 +67,14 @@
 .replay_player_one {
     transform: scaleX(-1);
     position: absolute;
-    bottom: 675px;
-    right: 300px;
+    top: 109px;
+    right: 320px;
 }
 
 .replay_player_two {
     position: absolute;
-    bottom: 675px;
-    right: 170px;
+    top: 109px;
+    right: 190px;
 }
 
 .replay_board_stats_one {
@@ -76,7 +83,7 @@
     width: 30px;
     position: absolute;
     top: 299px;
-    right: 310px;
+    right: 330px;
 }
 
 .replay_board_stats_two {
@@ -85,7 +92,7 @@
     width: 30px;
     position: absolute;
     top: 300px;
-    right: 210px;
+    right: 230px;
 }
 
 .replay_board_stats_two > p, .replay_board_stats_one > p {
@@ -125,8 +132,10 @@
 
 /* Comments Container */
 .CommentsAreaContainer {
-    width: 100%;
+    width: calc(100% - 40px);
     height: calc(100vh - 800px);
+    margin-left: 20px;
+    min-height: 400px;
     background-color: rgba(255, 255, 255, 0.521);
 }
 

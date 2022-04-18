@@ -10,16 +10,16 @@ const ReplayBoard = ({ game }) => {
   const movesArr = game?.moves?.slice(1, -1).split(",");
 
   const swapPiece = () => {
-    // console.log("Click!");
-    if (currPiece === omok_piece_mushroom) {
-      //   console.log("click 1");
-      currPiece = omok_piece_slime;
-      oppPiece = omok_piece_mushroom;
-    } else {
-      //   console.log("click 2");
-      currPiece = omok_piece_mushroom;
-      oppPiece = omok_piece_slime;
-    }
+    let temp = currPiece;
+    currPiece = oppPiece;
+    oppPiece = temp;
+    // if (currPiece === omok_piece_mushroom) {
+    //   currPiece = omok_piece_slime;
+    //   oppPiece = omok_piece_mushroom;
+    // } else {
+    //   currPiece = omok_piece_mushroom;
+    //   oppPiece = omok_piece_slime;
+    // }
   };
 
   let moveNumber = 0;
@@ -57,14 +57,20 @@ const ReplayBoard = ({ game }) => {
             ></div>
           ))}
         </div>
-        <img
-          src={game?.user_player_one?.sprite_url}
-          className="replay_player_one"
-        />
-        <img
-          src={game?.user_player_two?.sprite_url}
-          className="replay_player_two"
-        />
+        <div className="replay_player_one">
+          <img
+            src={game?.user_player_one?.sprite_url}
+            // className="replay_player_one"
+            alt="player one sprite"
+          />
+        </div>
+        <div className="replay_player_two">
+          <img
+            src={game?.user_player_two?.sprite_url}
+            // className="replay_player_two"
+            alt="player two sprite"
+          />
+        </div>
         <div className="replay_board_stats_one">
           <p>{game?.user_player_one?.wins}</p>
           <p>{game?.user_player_one?.losses}</p>

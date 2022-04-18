@@ -49,8 +49,8 @@ def password_min_length(form, field):
     if len(password) < 4:
         raise ValidationError('too short o(￣o￣*)ゞ')
 
+# Checking if sprite url is valid
 def valid_sprite(form, field):
-    # Checking if sprite url is valid
     url = field.data
     valid_sprites = [
         'https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png',

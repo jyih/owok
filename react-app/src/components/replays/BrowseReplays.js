@@ -26,12 +26,16 @@ const BrowseReplays = () => {
                 <img
                   src={game.user_player_one.sprite_url}
                   className="player_one_rotate"
+                  alt="player one sprite"
                 />
                 <p>{game.user_player_one.username}</p>
               </div>
               <p className="BrowseVsP">vs.</p>
               <div className="BrowsePlayerTwo">
-                <img src={game.user_player_two.sprite_url} />
+                <img
+                  src={game.user_player_two.sprite_url}
+                  alt="player two sprite"
+                />
                 <p>{game.user_player_two.username}</p>
               </div>
             </div>

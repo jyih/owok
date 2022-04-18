@@ -10,7 +10,7 @@ def seed_all():
     jojo = User(
         username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png")
     sharon = User(
-        username='milk', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
+        username='uwu', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
     jason = User(
         username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/jason2.png")
     paul = User(
@@ -51,7 +51,7 @@ def seed_all():
     comment3 = Comment(game_id=1, player_id=4, username="xXj0ngyXx",
                        content="T>FAME@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     comment4 = Comment(game_id=1, player_id=3,
-                       username="milk", content="nub f3")
+                       username="uwu", content="nub f3")
     comment5 = Comment(game_id=2, player_id=1, username="xD3m0",
                        content="S>10atk FS 80mil@@@@@@@@@@")
     comment6 = Comment(game_id=3, player_id=1, username="xD3m0",

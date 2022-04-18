@@ -1,6 +1,6 @@
 // basically a profile page, shows sprite, stats, and a list of replays
 import React from "react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 import "./ProfilePage.css";
 
