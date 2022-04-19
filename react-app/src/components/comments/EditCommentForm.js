@@ -55,6 +55,16 @@ const EditCommentForm = ({ commentId }) => {
           </button>
         </div>
       </form>
+      <button
+        onClick={async (e) => {
+          e.preventDefault();
+          if (window.confirm("Are you sure you want to delete this? uwu")) {
+            await dispatch(replayActions.deleteComment(commentId));
+          }
+        }}
+      >
+        Delete
+      </button>
     </div>
   );
 };
