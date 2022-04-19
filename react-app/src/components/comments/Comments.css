@@ -1,0 +1,98 @@
+.CommentsAreaContainer {
+    width: calc(100% - 40px);
+    height: calc(100vh - 800px);
+    margin-left: 20px;
+    min-height: 400px;
+    line-height: 1.5;
+	font-weight: 300;
+	color: #192229;
+    /* background-color: rgba(255, 255, 255, 0.521); */
+}
+
+.CommentLeft {
+    /* width: 100%; */
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-wrap: break-word;
+
+	position: relative;
+	max-width: 30em;
+
+	background-color: #fff;
+	padding: 1.125em 1.5em;
+    margin-bottom: 25px;
+	/* font-size: 1.25em; */
+	font-size: 15px;
+	border-radius: 1rem;
+    box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.CommentLeft::before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+
+	left: 1.5em;
+	border: .75rem solid transparent;
+	border-top: none;
+
+	border-bottom-color: #fff;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+.CommentRight {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-wrap: break-word;
+
+	position: relative;
+    right: -350px;
+	max-width: 30em;
+
+	background-color: #fff;
+	padding: 1.125em 1.5em;
+    margin-bottom: 25px;
+	/* font-size: 1.25em; */
+	font-size: 15px;
+	border-radius: 1rem;
+    box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.CommentRight::before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+
+	right: 1.5em;
+	border: .75rem solid transparent;
+	border-top: none;
+
+	border-bottom-color: #fff;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+.SingleComment > h3 {
+    font-family: MaplestoryOTFLight;
+    margin: 0;
+}
+
+.SingleComment > i {
+    position: absolute;
+    top: 20px;
+    right: 29px;
+}
+
+/* .CommentBottomLeft {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 24px solid #fff;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #fff;
+    border-bottom: 20px solid transparent;
+    left: 32px;
+    bottom: -24px;
+} */

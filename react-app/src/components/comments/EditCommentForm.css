@@ -1,0 +1,19 @@
+.EditCommentBox {
+    position: absolute;
+    top: 70px;
+    max-width: 30em;
+}
+
+.EditCommentTextBoxArea > textarea {
+    width: 445px;
+    box-sizing: border-box;
+    /* width: 30em; */
+    position: relative;
+	max-width: 30em;
+
+	background-color: #fff;
+	padding: 1.125em 1.5em;
+    margin-bottom: 25px;
+	/* font-size: 1.25em; */
+	font-size: 15px;
+}

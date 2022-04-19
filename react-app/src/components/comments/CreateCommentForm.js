@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as replayActions from "../../store/replays";
 
+import "./CreateCommentForm.css";
+
 const CreateCommentForm = () => {
   const dispatch = useDispatch();
   const player = useSelector((state) => state.session.user);
@@ -53,7 +55,7 @@ const CreateCommentForm = () => {
             onChange={updateContent}
           />
           <button type="submit" disabled={errors.length > 0}>
-            Comment
+            <i className="fa-solid fa-angles-down"></i>
           </button>
         </div>
       </form>
