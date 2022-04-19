@@ -54,11 +54,16 @@ def game_create():
 def game_update(id):
   data = request.json
   game = Game.query.get(id)
+
   if not game:
     return {'errors': 'Game not found'}
-  if data['moves']:
-    game.moves = data['moves']
-  game.is_private_one = data['is_private_one']
-  game.is_private_two = data['is_private_two']
+  # if data['moves']:
+  #   game.moves = data['moves']
+  if data['change'] == "is_private_one":
+    game.is_private_one = not game.is_private_one
+  elif data['change'] == "is_private_two":
+    game.is_private_two = not game.is_private_two
+  # game.is_private_one = data['is_private_one']
+  # game.is_private_two = data['is_private_two']
   db.session.commit()
   return game.to_dict()

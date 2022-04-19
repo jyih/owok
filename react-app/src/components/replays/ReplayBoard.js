@@ -1,9 +1,69 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { GridData } from "../gamearea/GridData";
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
 import omok_piece_slime from "../images/omok_piece_slime.png";
+import * as replayActions from "../../store/replays";
 
-const ReplayBoard = ({ game }) => {
+const ReplayBoard = () => {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const game = useSelector((state) => state.current_game);
+
+  //privacy
+  let privateButton = <></>;
+  //game.is_private_one
+  //game.is_private_two
+  //if sessionUser.id === game.player_one_id
+  //if sessionUser.id === game.player_two_id
+  const handlePrivateClick = async (e) => {
+    e.preventDefault();
+
+    let privateData = {
+      id: game.id,
+    };
+
+    if (sessionUser.id === game.player_one_id) {
+      privateData.change = "is_private_one";
+    }
+
+    if (sessionUser.id === game.player_two_id) {
+      privateData.change = "is_private_two";
+    }
+    dispatch(replayActions.editGame(privateData));
+    console.log("PrivateData", privateData);
+  };
+
+  //display button
+  if (
+    sessionUser.id === game.player_one_id ||
+    sessionUser.id === game.player_two_id
+  ) {
+    if (game.is_private_one === false || game.is_private_two === false) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>Private</button>
+        <i
+          className="fa-solid fa-unlock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to private"
+        ></i>
+      );
+    }
+    if (game.is_private_one === true || game.is_private_two === true) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>un-Private</button>
+        <i
+          className="fa-solid fa-lock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to unprivate"
+        ></i>
+      );
+    }
+  }
+
+  //replay
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
@@ -44,8 +104,18 @@ const ReplayBoard = ({ game }) => {
   return (
     <div className="replay_board_wrapper">
       <h1>
-        Replay of {game?.user_player_one?.username} vs.{" "}
-        {game?.user_player_two?.username}
+        Replay of{" "}
+        {sessionUser.id === game.player_one_id ||
+        sessionUser.id === game.player_two_id ||
+        !game?.is_private_one
+          ? game?.user_player_one?.username
+          : "???"}{" "}
+        vs.{" "}
+        {sessionUser.id === game.player_one_id ||
+        sessionUser.id === game.player_two_id ||
+        !game?.is_private_two
+          ? game?.user_player_two?.username
+          : "???"}
       </h1>
       <div className="replay_board_container">
         <div className="replay_board_layout">
@@ -71,6 +141,24 @@ const ReplayBoard = ({ game }) => {
             alt="player two sprite"
           />
         </div>
+        <div className="replay_player_one_username">
+          <p>
+            {sessionUser.id === game.player_one_id ||
+            sessionUser.id === game.player_two_id ||
+            !game?.is_private_one
+              ? game?.user_player_one?.username
+              : "???"}
+          </p>
+        </div>
+        <div className="replay_player_two_username">
+          <p>
+            {sessionUser.id === game.player_one_id ||
+            sessionUser.id === game.player_two_id ||
+            !game?.is_private_two
+              ? game?.user_player_two?.username
+              : "???"}
+          </p>
+        </div>
         <div className="replay_board_stats_one">
           <p>{game?.user_player_one?.wins}</p>
           <p>{game?.user_player_one?.losses}</p>
@@ -86,6 +174,7 @@ const ReplayBoard = ({ game }) => {
         <button onClick={(e) => replayClick(e)} className="replay_next_button">
           Next Move
         </button>
+        {privateButton}
       </div>
     </div>
   );

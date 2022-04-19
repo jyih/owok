@@ -22,7 +22,7 @@ const SingleReplay = () => {
     <div className="SingleReplayWrapper">
       <div className="SingleReplayBody">
         <div className="ReplayBoardArea">
-          <ReplayBoard game={game} />
+          <ReplayBoard />
         </div>
         <div className="CommentsAreaContainer">
           <div className="CommentsContainer">

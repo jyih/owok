@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import "./BrowseReplays.css";
 
 const BrowseReplays = () => {
+  const sessionUser = useSelector((state) => state.session.user);
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -28,7 +30,13 @@ const BrowseReplays = () => {
                   className="player_one_rotate"
                   alt="player one sprite"
                 />
-                <p>{game.user_player_one.username}</p>
+                <p>
+                  {sessionUser.id === game.player_one_id ||
+                  sessionUser.id === game.player_two_id ||
+                  !game?.is_private_one
+                    ? game?.user_player_one?.username
+                    : "???"}
+                </p>
               </div>
               <p className="BrowseVsP">vs.</p>
               <div className="BrowsePlayerTwo">
@@ -36,7 +44,13 @@ const BrowseReplays = () => {
                   src={game.user_player_two.sprite_url}
                   alt="player two sprite"
                 />
-                <p>{game.user_player_two.username}</p>
+                <p>
+                  {sessionUser.id === game.player_one_id ||
+                  sessionUser.id === game.player_two_id ||
+                  !game?.is_private_two
+                    ? game?.user_player_two?.username
+                    : "???"}
+                </p>
               </div>
             </div>
           </div>
