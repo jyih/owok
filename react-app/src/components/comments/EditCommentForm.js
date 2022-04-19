@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as replayActions from "../../store/replays";
 
-const EditCommentForm = ({ onClose, commentId }) => {
+const EditCommentForm = ({ commentId }) => {
   const dispatch = useDispatch();
   const game = useSelector((state) => state.current_game?.comments);
   const commentToEdit = game[commentId];
@@ -33,7 +33,6 @@ const EditCommentForm = ({ onClose, commentId }) => {
 
     if (editedComment) {
       dispatch(replayActions.editComment(editedComment));
-      onClose();
     }
     setErrors([]);
     setContent("");
@@ -52,7 +51,7 @@ const EditCommentForm = ({ onClose, commentId }) => {
             onChange={updateContent}
           />
           <button type="submit" disabled={errors.length > 0}>
-            Comment
+            Edit
           </button>
         </div>
       </form>
