@@ -53,4 +53,4 @@ def comment_delete(id):
     return {'errors': 'Comment not found'}
   db.session.delete(comment)
   db.session.commit()
-  return id
+  return f'{id}'

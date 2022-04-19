@@ -1,10 +1,4 @@
 .SingleReplayWrapper {
-    width: 100vw;
-    height: 100vh;
-    background-image: url("../images/mulung.jpg");
-    /* background-image: url("../images/herbtown.jpg"); */
-    background-size: cover;
-    background-repeat: repeat-y;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,14 +9,14 @@
     width: 890px;
     position: absolute;
     bottom: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-.SingleReplayBody:hover {
+/* .SingleReplayBody:hover {
     scrollbar-gutter: stable;
     overflow-y: scroll;
     overflow: overlay;
-}
+} */
 
 #privateButton {
     font-size: 18px;
@@ -173,18 +167,4 @@
 .replay_next_button:hover {
     background-color: rgb(255, 248, 108);
     box-shadow: 0px 6px 0px rgb(187, 182, 96);
-}
-
-/* Comments Container */
-.CommentsAreaContainer {
-    width: calc(100% - 40px);
-    height: calc(100vh - 800px);
-    margin-left: 20px;
-    min-height: 400px;
-    background-color: rgba(255, 255, 255, 0.521);
-}
-
-.SingleComment {
-    width: 100%;
-    overflow-wrap: break-word;
 }
