@@ -1,10 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CreateCommentForm from "./CreateCommentForm";
 
 const Comments = () => {
-  const dispatch = useDispatch();
-
   const game = useSelector((state) => state.current_game);
   const commentsObj = game?.comments;
   const comments = commentsObj && Object.values(commentsObj);

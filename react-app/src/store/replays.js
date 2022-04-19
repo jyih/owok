@@ -125,6 +125,7 @@ const replaysReducer = (state = initialState, action) => {
       return newState;
     case DELETE_COMMENT:
       delete newState.comments[action.comment_id];
+      return newState;
     default:
       return state;
   }
