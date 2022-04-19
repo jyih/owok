@@ -8,6 +8,10 @@ import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
+import { io } from 'socket.io-client';
+
+let socket;
+
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
