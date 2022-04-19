@@ -81,13 +81,41 @@
     transform: scaleX(-1);
     position: absolute;
     top: 109px;
-    right: 320px;
+    right: 317px;
 }
 
 .replay_player_two {
     position: absolute;
     top: 109px;
-    right: 190px;
+    right: 186px;
+}
+
+.replay_player_one_username {
+    position: absolute;
+    top: 241px;
+    left: 489px;
+    width: 89px;
+    font-size: 13px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.replay_player_two_username {
+    position: absolute;
+    top: 241px;
+    left: 589px;
+    width: 89px;
+    font-size: 13px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .replay_board_stats_one {
@@ -95,8 +123,10 @@
     flex-direction: column;
     width: 30px;
     position: absolute;
-    top: 299px;
-    right: 330px;
+    top: 298px;
+    right: 329px;
+    line-height: 1em;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .replay_board_stats_two {
@@ -104,8 +134,10 @@
     flex-direction: column;
     width: 30px;
     position: absolute;
-    top: 300px;
-    right: 230px;
+    top: 298px;
+    right: 229px;
+    line-height: 1em;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .replay_board_stats_two > p, .replay_board_stats_one > p {

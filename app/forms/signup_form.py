@@ -37,6 +37,11 @@ def username_min_length(form, field):
     if len(username) < 3:
         raise ValidationError('too short (っ °Д °;)っ')
 
+def username_max_length(form, field):
+    username = field.data
+    if len(username) > 12:
+        raise ValidationError('too long (っ °Д °;)っ')
+
 
 def email_min_length(form, field):
     email = field.data
@@ -71,7 +76,7 @@ def valid_sprite(form, field):
 
 class SignUpForm(FlaskForm):
     username = StringField(
-        'username', validators=[DataRequired(), username_exists, username_min_length, check_space])
+        'username', validators=[DataRequired(), username_exists, username_min_length, username_max_length, check_space])
     email = StringField('email', validators=[
                         DataRequired(), user_exists, email_min_length, valid_email, check_space])
     password = StringField('password', validators=[

@@ -16,7 +16,7 @@ def seed_all():
     paul = User(
         username='paulx3', email='paulsaccount@aa.io', password='p@ssword', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     chris = User(
-        username='xXTsangerineXx', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
+        username='Tsangerine', email='tsangerine@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem1_2.png")
     cecilia = User(
         username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png")
     alyssa = User(

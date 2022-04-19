@@ -10,17 +10,12 @@ const ReplayBoard = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const game = useSelector((state) => state.current_game);
 
+  //privacy
   let privateButton = <></>;
-
   //game.is_private_one
-
   //game.is_private_two
   //if sessionUser.id === game.player_one_id
   //if sessionUser.id === game.player_two_id
-
-  //button one
-
-  //button two
   const handlePrivateClick = async (e) => {
     e.preventDefault();
 
@@ -135,6 +130,24 @@ const ReplayBoard = () => {
             // className="replay_player_two"
             alt="player two sprite"
           />
+        </div>
+        <div className="replay_player_one_username">
+          <p>
+            {sessionUser.id === game.player_one_id ||
+            sessionUser.id === game.player_two_id ||
+            !game?.is_private_one
+              ? game?.user_player_one?.username
+              : "???"}
+          </p>
+        </div>
+        <div className="replay_player_two_username">
+          <p>
+            {sessionUser.id === game.player_one_id ||
+            sessionUser.id === game.player_two_id ||
+            !game?.is_private_two
+              ? game?.user_player_two?.username
+              : "???"}
+          </p>
         </div>
         <div className="replay_board_stats_one">
           <p>{game?.user_player_one?.wins}</p>
