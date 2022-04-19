@@ -75,48 +75,7 @@ const Board = () => {
     let temp = currPiece;
     currPiece = oppPiece;
     oppPiece = temp;
-    // if (currPiece === 'mushroom') {
-    //   console.log("click 1");
-    //   currPiece = omok_piece_slime;
-    //   oppPiece = omok_piece_mushroom;
-    // } else {
-    //   console.log("click 2");
-    //   currPiece = omok_piece_mushroom;
-    //   oppPiece = omok_piece_slime;
-    // }
   };
-
-  /**
-   * Counts number of pieces in an axis,
-   * given a vector with
-   * direction displace, and
-   * magnitude n
-   */
-  const checkLine = (displace, n = 5) => {
-    let lastPiece = board[lastMove];
-    let countPos = 0;
-    let countNeg = 0;
-
-    let lookPiece = lastPiece;
-    while (lookPiece === lastPiece && countPos < n) {
-      countPos++;
-      let lookMove = lastMove + (displace * countPos);
-
-      lookPiece = board[lookMove];
-      console.log(`pos:${countPos}, ${lookMove}: ${lookPiece}`)
-    }
-
-    lookPiece = lastPiece;
-    while (lookPiece === lastPiece && countNeg < n) {
-      countNeg++;
-      let lookMove = lastMove - (displace * countNeg);
-
-      lookPiece = board[lookMove];
-      console.log(`neg:${countNeg}, ${lookMove}: ${lookPiece}`)
-    }
-
-    return countPos + countNeg - 1;
-  }
 
   const checkGame = (n = 5) => {
     let vertical = checkLine(move.up, n)
@@ -126,6 +85,26 @@ const Board = () => {
     console.log(vertical, horizontal, forwardDiag, backwardDiag)
 
     if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
+  }
+
+  const checkLine = (displace, n = 5) => {
+    let countPos = checkVector(displace, n);
+    let countNeg = checkVector(-displace, n);
+    return countPos + countNeg - 1;
+  }
+
+  const checkVector = (displace, n = 5) => {
+    let lookPiece = board[lastMove];
+    let count = 0;
+
+    while (lookPiece === board[lastMove] && count < n) {
+      count++;
+      let lookMove = lastMove + (displace * count);
+      lookPiece = board[lookMove];
+      console.log(`pos:${count}, ${lookMove}: ${lookPiece}`)
+    }
+
+    return count;
   }
 
   const endGame = () => {
