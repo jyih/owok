@@ -104,8 +104,18 @@ const ReplayBoard = () => {
   return (
     <div className="replay_board_wrapper">
       <h1>
-        Replay of {game?.user_player_one?.username} vs.{" "}
-        {game?.user_player_two?.username}
+        Replay of{" "}
+        {sessionUser.id === game.player_one_id ||
+        sessionUser.id === game.player_two_id ||
+        !game?.is_private_one
+          ? game?.user_player_one?.username
+          : "???"}{" "}
+        vs.{" "}
+        {sessionUser.id === game.player_one_id ||
+        sessionUser.id === game.player_two_id ||
+        !game?.is_private_two
+          ? game?.user_player_two?.username
+          : "???"}
       </h1>
       <div className="replay_board_container">
         <div className="replay_board_layout">
