@@ -9,10 +9,16 @@
     /* background-color: rgba(255, 255, 255, 0.521); */
 }
 
+.SingleComment {
+    display: flex;
+    flex-direction: column;
+}
+
 .CommentLeft {
     /* width: 100%; */
     font-family: Arial, Helvetica, sans-serif;
     overflow-wrap: break-word;
+    box-sizing: border-box;
 
 	position: relative;
 	max-width: 30em;
@@ -44,9 +50,10 @@
 .CommentRight {
     font-family: Arial, Helvetica, sans-serif;
     overflow-wrap: break-word;
+    box-sizing: border-box;
 
 	position: relative;
-    right: -350px;
+    right: -380px;
 	max-width: 30em;
 
 	background-color: #fff;

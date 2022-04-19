@@ -1,19 +1,29 @@
 .EditCommentBox {
     position: absolute;
     top: 70px;
-    max-width: 30em;
+    width: 27em;
+    height: calc(100% - 110px);
+    display: flex;
+    flex-direction: column;
 }
 
-.EditCommentTextBoxArea > textarea {
-    width: 445px;
-    box-sizing: border-box;
+.EditCommentBox > form {
+    height: 100%;
+}
+
+.EditCommentBox textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    /* box-sizing: border-box; */
+    /* display: block; */
     /* width: 30em; */
-    position: relative;
-	max-width: 30em;
+    /* position: relative; */
+    box-sizing: border-box;
 
 	background-color: #fff;
-	padding: 1.125em 1.5em;
-    margin-bottom: 25px;
+	/* padding: 1.125em 1.5em;
+    margin-bottom: 25px; */
 	/* font-size: 1.25em; */
 	font-size: 15px;
 }

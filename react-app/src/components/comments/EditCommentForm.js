@@ -45,18 +45,18 @@ const EditCommentForm = ({ commentId, resetId }) => {
     <div className="EditCommentBox">
       <form onSubmit={handleSubmit}>
         <div className="EditCommentErrors">{errors}</div>
-        <div className="EditCommentTextBoxArea">
-          <textarea
-            type="text"
-            required
-            placeholder="Edit Comment"
-            value={content}
-            onChange={updateContent}
-          />
-          <button type="submit" disabled={errors.length > 0}>
-            Edit
-          </button>
-        </div>
+        {/* <div className="EditCommentTextBoxArea"> */}
+        <textarea
+          type="text"
+          required
+          placeholder="Edit Comment"
+          value={content}
+          onChange={updateContent}
+        />
+        <button type="submit" disabled={errors.length > 0}>
+          Edit
+        </button>
+        {/* </div> */}
       </form>
       <button
         onClick={async (e) => {

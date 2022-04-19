@@ -80,10 +80,10 @@ const Comments = () => {
                   ></i>
                 )}
                 {editId === comment.id && (
-                  <>
-                    <EditCommentForm commentId={comment.id} resetId={resetId} />
-                    <button onClick={() => setEditId(0)}>Cancel</button>
-                  </>
+                  // <>
+                  <EditCommentForm commentId={comment.id} resetId={resetId} />
+                  //   {/* <button onClick={() => setEditId(0)}>Cancel</button>
+                  // </> */}
                 )}
               </div>
             ))}
