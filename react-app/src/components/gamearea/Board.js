@@ -46,8 +46,6 @@ const Board = () => {
   const placePiece = (coord) => {
     if (!gameOver) {
       console.log("Place!");
-      // let r = coord.slice(0, 2)
-      // let c = coord.slice(-2)
       let square = document.getElementById(coord);
       if (square && !square.children.length) {
         let piece = document.createElement("img");
@@ -95,151 +93,42 @@ const Board = () => {
    * magnitude n
    */
   const checkLine = (displace, n = 5) => {
-    let countLine = 1;
+    let lastPiece = board[lastMove];
     let countPos = 0;
     let countNeg = 0;
 
-    let lookPiece, lastPiece = board[lastMove];
-    // let lookMove = lastMove + displace;
-    // let lookPiece = board[lookMove];
-
-    while (lookPiece === lastPiece && countPos < n - 1 && countLine < n) {
+    let lookPiece = lastPiece;
+    while (lookPiece === lastPiece && countPos < n) {
       countPos++;
       let lookMove = lastMove + (displace * countPos);
-      // lookMove += displace;
+
       lookPiece = board[lookMove];
+      console.log(`pos:${countPos}, ${lookMove}: ${lookPiece}`)
     }
 
-    countLine += countPos;
-
-    while (lookPiece === lastPiece && countNeg < n - 1 && countLine < n) {
+    lookPiece = lastPiece;
+    while (lookPiece === lastPiece && countNeg < n) {
       countNeg++;
-      let lookMove = lastMove - (displace * countPos);
-      // lookMove -= displace;
+      let lookMove = lastMove - (displace * countNeg);
+
       lookPiece = board[lookMove];
+      console.log(`neg:${countNeg}, ${lookMove}: ${lookPiece}`)
     }
 
-    countLine += countNeg;
-
-    return countLine;
+    return countPos + countNeg - 1;
   }
 
-  const checkGame = () => {
-    //check if piece is same piece
-    let lastPiece = board[lastMove];
-    console.log("lastmove:", lastMove);
-    console.log("piece logic check:", lastPiece === oppPiece);
+  const checkGame = (n = 5) => {
+    let vertical = checkLine(move.up, n)
+    let horizontal = checkLine(move.right, n)
+    let forwardDiag = checkLine(move.up + move.right, n)
+    let backwardDiag = checkLine(move.up + move.left, n)
+    console.log(vertical, horizontal, forwardDiag, backwardDiag)
 
-    /**
-     * 1. refactor/DRY checks
-     * 2. implement short circuit boolean to skip lower checks
-     *    if 5 in row has been found
-     */
+    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
+  }
 
-    //check vertical
-    let countNS = 1;
-    //check up
-    let countN = 0;
-    //lookMove: looking ahead to see what the coord above is
-    let lookMove = lastMove + move.up;
-    let lookPiece = board[lookMove];
-    //as soon as hit 4, the piece placed will be 5th one
-    while (lookPiece === lastPiece && countN < 4 && countNS < 5) {
-      countN++;
-      lookMove += move.up;
-      lookPiece = board[lookMove];
-    }
-    countNS += countN;
-    //check down
-    let countS = 0;
-    lookMove = lastMove + move.down;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countS < 4 && countNS < 5) {
-      countS++;
-      lookMove += move.down;
-      lookPiece = board[lookMove];
-    }
-    countNS += countS;
-
-    //check horizontal
-    let countWE = 1;
-    //check left
-    let countW = 0;
-    lookMove = lastMove + move.left;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countW < 4 && countWE < 5) {
-      countW++;
-      lookMove += move.left;
-      lookPiece = board[lookMove];
-    }
-    countWE += countW;
-
-    //check right
-    let countE = 0;
-    lookMove = lastMove + move.right;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countE < 4 && countWE < 5) {
-      countE++;
-      lookMove += move.right;
-      lookPiece = board[lookMove];
-    }
-    countWE += countE;
-
-    //check NESW diag
-    let countNESW = 1;
-    //check top right
-    let countNE = 0;
-    lookMove = lastMove + move.right + move.up;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countNE < 4 && countNESW < 5) {
-      countNE++;
-      lookMove = lookMove + move.right + move.up;
-      lookPiece = board[lookMove];
-    }
-    countNESW += countNE;
-
-    //check bot left
-    let countSW = 0;
-    lookMove = lastMove + move.left + move.down;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countSW < 4 && countNESW < 5) {
-      countSW++;
-      lookMove = lookMove + move.left + move.down;
-      lookPiece = board[lookMove];
-    }
-    countNESW += countSW;
-
-    //check NESW diag
-    let countNWSE = 1;
-    //check top right
-    let countNW = 0;
-    lookMove = lastMove + move.left + move.up;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countNW < 4 && countNWSE < 5) {
-      countNW++;
-      lookMove = lookMove + move.left + move.up;
-      lookPiece = board[lookMove];
-    }
-    countNWSE += countNW;
-
-    //check bot left
-    let countSE = 0;
-    lookMove = lastMove + move.right + move.down;
-    lookPiece = board[lookMove];
-    while (lookPiece === lastPiece && countSE < 4 && countNWSE < 5) {
-      countSE++;
-      lookMove = lookMove + move.right + move.down;
-      lookPiece = board[lookMove];
-    }
-    countNWSE += countSE;
-
-    //check if there's 5 anywhere
-    if (countNS >= 5 || countWE >= 5 || countNESW >= 5 || countNWSE >= 5) {
-      endGame(lastPiece);
-    }
-  };
-
-  const endGame = (winningPiece) => {
+  const endGame = () => {
     //need to get player_two data
     //increment winner win count
     //increment loser loss count
