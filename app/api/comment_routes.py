@@ -20,15 +20,12 @@ def comment(id):
     return {'errors': 'Comment not found'}
   return {**comment.to_dict()}
 
-@comment_routes.route('/<int:game_id>', methods=['POST'])
+@comment_routes.route('/', methods=['POST'])
 # @login_required
-def comment_create(game_id):
+def comment_create():
   data = request.json
-  # form = CommentForm()
-  # form['csrf_token'].data = request.cookies['csrf_token']
-  # if form.validate_on_submit():
   comment = Comment(
-      game_id = game_id,
+      game_id = data['game_id'],
       player_id = data['player_id'],
       username = data['username'],
       content = data['content'],
@@ -56,4 +53,4 @@ def comment_delete(id):
     return {'errors': 'Comment not found'}
   db.session.delete(comment)
   db.session.commit()
-  return {'message': f'Comment ${id} deleted'}
+  return id
