@@ -88,6 +88,42 @@ const Board = () => {
     // }
   };
 
+  /**
+   * Counts number of pieces in an axis,
+   * given a vector with
+   * direction displace, and
+   * magnitude n
+   */
+  const checkLine = (displace, n = 5) => {
+    let countLine = 1;
+    let countPos = 0;
+    let countNeg = 0;
+
+    let lookPiece, lastPiece = board[lastMove];
+    // let lookMove = lastMove + displace;
+    // let lookPiece = board[lookMove];
+
+    while (lookPiece === lastPiece && countPos < n - 1 && countLine < n) {
+      countPos++;
+      let lookMove = lastMove + (displace * countPos);
+      // lookMove += displace;
+      lookPiece = board[lookMove];
+    }
+
+    countLine += countPos;
+
+    while (lookPiece === lastPiece && countNeg < n - 1 && countLine < n) {
+      countNeg++;
+      let lookMove = lastMove - (displace * countPos);
+      // lookMove -= displace;
+      lookPiece = board[lookMove];
+    }
+
+    countLine += countNeg;
+
+    return countLine;
+  }
+
   const checkGame = () => {
     //check if piece is same piece
     let lastPiece = board[lastMove];
