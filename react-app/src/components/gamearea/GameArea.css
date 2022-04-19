@@ -1,10 +1,4 @@
 .GameAreaContainer {
-    width: 100vw;
-    height: 100vh;
-    background-image: url("../images/mulung.jpg");
-    /* background-image: url("../images/herbtown.jpg"); */
-    background-size: cover;
-    background-repeat: repeat-y;
     display: flex;
     align-items: center;
     justify-content: center;

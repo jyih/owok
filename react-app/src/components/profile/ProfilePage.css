@@ -1,11 +1,5 @@
 .ProfilePageContainer {
-    width: 100vw;
-    height: 100vh;
     font-family: MaplestoryOTFLight;
-    background-image: url("../images/mulung.jpg");
-    /* background-image: url("../images/herbtown.jpg"); */
-    background-size: cover;
-    background-repeat: repeat-y;
     display: flex;
     align-items: center;
     flex-direction: column;

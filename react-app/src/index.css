@@ -5,6 +5,17 @@ html, body, div, span, nav, ul, li, fieldset {
     border: 0;
 }
 
+html {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./components/images/mulung.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    overflow: overlay;
+}
+
 @font-face {
     font-family: MaplestoryOTFLight;
     src: url("./components/font/MaplestoryOTFLight.otf");
