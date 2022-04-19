@@ -42,8 +42,6 @@ export const editGame = (privateData) => async (dispatch) => {
     return res.errors;
   }
   const updatedGame = await res.json();
-  console.log("thunk privateData", privateData);
-  console.log("thunk updatedGame", updatedGame);
 
   dispatch(loadGame(updatedGame));
   return updatedGame;
@@ -82,7 +80,7 @@ export const addComment = (payload) => async (dispatch) => {
 };
 
 export const editComment = (payload) => async (dispatch) => {
-  const res = await fetch(`/api/comments/${payload.comment_id}`, {
+  const res = await fetch(`/api/comments/${payload.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
