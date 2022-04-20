@@ -18,7 +18,11 @@ const NavBar = () => {
         <NavLink to="/browse" exact={true} activeClassName="active">
           Browse
         </NavLink>
-        <NavLink to="/profile/:userId" exact={true} activeClassName="active">
+        <NavLink
+          to={`/profile/${sessionUser.id}`}
+          exact={true}
+          activeClassName="active"
+        >
           Profile
         </NavLink>
         {/* <li>
