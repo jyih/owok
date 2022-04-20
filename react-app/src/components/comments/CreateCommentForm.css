@@ -16,9 +16,10 @@
     min-height: 100px;
     width: 850px;
     /* background-color: rgb(169, 221, 255); */
-    /* background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20210611/pngtree-cute-pink-kawaii-background-vector-design-image_728548.jpg);
+    background-image: url("../images/pinkbeanfacetransparent.png");
     background-repeat: no-repeat;
-    background-size: cover; */
+    background-size: contain;
+    background-position: 50%;
     background-color: #FCCDD9;
     border: none;
     /* border: 3px solid rgb(127, 162, 168); */
