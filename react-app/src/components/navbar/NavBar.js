@@ -13,7 +13,7 @@ const NavBar = () => {
     sessionElements = (
       <div className="NavBarContainer">
         <NavLink to="/" exact={true} activeClassName="active">
-          Home
+          Play Owok
         </NavLink>
         <NavLink to="/browse" exact={true} activeClassName="active">
           Browse
