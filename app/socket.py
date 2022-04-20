@@ -11,7 +11,7 @@ else:
     origins = "*"
 
 # create your SocketIO instance
-socketio = SocketIO(cors_allowed_origins=origins)
+socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
 
 
 # handle chat messages
