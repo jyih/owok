@@ -50,7 +50,7 @@ const CreateCommentForm = () => {
           <textarea
             type="text"
             required
-            placeholder="Comment"
+            placeholder="Write a comment"
             value={content}
             onChange={updateContent}
           />

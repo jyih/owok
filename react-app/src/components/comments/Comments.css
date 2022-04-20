@@ -12,6 +12,7 @@
 .SingleComment {
     display: flex;
     flex-direction: column;
+	box-shadow: inset -6px -8px 10px #adadad;
 }
 
 .CommentLeft {
@@ -30,7 +31,7 @@
 	font-size: 15px;
 	border-radius: 1rem;
 
-    box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+    /* box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2); */
 }
 
 .CommentLeft::before {
@@ -63,7 +64,7 @@
 	/* font-size: 1.25em; */
 	font-size: 15px;
 	border-radius: 1rem;
-    box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+    /* box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2); */
 }
 
 .CommentRight::before {
