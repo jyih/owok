@@ -1,6 +1,7 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 import Board from "./Board";
+import Chat from "./Chat";
 
 import "./GameArea.css";
 
@@ -10,6 +11,7 @@ const GameArea = () => {
   return (
     <div className="GameAreaContainer">
       <Board />
+      <Chat />
     </div>
   );
 };

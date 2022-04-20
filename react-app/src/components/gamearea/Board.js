@@ -33,6 +33,7 @@ const Board = () => {
   let oppPiece = "slime";
   let gameOver = false;
   let lastMove = null;
+  let isTurn = true;
   const notation = [];
   const pieces = {
     mushroom: omok_piece_mushroom,
@@ -48,7 +49,7 @@ const Board = () => {
   // const board = Array(15*15).fill('');
 
   const placePiece = (coord) => {
-    if (!gameOver) {
+    if (!gameOver && isTurn) {
       console.log("Place!");
       let square = document.getElementById(coord);
       if (square && !square.children.length) {
