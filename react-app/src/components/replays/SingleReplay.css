@@ -112,6 +112,15 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.replay_player_one_username a, .replay_player_two_username a {
+    text-decoration: none;
+    color: black;
+}
+
+.replay_player_one_username a:hover, .replay_player_two_username a:hover {
+    color: rgb(93, 6, 255);
+}
+
 .replay_board_stats_one {
     display: flex;
     flex-direction: column;

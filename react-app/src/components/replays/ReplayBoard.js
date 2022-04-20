@@ -4,6 +4,7 @@ import { GridData } from "../gamearea/GridData";
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
 import omok_piece_slime from "../images/omok_piece_slime.png";
 import * as replayActions from "../../store/replays";
+import { NavLink } from "react-router-dom";
 
 const ReplayBoard = () => {
   const dispatch = useDispatch();
@@ -141,24 +142,35 @@ const ReplayBoard = () => {
             alt="player two sprite"
           />
         </div>
+
         <div className="replay_player_one_username">
           <p>
             {sessionUser.id === game.player_one_id ||
             sessionUser.id === game.player_two_id ||
-            !game?.is_private_one
-              ? game?.user_player_one?.username
-              : "???"}
+            !game?.is_private_one ? (
+              <NavLink to={`/profile/${game.player_one_id}`}>
+                {game?.user_player_one?.username}
+              </NavLink>
+            ) : (
+              "???"
+            )}
           </p>
         </div>
+
         <div className="replay_player_two_username">
           <p>
             {sessionUser.id === game.player_one_id ||
             sessionUser.id === game.player_two_id ||
-            !game?.is_private_two
-              ? game?.user_player_two?.username
-              : "???"}
+            !game?.is_private_two ? (
+              <NavLink to={`/profile/${game.player_two_id}`}>
+                {game?.user_player_two?.username}
+              </NavLink>
+            ) : (
+              "???"
+            )}
           </p>
         </div>
+
         <div className="replay_board_stats_one">
           <p>{game?.user_player_one?.wins}</p>
           <p>{game?.user_player_one?.losses}</p>

@@ -90,9 +90,16 @@
 	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
 }
 
-.SingleComment > h3 {
+.SingleComment a, h3 {
     font-family: MaplestoryOTFLight;
     margin: 0;
+	text-decoration: none;
+	color: #192229;
+	width: max-content;
+}
+
+.SingleComment a:hover, h3:hover {
+	color: rgb(122, 6, 255);
 }
 
 .SingleComment > i {
