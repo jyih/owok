@@ -12,7 +12,7 @@ import "./Board.css";
 import { io } from 'socket.io-client';
 let socket;
 
-const useDidMountEffect = (func, ...deps) => {
+const useDidMountEffect = (func, deps) => {
   const didMount = useRef(false)
   useEffect(() => {
     if (didMount.current) {
@@ -27,7 +27,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const { userId } = useParams()
-  // const [socketRoom, setSocketRoom] = useState(parseInt(userId));
+  const [socketRoom, setSocketRoom] = useState(parseInt(userId));
   const [currPiece, setCurrPiece] = useState("mushroom");
   const [oppPiece, setOppPiece] = useState("slime");
   const [gameOver, setGameOver] = useState(false)
@@ -62,17 +62,13 @@ const Board = () => {
     return (() => {
       socket.disconnect()
     })
-  }, [players])
+  }, [])
 
-  // useEffect(() => {
-  //   // leaveRoom(prevRoom);
-  //   console.log('joinRoom useEffect')
-  //   joinRoom(parseInt(userId));
-  // }, [userId]);
+  useEffect(() => {
+    // leaveRoom(prevRoom);
+    joinRoom(socketRoom);
 
-  useDidMountEffect(()=> {
-    joinRoom(parseInt(userId))
-  }, userId)
+  }, [socketRoom]);
 
   useEffect(() => {
     socket.on('open_room', (data) => {
@@ -93,29 +89,7 @@ const Board = () => {
       console.log("PLAYERS PLEASE WORK:", players)
     })
 
-  }, [user, userId, players])
-
-  // const leaveRoom = (oldRoom) => {
-  //   socket.emit("leave_room", { room: oldRoom });
-  // };
-
-  //make sure lastMove updates/persists before setBoard
-  useDidMountEffect(() => {
-    placePiece(lastMove)
-    setNotation([...notation, lastMove])
-    let addMove = {};
-    addMove[lastMove] = currPiece;
-    setBoard({ ...board, ...addMove });
-    swapPiece()
-  }, lastMove)
-
-  //make sure board updates/persists before checkGame
-  useDidMountEffect(() => {
-    console.log("notation:", notation);
-    console.log("board:", board);
-    checkGame()
-    console.log("gameStatus:", gameOver);
-  }, board)
+  }, [user])
 
   const joinRoom = (newRoom) => {
     socket.emit('join_room', { user: user, room: newRoom });
@@ -128,16 +102,38 @@ const Board = () => {
     }
   }
 
+  // const leaveRoom = (oldRoom) => {
+  //   socket.emit("leave_room", { room: oldRoom });
+  // };
+
+
+  //make sure lastMove updates/persists before setBoard
+  useDidMountEffect(() => {
+    placePiece(lastMove)
+    setNotation([...notation, lastMove])
+    let addMove = {};
+    addMove[lastMove] = currPiece;
+    setBoard({ ...board, ...addMove });
+    swapPiece()
+  }, [lastMove])
+
+  //make sure board updates/persists before checkGame
+  useDidMountEffect(() => {
+    console.log("notation:", notation);
+    console.log("board:", board);
+    checkGame()
+    console.log("gameStatus:", gameOver);
+  }, [board])
+
   const placePiece = (coordNum) => {
     if (!gameOver) {
       console.log("Place!");
       let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
       console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
-        // change style background image to the img (might be better for performance)
-        // bc not adding nodes to dom, just updating the node's style
         console.log('currPiece', currPiece)
         img.setAttribute('src', pieces[currPiece])
+
       }
     } else {
       console.log("Game has finished!");
@@ -182,14 +178,17 @@ const Board = () => {
     return count;
   }
 
-  const endGame = () => {
+  const endGame = (winner) => {
     //need to get player_two data
+    //increment winner win count
+    //increment loser loss count
+    //if draw, increment both players' draw count
     setGameOver(true);
 
     const gameData = {
-      player_one_id: user.id,
-      player_two_id: user.id,
-      winner_id: user.id,
+      player_one_id: players[0]?.id,
+      player_two_id: players[1]?.id,
+      winner_id: players[winner],
       moves: notation,
     };
 
@@ -203,33 +202,28 @@ const Board = () => {
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((obj) => (
+        {GridData.map((obj, index) => (
           <div
             key={obj.coord}
             id={`${obj.coord}`}
             className={`grid ${obj.coord}`}
             onClick={(e) => sendMove(e)}
           >
-            <img id={`img-${obj?.coord}`} src={obj?.src} alt={obj?.src} />
+            <img id={`img-${obj.coord}`} src={obj?.src} />
           </div>
         ))}
       </div>
       <img
         src={players[0]?.sprite_url}
         className="board_player_one"
-        alt="player one sprite"
+        alt={players[0]}
       />
-      {/* <img src={players[1]?.sprite_url} className="board_player_two" alt="player two sprite" /> */}
+      {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
       <div className="board_stats">
         <p>{players[0]?.wins}</p>
         <p>{players[0]?.losses}</p>
         <p>{players[0]?.draws}</p>
       </div>
-      {/* <div className="board_stats">
-        <p>{players[1]?.wins}</p>
-        <p>{players[1]?.losses}</p>
-        <p>{players[1]?.draws}</p>
-      </div> */}
     </div>
   );
 };
