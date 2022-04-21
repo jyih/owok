@@ -12,6 +12,7 @@
 ***DISCLAIMER: THIS IS NOT FOR PROFIT AND JUST FOR FUN AND WAS MADE SO WE DIDN'T HAVE TO LOG ONTO MAPLESTORY TO PLAY OMOK WE WILL TAKE IT DOWN IF U SEE THIS N3X0N***
 
 <p align="center">
+   <img src="https://user-images.githubusercontent.com/89059894/164385380-74939524-9c01-4df0-87d4-912316942ca6.png" alt="sprite">
    <img src="https://user-images.githubusercontent.com/89059894/164375848-7010ac23-3539-4793-8d5c-454fa89212e4.png" alt="sprite">
 </p>
 <p align="center">
@@ -228,5 +229,4 @@ In the future, We want to move the game logic to the backend for more efficiency
    Sockets: not persisting data across clients, and then later emitting information universally
 
    *Solution:*
-   Added a custom hook useDidMountEffect to ensure that the moves persist before setting the board and checking for win.
-   Added joinRoom(socketRoom) useEffect.
+   Added a custom hook useDidMountEffect to ensure that the useEffect does not trigger on page load. Added useState to ensure that the moves persist before setting the board and checking for win. joinRoom(socketRoom) useEffect.
