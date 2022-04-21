@@ -188,6 +188,7 @@
   - Participants of game will be able to see the private person's name
   - People who did not participate will NOT be able to see the private person's name
   - The privated game will show up on the other participant's profile, but NOT on the privated person's profile
+  - You will be able to see all games, private or not private, on your own profile
   
   <p align="center">
     <img width="200" src="https://user-images.githubusercontent.com/89059894/164517326-6169a663-9cbb-4c7a-8a6a-c242dec5faf0.png" alt="slime">
