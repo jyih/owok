@@ -2,33 +2,44 @@
     font-family: MaplestoryOTFLight;
     /* position: absolute;
     bottom: 5px; */
-    width: 100%;
+    width: 850px;
 }
 
 .CreateCommentErrors {
-    color: rgb(194, 92, 92);
+    color: rgb(255, 89, 89);
     font-family: MaplestoryOTFLight;
+    margin-top: 50px;
 }
 
 .CommentTextBoxArea > textarea {
     font-family: MaplestoryOTFLight;
     min-height: 100px;
     width: 850px;
-    background-color: rgb(170, 230, 238);
-    border: 1px solid rgb(170, 230, 238);
-    border-radius: 7px;
+    /* background-color: rgb(169, 221, 255); */
+    background-image: url("../images/pinkbeanfacetransparent.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    background-color: #FCCDD9;
+    border: none;
+    /* border: 3px solid rgb(127, 162, 168); */
+    border-radius: 10px;
     color: rgb(0, 0, 0);
     font-size: 15px;
     resize: none;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
+    box-shadow: 6px 6px 0px #EDA6BB;
+    /* box-shadow: 0px 0px 8px rgb(127, 162, 168); */
+    outline: none;
 }
 
 .CommentTextBoxArea > textarea:focus {
     font-family: MaplestoryOTFLight;
-    box-shadow: 0px 0px 0px 4px rgb(186, 225, 241);
-    outline: none;
+    box-shadow: 6px 6px 0px #EDA6BB;
+    /* box-shadow: 0px 0px 0px 2px rgb(127, 162, 168);; */
+    /* box-shadow: 0px 0px 0px 4px rgb(186, 225, 241); */
 }
 
 .CommentTextBoxArea > button {

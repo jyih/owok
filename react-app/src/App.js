@@ -53,7 +53,7 @@ function App() {
         <ProtectedRoute path="/profile/:userId" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/" exact={true}>
+        <ProtectedRoute path="/:userId" exact={true}>
           <GameArea />
         </ProtectedRoute>
       </Switch>

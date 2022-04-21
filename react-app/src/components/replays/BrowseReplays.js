@@ -18,46 +18,48 @@ const BrowseReplays = () => {
     fetchGames();
   }, []);
 
-  const gamesComponents = games.map((game) => {
-    return (
-      <div key={game.id} className="SingleGameContainer">
-        <NavLink to={`/replays/${game.id}`}>
-          <div className="BrowsePlayerImages">
-            <div className="BrowseSprites">
-              <div className="BrowsePlayerOne">
-                <img
-                  src={game.user_player_one.sprite_url}
-                  className="player_one_rotate"
-                  alt="player one sprite"
-                />
-                <p>
-                  {sessionUser.id === game.player_one_id ||
-                  sessionUser.id === game.player_two_id ||
-                  !game?.is_private_one
-                    ? game?.user_player_one?.username
-                    : "???"}
-                </p>
-              </div>
-              <p className="BrowseVsP">vs.</p>
-              <div className="BrowsePlayerTwo">
-                <img
-                  src={game.user_player_two.sprite_url}
-                  alt="player two sprite"
-                />
-                <p>
-                  {sessionUser.id === game.player_one_id ||
-                  sessionUser.id === game.player_two_id ||
-                  !game?.is_private_two
-                    ? game?.user_player_two?.username
-                    : "???"}
-                </p>
+  const gamesComponents = games
+    .sort((a, b) => b.id - a.id)
+    .map((game) => {
+      return (
+        <div key={game.id} className="SingleGameContainer">
+          <NavLink to={`/replays/${game.id}`}>
+            <div className="BrowsePlayerImages">
+              <div className="BrowseSprites">
+                <div className="BrowsePlayerOne">
+                  <img
+                    src={game.user_player_one.sprite_url}
+                    className="player_one_rotate"
+                    alt="player one sprite"
+                  />
+                  <p>
+                    {sessionUser.id === game.player_one_id ||
+                    sessionUser.id === game.player_two_id ||
+                    !game?.is_private_one
+                      ? game?.user_player_one?.username
+                      : "???"}
+                  </p>
+                </div>
+                <p className="BrowseVsP">vs.</p>
+                <div className="BrowsePlayerTwo">
+                  <img
+                    src={game.user_player_two.sprite_url}
+                    alt="player two sprite"
+                  />
+                  <p>
+                    {sessionUser.id === game.player_one_id ||
+                    sessionUser.id === game.player_two_id ||
+                    !game?.is_private_two
+                      ? game?.user_player_two?.username
+                      : "???"}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </NavLink>
-      </div>
-    );
-  });
+          </NavLink>
+        </div>
+      );
+    });
 
   return (
     <div className="BrowseReplaysContainer">

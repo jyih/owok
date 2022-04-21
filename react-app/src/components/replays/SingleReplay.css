@@ -21,7 +21,7 @@
 #privateButton {
     font-size: 18px;
     position: absolute;
-    top: 100px;
+    top: 158px;
     right: 35px;
     color: gray;
 }
@@ -41,10 +41,13 @@
 
 .replay_board_wrapper > h1 {
     font-family: MaplestoryOTFLight;
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
 }
 
 .replay_board_container {
-    background-image: url("../images/board.jpg");
+    background-image: url("../images/boardoccupied.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     width: 855px;
@@ -74,19 +77,19 @@
 .replay_player_one {
     transform: scaleX(-1);
     position: absolute;
-    top: 109px;
+    top: 167px;
     right: 317px;
 }
 
 .replay_player_two {
     position: absolute;
-    top: 109px;
+    top: 167px;
     right: 186px;
 }
 
 .replay_player_one_username {
     position: absolute;
-    top: 241px;
+    top: 299px;
     left: 489px;
     width: 89px;
     font-size: 13px;
@@ -100,7 +103,7 @@
 
 .replay_player_two_username {
     position: absolute;
-    top: 241px;
+    top: 299px;
     left: 589px;
     width: 89px;
     font-size: 13px;
@@ -112,12 +115,21 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.replay_player_one_username a, .replay_player_two_username a {
+    text-decoration: none;
+    color: black;
+}
+
+.replay_player_one_username a:hover, .replay_player_two_username a:hover {
+    color: rgb(93, 6, 255);
+}
+
 .replay_board_stats_one {
     display: flex;
     flex-direction: column;
     width: 30px;
     position: absolute;
-    top: 298px;
+    top: 356px;
     right: 329px;
     line-height: 1em;
     font-family: Arial, Helvetica, sans-serif;
@@ -128,7 +140,7 @@
     flex-direction: column;
     width: 30px;
     position: absolute;
-    top: 298px;
+    top: 356px;
     right: 229px;
     line-height: 1em;
     font-family: Arial, Helvetica, sans-serif;

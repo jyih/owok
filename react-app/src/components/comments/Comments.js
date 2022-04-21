@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import CreateCommentForm from "./CreateCommentForm";
 import EditCommentForm from "./EditCommentForm";
 
@@ -58,7 +59,9 @@ const Comments = () => {
                   index
                 )}`}
               >
-                <h3>{comment.username}</h3>
+                <NavLink to={`/profile/${comment.player_id}`}>
+                  <h3>{comment.username}</h3>
+                </NavLink>
                 <div
                   className="CommentTime"
                   title={formatDate(comment.created_at)}

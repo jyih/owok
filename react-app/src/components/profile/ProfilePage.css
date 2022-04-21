@@ -14,3 +14,9 @@
     position: absolute;
     top: 100px;
 }
+
+.ProfilePageBody > h1 {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
+}

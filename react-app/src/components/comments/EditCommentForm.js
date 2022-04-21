@@ -54,20 +54,22 @@ const EditCommentForm = ({ commentId, resetId }) => {
           onChange={updateContent}
         />
         <button type="submit" disabled={errors.length > 0}>
-          Edit
+          <i class="fa-solid fa-square-check" title="Confirm edit"></i>
         </button>
         {/* </div> */}
       </form>
-      <button
+      <i
+        class="fa-solid fa-trash-can"
+        title="Delete"
         onClick={async (e) => {
           e.preventDefault();
-          if (window.confirm("Are you sure you want to delete this? uwu")) {
+          if (
+            window.confirm("a-are you sure you want to delete me..? -sad uwu-")
+          ) {
             await dispatch(replayActions.deleteComment(commentId));
           }
         }}
-      >
-        Delete
-      </button>
+      ></i>
     </div>
   );
 };
