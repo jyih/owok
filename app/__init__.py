@@ -15,8 +15,6 @@ from .seeds import seed_commands
 
 from .config import Config
 
-from .socket import socketio
-
 app = Flask(__name__)
 
 # Setup login manager
@@ -40,8 +38,6 @@ app.register_blueprint(comment_routes, url_prefix='/api/comments')
 
 db.init_app(app)
 Migrate(app, db)
-
-socketio.init_app(app)
 
 # Application Security
 CORS(app)
@@ -79,6 +75,3 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
-
-if __name__ == '__main__':
-    socketio.run(app)

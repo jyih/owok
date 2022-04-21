@@ -1,11 +1,11 @@
-[04-13-2022]
+(04-13-2022)
 Issue:
-Could not implement multiple foreign keys in Game referencing User [player_one and player_two)
+Could not implement multiple foreign keys in Game referencing User (player_one and player_two)
 
 Solution:
 Implemented.
 
-[04-15-2022]
+(04-15-2022)
 Issue:
 Replays were not properly playing the first move, which made the moves play out of order
 
@@ -13,25 +13,3 @@ Solution:
 Found that the new game moves were storing with curly braces wrapping the coordinates inside
 the string. Had to slice first and last character from string to remove curly braces
 const movesArr = game?.moves?.slice(1, -1).split(",");
-
-[04-19-2022]
-Issue:
-Datetime not saving to database correctly
-
-Solution:
-Removed invocation of datetime in models
-
-[04-20-2022]
-Issue:
-Sockets: not persisting data across clients, and then later emitting information universally
-
-Solution:
-Added a custom hook useDidMountEffect to ensure that the moves persist before setting the board and checking for win.
-Added joinRoom(socketRoom) useEffect.
-
-
-[04-21-2022]
-Issue:
-Game does not save on completion after implementing socketse
-
-Solution:

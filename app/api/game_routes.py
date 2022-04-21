@@ -46,20 +46,6 @@ def game_create():
       moves = data['moves'],
   )
   db.session.add(game)
-
-  if data['winner_id']:
-    winner_id = data['winner_id']
-    loser_id = data['player_two_id'] if data['winner_id'] == data['player_one_id'] else data['player_one_id']
-    winner = User.query.get(winner_id)
-    loser = User.query.get(loser_id)
-    winner['wins'] += 1
-    loser['losses'] += 1
-  else:
-    player_one = User.query.get(data['player_one_id'])
-    player_two = User.query.get(data['player_two_id'])
-    player_one['draws'] += 1
-    player_two['draws'] += 1
-
   db.session.commit()
   return game.to_dict()
 

@@ -32,15 +32,12 @@ const ReplayBoard = () => {
       privateData.change = "is_private_two";
     }
     dispatch(replayActions.editGame(privateData));
-    console.log("PrivateData", privateData);
+    window.alert(`Privacy was changed! 😊`);
   };
 
   //display button
-  if (
-    sessionUser.id === game.player_one_id ||
-    sessionUser.id === game.player_two_id
-  ) {
-    if (game.is_private_one === false || game.is_private_two === false) {
+  if (sessionUser.id === game.player_one_id) {
+    if (game.is_private_one === false) {
       privateButton = (
         // <button onClick={(e) => handlePrivateClick(e)}>Private</button>
         <i
@@ -51,7 +48,32 @@ const ReplayBoard = () => {
         ></i>
       );
     }
-    if (game.is_private_one === true || game.is_private_two === true) {
+    if (game.is_private_one === true) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>un-Private</button>
+        <i
+          className="fa-solid fa-lock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to unprivate"
+        ></i>
+      );
+    }
+  }
+
+  if (sessionUser.id === game.player_two_id) {
+    if (game.is_private_two === false) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>Private</button>
+        <i
+          className="fa-solid fa-unlock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to private"
+        ></i>
+      );
+    }
+    if (game.is_private_two === true) {
       privateButton = (
         // <button onClick={(e) => handlePrivateClick(e)}>un-Private</button>
         <i
@@ -120,11 +142,11 @@ const ReplayBoard = () => {
       </h1>
       <div className="replay_board_container">
         <div className="replay_board_layout">
-          {GridData.map((obj, index) => (
+          {GridData.map((coord, index) => (
             <div
-              key={obj.coord}
-              id={`${obj.coord}`}
-              className={`replay_grid ${obj.coord}`}
+              key={coord}
+              id={`${coord}`}
+              className={`replay_grid ${coord}`}
             ></div>
           ))}
         </div>
