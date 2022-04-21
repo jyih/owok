@@ -36,21 +36,64 @@ const Board = () => {
   const [lastMove, setLastMove] = useState(null)
   const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id))
 
-  const [players, setPlayers] = useState({ 0: parseInt(userId), 1: null })
+  const [players, setPlayers] = useState({})
+
+  const pieces = {
+    mushroom: omok_piece_mushroom,
+    slime: omok_piece_slime,
+  };
+
+  const displace = {
+    up: -100,
+    down: 100,
+    left: -1,
+    right: 1,
+  };
 
   useEffect(() => {
     socket = io();
 
     socket.on("place_piece", (move) => {
-      console.log(move)
-      // placePiece(move.coord)
+      console.log("socket place piece, move:", move)
       setLastMove(parseInt(move.coord))
+      console.log("socket place piece, players:", players)
     })
 
     return (() => {
       socket.disconnect()
     })
   }, [])
+
+  useEffect(() => {
+    // leaveRoom(prevRoom);
+    joinRoom(socketRoom);
+
+  }, [socketRoom]);
+
+  useEffect(() => {
+    socket.on('open_room', (data) => {
+      console.log('useEffect, join_room, data.user.id', data)
+      if (data.user?.id === parseInt(userId)) {
+        let addPlayer = { 0: data.user }
+        setPlayers({
+          ...players,
+          ...addPlayer
+        })
+      } else if (data.user?.id && !players[1]) {
+        let addPlayer = { 1: data.user }
+        setPlayers({
+          ...players,
+          ...addPlayer
+        })
+      }
+      console.log("PLAYERS PLEASE WORK:", players)
+    })
+
+  }, [user])
+
+  const joinRoom = (newRoom) => {
+    socket.emit('join_room', { user: user, room: newRoom });
+  };
 
   const sendMove = (e) => {
     if (isTurn && e.target.nodeName === 'DIV') {
@@ -62,18 +105,6 @@ const Board = () => {
   // const leaveRoom = (oldRoom) => {
   //   socket.emit("leave_room", { room: oldRoom });
   // };
-
-  const joinRoom = (newRoom) => {
-    socket.emit('join_room', { room: newRoom });
-  };
-
-
-  useEffect(() => {
-    // leaveRoom(prevRoom);
-    joinRoom(socketRoom);
-  }, [
-    // prevRoom,
-    socketRoom]);
 
 
   //make sure lastMove updates/persists before setBoard
@@ -102,17 +133,6 @@ const Board = () => {
   // let lastMove = null;
   // let isTurn = true;
 
-  const pieces = {
-    mushroom: omok_piece_mushroom,
-    slime: omok_piece_slime,
-  };
-
-  const displace = {
-    up: -100,
-    down: 100,
-    left: -1,
-    right: 1,
-  };
   // const board = Array(15*15).fill('');
 
   const placePiece = (coordNum) => {

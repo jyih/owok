@@ -35,16 +35,14 @@ def handle_place_piece(data):
 @socketio.on('join_room')
 def on_join(data):
     room = data['room']
-    print('|*| JOIN_ROOM:', data)
+    print('|*| JOIN_ROOM:', data['user'])
     join_room(room)
-    emit('open_room', {'room': room}, broadcast=True)
+    emit('open_room', data, broadcast=True)
 
 @socketio.on("leave_room")
 def leave(data):
     print('''
-
     |*| LEAVE_ROOM:
-
     ''', data)
     leave_room(data['room'])
 
