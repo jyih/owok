@@ -38,22 +38,36 @@ const Board = () => {
   useEffect(() => {
     socket = io();
 
+    socket.on("place_piece", (move) => {
+      console.log(move)
+      // placePiece(move.coord)
+      setLastMove(parseInt(move.coord))
+    })
+
     return (() => {
       socket.disconnect()
     })
   }, [])
 
+  const sendMove = (e) => {
+    console.log('sendMove', e)
+    socket.emit("place_piece", { user: user.id, coord: e.target.id })
+  }
+
+  //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
+    placePiece(lastMove)
     setNotation([...notation, lastMove])
     let addMove = {};
     addMove[lastMove] = currPiece;
     setBoard({ ...board, ...addMove });
+    swapPiece()
   }, [lastMove])
 
+  //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
     console.log("notation:", notation);
     console.log("board:", board);
-    swapPiece()
     checkGame()
     console.log("gameStatus:", gameOver);
   }, [board])
@@ -79,16 +93,17 @@ const Board = () => {
   };
   // const board = Array(15*15).fill('');
 
-  const placePiece = async (coord) => {
+  const placePiece = (coordNum) => {
     if (!gameOver && isTurn) {
       console.log("Place!");
       // let square = document.getElementById(coord);
-      let img = document.getElementById(`img-${coord}`)
-      console.log(img)
+      let img = document.getElementById(`img-${('0'+coordNum).slice(-4)}`)
+      console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
         // let piece = document.createElement("img");
         // change style background image to the img (might be better for performance)
         // bc not adding nodes to dom, just updating the node's style
+        console.log('currPiece', currPiece)
         img.setAttribute('src', pieces[currPiece])
 
         // square.appendChild(piece);
@@ -97,7 +112,7 @@ const Board = () => {
         // notation.push(coord);
         // board[lastMove] = currPiece;
 
-        setLastMove(parseInt(coord))
+        // setLastMove(parseInt(coord))
         // setNotation([...notation, coord])
         // let addMove = {};
         // addMove[lastMove] = currPiece;
@@ -182,7 +197,7 @@ const Board = () => {
             key={obj.coord}
             id={`${obj.coord}`}
             className={`grid ${obj.coord}`}
-            onClick={(e) => placePiece(e.target.id)}
+            onClick={(e) => sendMove(e)}
           >
             <img id={`img-${obj.coord}`} src={obj?.src} />
           </div>
