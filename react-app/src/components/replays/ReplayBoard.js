@@ -120,11 +120,11 @@ const ReplayBoard = () => {
       </h1>
       <div className="replay_board_container">
         <div className="replay_board_layout">
-          {GridData.map((coord, index) => (
+          {GridData.map((obj, index) => (
             <div
-              key={coord}
-              id={`${coord}`}
-              className={`replay_grid ${coord}`}
+              key={obj.coord}
+              id={`${obj.coord}`}
+              className={`replay_grid ${obj.coord}`}
             ></div>
           ))}
         </div>
