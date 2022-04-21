@@ -78,7 +78,6 @@ const Board = () => {
   useEffect(() => {
     // leaveRoom(prevRoom);
     joinRoom(parseInt(userId));
-
   });
 
   useEffect(() => {
@@ -106,7 +105,6 @@ const Board = () => {
   //   socket.emit("leave_room", { room: oldRoom });
   // };
 
-
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
     placePiece(lastMove)
@@ -125,47 +123,16 @@ const Board = () => {
     console.log("gameStatus:", gameOver);
   }, board)
 
-  // let currPiece = "mushroom";
-  // let oppPiece = "slime";
-  // let gameOver = false;
-  // const notation = [];
-  // const board = {};
-  // let lastMove = null;
-  // let isTurn = true;
-
-  // const board = Array(15*15).fill('');
-
   const placePiece = (coordNum) => {
     if (!gameOver) {
       console.log("Place!");
-      // let square = document.getElementById(coord);
       let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
       console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
-        // let piece = document.createElement("img");
         // change style background image to the img (might be better for performance)
         // bc not adding nodes to dom, just updating the node's style
         console.log('currPiece', currPiece)
         img.setAttribute('src', pieces[currPiece])
-
-        // square.appendChild(piece);
-
-        // lastMove = parseInt(coord);
-        // notation.push(coord);
-        // board[lastMove] = currPiece;
-
-        // setLastMove(parseInt(coord))
-        // setNotation([...notation, coord])
-        // let addMove = {};
-        // addMove[lastMove] = currPiece;
-        // setBoard({ ...board, ...addMove });
-        // console.log("addMove+Board", addMove, board)
-
-        // console.log("notation:", notation);
-        // console.log("board:", board);
-        // swapPiece();
-        // checkGame();
-        // console.log("gameStatus:", gameOver);
       }
     } else {
       console.log("Game has finished!");
@@ -212,11 +179,7 @@ const Board = () => {
 
   const endGame = () => {
     //need to get player_two data
-    //increment winner win count
-    //increment loser loss count
-    //if draw, increment both players' draw count
     setGameOver(true);
-    // gameOver = true;
 
     const gameData = {
       player_one_id: user.id,
@@ -235,7 +198,7 @@ const Board = () => {
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((obj, index) => (
+        {GridData.map((obj) => (
           <div
             key={obj.coord}
             id={`${obj.coord}`}
@@ -251,12 +214,17 @@ const Board = () => {
         className="board_player_one"
         alt="player one sprite"
       />
-      {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
+      {/* <img src={players[1]?.sprite_url} className="board_player_two" alt="player two sprite" /> */}
       <div className="board_stats">
         <p>{players[0]?.wins}</p>
         <p>{players[0]?.losses}</p>
         <p>{players[0]?.draws}</p>
       </div>
+      {/* <div className="board_stats">
+        <p>{players[1]?.wins}</p>
+        <p>{players[1]?.losses}</p>
+        <p>{players[1]?.draws}</p>
+      </div> */}
     </div>
   );
 };
