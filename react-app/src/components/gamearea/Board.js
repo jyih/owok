@@ -50,17 +50,6 @@ const Board = () => {
     right: 1,
   };
 
-  const joinRoom = (newRoom) => {
-    socket.emit('join_room', { user: user, room: newRoom });
-  };
-
-  const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === 'DIV') {
-      console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
-    }
-  }
-
   useEffect(() => {
     socket = io();
 
@@ -73,12 +62,17 @@ const Board = () => {
     return (() => {
       socket.disconnect()
     })
-  })
+  }, [players])
 
-  useEffect(() => {
-    // leaveRoom(prevRoom);
-    joinRoom(parseInt(userId));
-  });
+  // useEffect(() => {
+  //   // leaveRoom(prevRoom);
+  //   console.log('joinRoom useEffect')
+  //   joinRoom(parseInt(userId));
+  // }, [userId]);
+
+  useDidMountEffect(()=> {
+    joinRoom(parseInt(userId))
+  }, userId)
 
   useEffect(() => {
     socket.on('open_room', (data) => {
@@ -122,6 +116,17 @@ const Board = () => {
     checkGame()
     console.log("gameStatus:", gameOver);
   }, board)
+
+  const joinRoom = (newRoom) => {
+    socket.emit('join_room', { user: user, room: newRoom });
+  };
+
+  const sendMove = (e) => {
+    if (isTurn && e.target.nodeName === 'DIV') {
+      console.log('sendMove', e)
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
+    }
+  }
 
   const placePiece = (coordNum) => {
     if (!gameOver) {
