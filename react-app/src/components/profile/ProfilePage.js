@@ -158,21 +158,23 @@ const ProfilePage = () => {
         {user?.username ? (
           <div className="ProfilePageBody">
             <h1>{user.username}</h1>
-            <div className="ProfileCard">
-              <div className="ProfileCardLeft">
-                <img src={user.sprite_url} alt={`${user.username} sprite`} />
-                <p>{user.username}</p>
+            <div className="ProfileWrapper">
+              <div className="ProfileCard">
+                <div className="ProfileCardLeft">
+                  <img src={user.sprite_url} alt={`${user.username} sprite`} />
+                  <p>{user.username}</p>
+                </div>
+                <div className="ProfileCardRight">
+                  <p>wins: {user.wins}</p>
+                  <p>losses: {user.losses}</p>
+                  <p>draws: {user.draws}</p>
+                </div>
               </div>
-              <div className="ProfileCardRight">
-                <p>wins: {user.wins}</p>
-                <p>losses: {user.losses}</p>
-                <p>draws: {user.draws}</p>
+              <div className="ProfileGames">
+                {sessionUser.id === user.id
+                  ? sessionUsersGamesComponent
+                  : usersGamesComponent}
               </div>
-            </div>
-            <div className="ProfileGames">
-              {sessionUser.id === user.id
-                ? sessionUsersGamesComponent
-                : usersGamesComponent}
             </div>
           </div>
         ) : (
