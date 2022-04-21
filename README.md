@@ -177,6 +177,28 @@
    - Comment on replays
    - Edit and delete their comments
    - View their own profile or profiles of other users
+  
+  ### Notes on Privating a replay
+  <p align="center">
+    <img width="200" src="https://user-images.githubusercontent.com/89059894/164516098-d760ad2c-befd-4095-9fad-19a011914e3e.png" alt="slime">
+    <img width="190" src="https://user-images.githubusercontent.com/89059894/164516095-ed8aaea8-37c4-4f76-a529-f1262e0d3c34.png" alt="slime">
+  </p>
+  
+  Pressing this lock on your replays will toggle the privacy feature! This feature allows you to hide replays from your profile! However, if the other participant in your replay does not have the game set as private, the replay will still show up on their profile.. 😥 Your name will not be displayed to non-participants on the replay if you set yourself to private, though!
+  - Participants of game will be able to see the private person's name
+  - People who did not participate will NOT be able to see the private person's name
+  - The privated game will show up on the other participant's profile, but NOT on the privated person's profile
+  
+  <p align="center">
+    <img width="200" src="https://user-images.githubusercontent.com/89059894/164517326-6169a663-9cbb-4c7a-8a6a-c242dec5faf0.png" alt="slime">
+    <img width="200" src="https://user-images.githubusercontent.com/89059894/164517329-e9bfbafb-ec8a-4594-9a26-74771b108739.png" alt="slime">
+  </p>
+
+  
+  <p align="center">
+    <img width="200" src="https://user-images.githubusercontent.com/89059894/164517904-21e3b9b8-e1f8-4062-b5e6-bbe6aa19c2f0.png" alt="slime">
+    <img width="200" src="https://user-images.githubusercontent.com/89059894/164517279-87dc923e-47c0-4402-a054-4bbad05acf75.png" alt="slime">
+  </p>
 
 <br>
 
