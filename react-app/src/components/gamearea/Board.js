@@ -12,7 +12,7 @@ import "./Board.css";
 import { io } from 'socket.io-client';
 let socket;
 
-const useDidMountEffect = (func, deps) => {
+const useDidMountEffect = (func, ...deps) => {
   const didMount = useRef(false)
   useEffect(() => {
     if (didMount.current) {
@@ -27,7 +27,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const { userId } = useParams()
-  const [socketRoom, setSocketRoom] = useState(parseInt(userId));
+  // const [socketRoom, setSocketRoom] = useState(parseInt(userId));
   const [currPiece, setCurrPiece] = useState("mushroom");
   const [oppPiece, setOppPiece] = useState("slime");
   const [gameOver, setGameOver] = useState(false)
@@ -50,6 +50,17 @@ const Board = () => {
     right: 1,
   };
 
+  const joinRoom = (newRoom) => {
+    socket.emit('join_room', { user: user, room: newRoom });
+  };
+
+  const sendMove = (e) => {
+    if (isTurn && e.target.nodeName === 'DIV') {
+      console.log('sendMove', e)
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
+    }
+  }
+
   useEffect(() => {
     socket = io();
 
@@ -62,13 +73,13 @@ const Board = () => {
     return (() => {
       socket.disconnect()
     })
-  }, [])
+  })
 
   useEffect(() => {
     // leaveRoom(prevRoom);
-    joinRoom(socketRoom);
+    joinRoom(parseInt(userId));
 
-  }, [socketRoom]);
+  });
 
   useEffect(() => {
     socket.on('open_room', (data) => {
@@ -89,18 +100,7 @@ const Board = () => {
       console.log("PLAYERS PLEASE WORK:", players)
     })
 
-  }, [user])
-
-  const joinRoom = (newRoom) => {
-    socket.emit('join_room', { user: user, room: newRoom });
-  };
-
-  const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === 'DIV') {
-      console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
-    }
-  }
+  }, [user, userId, players])
 
   // const leaveRoom = (oldRoom) => {
   //   socket.emit("leave_room", { room: oldRoom });
@@ -115,7 +115,7 @@ const Board = () => {
     addMove[lastMove] = currPiece;
     setBoard({ ...board, ...addMove });
     swapPiece()
-  }, [lastMove])
+  }, lastMove)
 
   //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
@@ -123,7 +123,7 @@ const Board = () => {
     console.log("board:", board);
     checkGame()
     console.log("gameStatus:", gameOver);
-  }, [board])
+  }, board)
 
   // let currPiece = "mushroom";
   // let oppPiece = "slime";
@@ -242,7 +242,7 @@ const Board = () => {
             className={`grid ${obj.coord}`}
             onClick={(e) => sendMove(e)}
           >
-            <img id={`img-${obj.coord}`} src={obj?.src} />
+            <img id={`img-${obj?.coord}`} src={obj?.src} alt={obj?.src} />
           </div>
         ))}
       </div>
