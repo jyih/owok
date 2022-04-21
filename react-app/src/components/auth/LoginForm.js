@@ -31,12 +31,12 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to="/" />;
+    return <Redirect to="/browse" />;
   }
 
   const demoLogin = async () => {
     await dispatch(login("demo@aa.io", "password"));
-    return <Redirect to="/" />;
+    return <Redirect to="/browse" />;
   };
 
   const demoButton = (e) => {
