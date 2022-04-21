@@ -247,15 +247,15 @@ const Board = () => {
         ))}
       </div>
       <img
-        src={user.sprite_url}
+        src={players[0]?.sprite_url}
         className="board_player_one"
         alt="player one sprite"
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
       <div className="board_stats">
-        <p>{user.wins}</p>
-        <p>{user.losses}</p>
-        <p>{user.draws}</p>
+        <p>{players[0]?.wins}</p>
+        <p>{players[0]?.losses}</p>
+        <p>{players[0]?.draws}</p>
       </div>
     </div>
   );
