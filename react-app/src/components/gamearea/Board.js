@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
@@ -9,38 +9,69 @@ import omok_piece_slime from "../images/omok_piece_slime.png";
 import "./Board.css";
 
 import { io } from 'socket.io-client';
-
 let socket;
+
+const useDidMountEffect = (func, deps) => {
+  const didMount = useRef(false)
+  useEffect(() => {
+    if (didMount.current) {
+      func();
+    } else {
+      didMount.current = true;
+    }
+  }, deps)
+}
 
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  // function for player one and player two placing moves taking turns
-  // this function also pushes each players moves to their own moves array for win calculations
-  // win calculator function
 
-  // 3 boards, 1 main board with both moves and that the player clicks, when a player's turn clicks
-  // on the main board, record the move on the corresponding player's personal board
-  // every move, run checks for horizontal, vertical, and diagonal wins (bit based board so 0 and 1?)
-  // for diagonal, need to shift every i-th row (have to do once left and once right?)
-  // by i squares to make it all line up and be vertical.
+  const [currPiece, setCurrPiece] = useState("mushroom");
+  const [oppPiece, setOppPiece] = useState("slime");
+  const [gameOver, setGameOver] = useState(false)
+  const [notation, setNotation] = useState([])
+  const [board, setBoard] = useState({})
+  const [lastMove, setLastMove] = useState(null)
+  const [isTurn, setIsTurn] = useState(true)
 
-  // mathmatical vectors, define array that is eight 0 and 1 and -1 combinations, calculate neighbors
-  // with map of vectors added to indecies of the board grid, and then do the test. return number
-  // of neighbors and do this (after doing second paragraph)
 
-  let currPiece = "mushroom";
-  let oppPiece = "slime";
-  let gameOver = false;
-  let lastMove = null;
-  let isTurn = true;
-  const notation = [];
+  useEffect(() => {
+    socket = io();
+
+    return (() => {
+      socket.disconnect()
+    })
+  }, [])
+
+  useDidMountEffect(() => {
+    setNotation([...notation, lastMove])
+    let addMove = {};
+    addMove[lastMove] = currPiece;
+    setBoard({ ...board, ...addMove });
+  }, [lastMove])
+
+  useDidMountEffect(() => {
+    console.log("notation:", notation);
+    console.log("board:", board);
+    swapPiece()
+    checkGame()
+    console.log("gameStatus:", gameOver);
+  }, [board])
+
+  // let currPiece = "mushroom";
+  // let oppPiece = "slime";
+  // let gameOver = false;
+  // const notation = [];
+  // const board = {};
+  // let lastMove = null;
+  // let isTurn = true;
+
   const pieces = {
     mushroom: omok_piece_mushroom,
     slime: omok_piece_slime,
   };
-  const board = {};
-  const move = {
+
+  const displace = {
     up: -100,
     down: 100,
     left: -1,
@@ -48,27 +79,36 @@ const Board = () => {
   };
   // const board = Array(15*15).fill('');
 
-  const placePiece = (coord) => {
+  const placePiece = async (coord) => {
     if (!gameOver && isTurn) {
       console.log("Place!");
-      let square = document.getElementById(coord);
-      if (square && !square.children.length) {
-        let piece = document.createElement("img");
+      // let square = document.getElementById(coord);
+      let img = document.getElementById(`img-${coord}`)
+      console.log(img)
+      if (img != null && !img.getAttribute('src')) {
+        // let piece = document.createElement("img");
         // change style background image to the img (might be better for performance)
         // bc not adding nodes to dom, just updating the node's style
-        piece.src = pieces[currPiece];
-        square.appendChild(piece);
+        img.setAttribute('src', pieces[currPiece])
 
-        lastMove = parseInt(coord);
+        // square.appendChild(piece);
 
-        notation.push(coord);
-        board[lastMove] = currPiece;
+        // lastMove = parseInt(coord);
+        // notation.push(coord);
+        // board[lastMove] = currPiece;
 
-        console.log("moves:", notation);
-        console.log("board:", board);
-        swapPiece();
-        checkGame();
-        console.log("gameStatus:", gameOver);
+        setLastMove(parseInt(coord))
+        // setNotation([...notation, coord])
+        // let addMove = {};
+        // addMove[lastMove] = currPiece;
+        // setBoard({ ...board, ...addMove });
+        // console.log("addMove+Board", addMove, board)
+
+        // console.log("notation:", notation);
+        // console.log("board:", board);
+        // swapPiece();
+        // checkGame();
+        // console.log("gameStatus:", gameOver);
       }
     } else {
       console.log("Game has finished!");
@@ -78,35 +118,35 @@ const Board = () => {
   const swapPiece = () => {
     console.log("Swap!");
     let temp = currPiece;
-    currPiece = oppPiece;
-    oppPiece = temp;
+    setCurrPiece(oppPiece);
+    setOppPiece(temp);
   };
 
   const checkGame = (n = 5) => {
-    let vertical = checkLine(move.up, n)
-    let horizontal = checkLine(move.right, n)
-    let forwardDiag = checkLine(move.up + move.right, n)
-    let backwardDiag = checkLine(move.up + move.left, n)
-    console.log(vertical, horizontal, forwardDiag, backwardDiag)
+    let vertical = checkLine(displace.up, n)
+    let horizontal = checkLine(displace.right, n)
+    let forwardDiag = checkLine(displace.up + displace.right, n)
+    let backwardDiag = checkLine(displace.up + displace.left, n)
+    console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
 
     if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
   }
 
-  const checkLine = (displace, n = 5) => {
-    let countPos = checkVector(displace, n);
-    let countNeg = checkVector(-displace, n);
+  const checkLine = (displacement, n = 5) => {
+    let countPos = checkVector(displacement, n);
+    let countNeg = checkVector(-displacement, n);
     return countPos + countNeg - 1;
   }
 
-  const checkVector = (displace, n = 5) => {
+  const checkVector = (displacement, n = 5) => {
     let lookPiece = board[lastMove];
     let count = 0;
-
-    while (lookPiece === board[lastMove] && count < n) {
+    console.log('inside checkVector', lastMove, lookPiece, board,)
+    while (board[lastMove] && lookPiece === board[lastMove] && count < n) {
       count++;
-      let lookMove = lastMove + (displace * count);
+      let lookMove = lastMove + (displacement * count);
       lookPiece = board[lookMove];
-      console.log(`pos:${count}, ${lookMove}: ${lookPiece}`)
+      console.log(`count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`)
     }
 
     return count;
@@ -117,7 +157,8 @@ const Board = () => {
     //increment winner win count
     //increment loser loss count
     //if draw, increment both players' draw count
-    gameOver = true;
+    setGameOver(true);
+    // gameOver = true;
 
     const gameData = {
       player_one_id: user.id,
@@ -136,13 +177,15 @@ const Board = () => {
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((coord, index) => (
+        {GridData.map((obj, index) => (
           <div
-            key={coord}
-            id={`${coord}`}
-            className={`grid ${coord}`}
+            key={obj.coord}
+            id={`${obj.coord}`}
+            className={`grid ${obj.coord}`}
             onClick={(e) => placePiece(e.target.id)}
-          ></div>
+          >
+            <img id={`img-${obj.coord}`} src={obj?.src} />
+          </div>
         ))}
       </div>
       <img
