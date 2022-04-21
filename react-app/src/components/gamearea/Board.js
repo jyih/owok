@@ -27,7 +27,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const { userId } = useParams()
-
+  const [socketRoom, setSocketRoom] = useState(parseInt(userId));
   const [currPiece, setCurrPiece] = useState("mushroom");
   const [oppPiece, setOppPiece] = useState("slime");
   const [gameOver, setGameOver] = useState(false)
@@ -36,6 +36,7 @@ const Board = () => {
   const [lastMove, setLastMove] = useState(null)
   const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id))
 
+  const [players, setPlayers] = useState({ 0: parseInt(userId), 1: null })
 
   useEffect(() => {
     socket = io();
@@ -52,11 +53,28 @@ const Board = () => {
   }, [])
 
   const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === 'DIV'){
+    if (isTurn && e.target.nodeName === 'DIV') {
       console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id })
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
     }
   }
+
+  // const leaveRoom = (oldRoom) => {
+  //   socket.emit("leave_room", { room: oldRoom });
+  // };
+
+  const joinRoom = (newRoom) => {
+    socket.emit('join_room', { room: newRoom });
+  };
+
+
+  useEffect(() => {
+    // leaveRoom(prevRoom);
+    joinRoom(socketRoom);
+  }, [
+    // prevRoom,
+    socketRoom]);
+
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {

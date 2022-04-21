@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 import os
 
 
@@ -30,7 +30,7 @@ def handle_player_info(data):
 @socketio.on("place_piece")
 def handle_place_piece(data):
     print('|*| PLACE_PIECE:', data)
-    emit("place_piece", data, broadcast=True)
+    emit("place_piece", data, broadcast=True, room=data['room'])
 
 @socketio.on('join_room')
 def on_join(data):
@@ -41,7 +41,11 @@ def on_join(data):
 
 @socketio.on("leave_room")
 def leave(data):
-    print('|*| LEAVE_ROOM:', data)
+    print('''
+
+    |*| LEAVE_ROOM:
+
+    ''', data)
     leave_room(data['room'])
 
 @socketio.on('message')
