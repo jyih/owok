@@ -1,5 +1,6 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
 import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
 
@@ -25,6 +26,7 @@ const useDidMountEffect = (func, deps) => {
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
+  const { userId } = useParams()
 
   const [currPiece, setCurrPiece] = useState("mushroom");
   const [oppPiece, setOppPiece] = useState("slime");
@@ -32,7 +34,7 @@ const Board = () => {
   const [notation, setNotation] = useState([])
   const [board, setBoard] = useState({})
   const [lastMove, setLastMove] = useState(null)
-  const [isTurn, setIsTurn] = useState(true)
+  const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id))
 
 
   useEffect(() => {
@@ -50,8 +52,10 @@ const Board = () => {
   }, [])
 
   const sendMove = (e) => {
-    console.log('sendMove', e)
-    socket.emit("place_piece", { user: user.id, coord: e.target.id })
+    if (isTurn && e.target.nodeName === 'DIV'){
+      console.log('sendMove', e)
+      socket.emit("place_piece", { user: user.id, coord: e.target.id })
+    }
   }
 
   //make sure lastMove updates/persists before setBoard
@@ -94,10 +98,10 @@ const Board = () => {
   // const board = Array(15*15).fill('');
 
   const placePiece = (coordNum) => {
-    if (!gameOver && isTurn) {
+    if (!gameOver) {
       console.log("Place!");
       // let square = document.getElementById(coord);
-      let img = document.getElementById(`img-${('0'+coordNum).slice(-4)}`)
+      let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
       console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
         // let piece = document.createElement("img");
@@ -135,6 +139,7 @@ const Board = () => {
     let temp = currPiece;
     setCurrPiece(oppPiece);
     setOppPiece(temp);
+    setIsTurn(!isTurn);
   };
 
   const checkGame = (n = 5) => {
