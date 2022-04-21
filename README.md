@@ -27,8 +27,8 @@
 
 ### GitHub Documentation
 
-| [MVP Feature List](https://github.com/milkyomo/owok/wiki/Features) | [Database Schema](https://github.com/milkyomo/owok/wiki/Database-Schema) | [API Documentation](https://github.com/milkyomo/owok/wiki/API-Documentation) |
-[Redux State Shape](https://github.com/milkyomo/owok/wiki/State-Shape) | [User Stories](https://github.com/milkyomo/owok/wiki/User-Stories) | [Wireframes](https://github.com/milkyomo/owok/wiki/Wireframes)
+| [MVP Feature List](https://github.com/jyih/owok/wiki/Features) | [Database Schema](https://github.com/jyih/owok/wiki/Database-Schema) | [API Documentation](https://github.com/jyih/owok/wiki/API-Documentation) |
+[Redux State Shape](https://github.com/jyih/owok/wiki/State-Shape) | [User Stories](https://github.com/jyih/owok/wiki/User-Stories) | [Wireframes](https://github.com/jyih/owok/wiki/Wireframes)
 <br>
 
 ### Navigating this ReadMe
