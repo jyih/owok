@@ -18,6 +18,11 @@ const Chat = () => {
     socket = io();
 
     socket.on("chat", (chat) => {
+      if (data[players]) {
+        /**
+         * logic if initial join
+         */
+      }
       setMessages((messages) => [...messages, chat]);
     });
     // when component unmounts, disconnect

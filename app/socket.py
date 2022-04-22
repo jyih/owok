@@ -21,7 +21,7 @@ user_sid = {}
 @socketio.on("chat")
 def handle_chat(data):
     print('|*| CHAT:', data)
-    emit("chat", data, broadcast=True)
+    emit("chat", data, broadcast=True, room=data['room'])
 
 # handle player info
 @socketio.on("player_info")
@@ -58,7 +58,9 @@ def on_join(data):
     rooms[room][user['id']] = user
     join_room(room)
     data['players'] = rooms[room]
+
     emit('open_room', data, broadcast=True)
+    emit("chat", data, broadcast=True)
 
 # @socketio.on('leave_room')
 # def on_leave(data):
@@ -88,8 +90,8 @@ def disconnect():
     emit('leave_room', {'players': rooms[dc_user['room']]}, broadcast=True)
 
 
-@socketio.on('message')
-def on_chat_sent(data):
-    # data = req['message']
-    print('|*| MESSAGE:', data)
-    send({'message': data['message']}, room=data['room'],)
+# @socketio.on('message')
+# def on_chat_sent(data):
+#     # data = req['message']
+#     print('|*| MESSAGE:', data)
+#     send({'message': data['message']}, room=data['room'],)
