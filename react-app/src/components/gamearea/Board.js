@@ -27,24 +27,25 @@ const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   // const { roomId } = useParams()
-  const params = useParams();
-  const roomId = parseInt(params.roomId)
-  const [socketRoom, setSocketRoom] = useState(parseInt(roomId));
+  // const params = useParams();
+  // const roomId = parseInt(params.roomId)
+  const { playerOneId, playerTwoId } = useParams();
+  const [socketRoom, setSocketRoom] = useState(playerOneId);
   // const [currPiece, setCurrPiece] = useState("mushroom");
   // const [oppPiece, setOppPiece] = useState("slime");
   // const [currTurn, setCurrTurn] = useState(0)
-  const [turn, setTurn] = useState(0)
+  const [turn, setTurn] = useState(playerOneId)
   const [gameOver, setGameOver] = useState(false)
   const [notation, setNotation] = useState([])
   const [board, setBoard] = useState({})
   const [lastMove, setLastMove] = useState(null)
   // const [isTurn, setIsTurn] = useState(parseInt(roomId) === parseInt(user.id))
 
-  const [players, setPlayers] = useState({ 0: null, 1: null })
+  const [players, setPlayers] = useState({})
 
   const pieces = {
-    0: omok_piece_mushroom,
-    1: omok_piece_slime,
+    [playerOneId]: omok_piece_mushroom,
+    [playerTwoId]: omok_piece_slime,
   };
 
   const displace = {
@@ -57,6 +58,12 @@ const Board = () => {
   useEffect(() => {
     socket = io();
 
+    socket.on('open_room', (data) => {
+      console.log('useEffect, join_room, data.user.id', data)
+      console.log(data.players)
+      setPlayers(data.players)
+    })
+
     socket.on("place_piece", (move) => {
       console.log("socket place piece, move:", move)
       setLastMove(parseInt(move.coord))
@@ -66,7 +73,7 @@ const Board = () => {
     return (() => {
       socket.disconnect()
     })
-  })
+  }, [])
 
   useEffect(() => {
     // leaveRoom(prevRoom);
@@ -74,50 +81,21 @@ const Board = () => {
 
   }, [socketRoom]);
 
-  useEffect(() => {
-    socket.on('open_room', (data) => {
-      console.log('useEffect, join_room, data.user.id', data)
-      // if (data.user?.id === parseInt(roomId)) {
-      console.log('conditional check:', players[0], players[1])
-      if (data.user?.id && !players[0]) {
-        console.log('open_room: user.id matches roomId')
-        let addPlayer = { 0: { ...data.user } }
-        let temp = {
-          ...players,
-          ...addPlayer
-        }
-        console.log("temp players obj", temp)
-        setPlayers(temp
-        )
-      } else if (data.user?.id && !players[1]) {
-        console.log('open_room: user.id !matches roomId')
-        let addPlayer = { 1: { ...data.user } }
-        setPlayers({
-          ...players,
-          ...addPlayer
-        })
-      }
-      console.log("PLAYERS PLEASE WORK:", players)
-    })
-
-  })
-
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
-    console.log('didMount (dep lastMove)')
+    console.log('didMount (dep lastMove):', lastMove)
     placePiece(lastMove)
     setNotation([...notation, lastMove])
     let addMove = {};
     addMove[lastMove] = turn;
     setBoard({ ...board, ...addMove });
   }, [lastMove])
-  
+
   //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
     console.log("notation:", notation);
     console.log("board:", board);
     checkGame()
-    swapPiece()
     console.log("gameStatus:", gameOver);
   }, [board])
 
@@ -127,17 +105,12 @@ const Board = () => {
 
   const sendMove = (e) => {
     console.log('sendMove outside if', players, turn, players[turn], user.id, e.target.nodeName)
-    console.log('sendMove if cond', players[turn]?.id === user.id && e.target.nodeName === 'DIV')
-    if (players[turn]?.id === user.id && e.target.nodeName === 'DIV') {
-      console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: roomId })
+    console.log('sendMove if cond', parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV')
+    if (!gameOver && parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV') {
+      console.log('sendMove', e.target.id)
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: playerOneId })
     }
   }
-
-  // const leaveRoom = (oldRoom) => {
-  //   socket.emit("leave_room", { room: oldRoom });
-  // };
-
 
   const placePiece = (coordNum) => {
     console.log("Can Place?")
@@ -161,17 +134,21 @@ const Board = () => {
     // setCurrPiece(oppPiece);
     // setOppPiece(temp);
     // setIsTurn(!isTurn);
-    setTurn((turn + 1) % 2)
+    // setTurn((turn + 1) % 2)
+    if (!gameOver) setTurn(turn === playerOneId ? playerTwoId : playerOneId)
   };
 
   const checkGame = (n = 5) => {
-    let vertical = checkLine(displace.up, n)
-    let horizontal = checkLine(displace.right, n)
-    let forwardDiag = checkLine(displace.up + displace.right, n)
-    let backwardDiag = checkLine(displace.up + displace.left, n)
-    console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
+    if (!gameOver) {
+      let vertical = checkLine(displace.up, n)
+      let horizontal = checkLine(displace.right, n)
+      let forwardDiag = checkLine(displace.up + displace.right, n)
+      let backwardDiag = checkLine(displace.up + displace.left, n)
+      console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
 
-    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame(turn);
+      if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame(turn);
+      else swapPiece()
+    }
   }
 
   const checkLine = (displacement, n = 5) => {
@@ -194,7 +171,7 @@ const Board = () => {
     return count;
   }
 
-  const endGame = (winner) => {
+  const endGame = (winnerId = players[board[lastMove]]) => {
     //need to get player_two data
     //increment winner win count
     //increment loser loss count
@@ -202,23 +179,25 @@ const Board = () => {
     setGameOver(true);
 
     const gameData = {
-      player_one_id: players[0]?.id,
-      player_two_id: players[1]?.id,
-      winner_id: players[winner],
+      player_one_id: playerOneId,
+      player_two_id: playerTwoId,
+      winner_id: winnerId,
       moves: notation,
     };
 
-    const data = dispatch(replayActions.saveGame(gameData));
-
-    if (data?.errors) {
-      console.log(data.errors);
+    if (parseInt(winnerId) === user.id) {
+      const data = dispatch(replayActions.saveGame(gameData));
+      if (data?.errors) {
+        console.log(data.errors);
+      }
     }
+
   };
 
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((obj, index) => (
+        {GridData.map((obj) => (
           <div
             key={obj.coord}
             id={`${obj.coord}`}
