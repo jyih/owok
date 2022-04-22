@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
 
@@ -9,34 +9,34 @@ import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 let socket;
 
 const useDidMountEffect = (func, deps) => {
-  const didMount = useRef(false)
+  const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
       func();
     } else {
       didMount.current = true;
     }
-  }, deps)
-}
+  }, deps);
+};
 
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const { userId } = useParams()
+  const { userId } = useParams();
   const [socketRoom, setSocketRoom] = useState(parseInt(userId));
   const [currPiece, setCurrPiece] = useState("mushroom");
   const [oppPiece, setOppPiece] = useState("slime");
-  const [gameOver, setGameOver] = useState(false)
-  const [notation, setNotation] = useState([])
-  const [board, setBoard] = useState({})
-  const [lastMove, setLastMove] = useState(null)
-  const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id))
+  const [gameOver, setGameOver] = useState(false);
+  const [notation, setNotation] = useState([]);
+  const [board, setBoard] = useState({});
+  const [lastMove, setLastMove] = useState(null);
+  const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id));
 
-  const [players, setPlayers] = useState({})
+  const [players, setPlayers] = useState({});
 
   const pieces = {
     mushroom: omok_piece_mushroom,
@@ -54,86 +54,86 @@ const Board = () => {
     socket = io();
 
     socket.on("place_piece", (move) => {
-      console.log("socket place piece, move:", move)
-      setLastMove(parseInt(move.coord))
-      console.log("socket place piece, players:", players)
-    })
+      console.log("socket place piece, move:", move);
+      setLastMove(parseInt(move.coord));
+      console.log("socket place piece, players:", players);
+    });
 
-    return (() => {
-      socket.disconnect()
-    })
-  }, [])
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // leaveRoom(prevRoom);
     joinRoom(socketRoom);
-
   }, [socketRoom]);
 
   useEffect(() => {
-    socket.on('open_room', (data) => {
-      console.log('useEffect, join_room, data.user.id', data)
+    socket.on("open_room", (data) => {
+      console.log("useEffect, join_room, data.user.id", data);
       if (data.user?.id === parseInt(userId)) {
-        let addPlayer = { 0: data.user }
+        let addPlayer = { 0: data.user };
         setPlayers({
           ...players,
-          ...addPlayer
-        })
+          ...addPlayer,
+        });
       } else if (data.user?.id && !players[1]) {
-        let addPlayer = { 1: data.user }
+        let addPlayer = { 1: data.user };
         setPlayers({
           ...players,
-          ...addPlayer
-        })
+          ...addPlayer,
+        });
       }
-      console.log("PLAYERS PLEASE WORK:", players)
-    })
-
-  }, [user])
+      console.log("PLAYERS PLEASE WORK:", players);
+    });
+  }, [user]);
 
   const joinRoom = (newRoom) => {
-    socket.emit('join_room', { user: user, room: newRoom });
+    socket.emit("join_room", { user: user, room: newRoom });
   };
 
   const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === 'DIV') {
-      console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
+    if (isTurn && e.target.nodeName === "DIV") {
+      console.log("sendMove", e);
+      socket.emit("place_piece", {
+        user: user.id,
+        coord: e.target.id,
+        room: parseInt(userId),
+      });
     }
-  }
+  };
 
   // const leaveRoom = (oldRoom) => {
   //   socket.emit("leave_room", { room: oldRoom });
   // };
 
-
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
-    placePiece(lastMove)
-    setNotation([...notation, lastMove])
+    placePiece(lastMove);
+    setNotation([...notation, lastMove]);
     let addMove = {};
     addMove[lastMove] = currPiece;
     setBoard({ ...board, ...addMove });
-    swapPiece()
-  }, [lastMove])
+    swapPiece();
+  }, [lastMove]);
 
   //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
     console.log("notation:", notation);
     console.log("board:", board);
-    checkGame()
+    checkGame();
     console.log("gameStatus:", gameOver);
-  }, [board])
+  }, [board]);
 
   const placePiece = (coordNum) => {
     if (!gameOver) {
       console.log("Place!");
-      let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
-      console.log(coordNum, img)
-      if (img != null && !img.getAttribute('src')) {
-        console.log('currPiece', currPiece)
-        img.setAttribute('src', pieces[currPiece])
-
+      let img = document.getElementById(`img-${("0" + coordNum).slice(-4)}`);
+      console.log(coordNum, img);
+      if (img != null && !img.getAttribute("src")) {
+        console.log("currPiece", currPiece);
+        img.setAttribute("src", pieces[currPiece]);
       }
     } else {
       console.log("Game has finished!");
@@ -149,34 +149,42 @@ const Board = () => {
   };
 
   const checkGame = (n = 5) => {
-    let vertical = checkLine(displace.up, n)
-    let horizontal = checkLine(displace.right, n)
-    let forwardDiag = checkLine(displace.up + displace.right, n)
-    let backwardDiag = checkLine(displace.up + displace.left, n)
-    console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
+    let vertical = checkLine(displace.up, n);
+    let horizontal = checkLine(displace.right, n);
+    let forwardDiag = checkLine(displace.up + displace.right, n);
+    let backwardDiag = checkLine(displace.up + displace.left, n);
+    console.log("checkGame:", vertical, horizontal, forwardDiag, backwardDiag);
 
-    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
-  }
+    if (
+      vertical >= n ||
+      horizontal >= n ||
+      forwardDiag >= n ||
+      backwardDiag >= n
+    )
+      endGame();
+  };
 
   const checkLine = (displacement, n = 5) => {
     let countPos = checkVector(displacement, n);
     let countNeg = checkVector(-displacement, n);
     return countPos + countNeg - 1;
-  }
+  };
 
   const checkVector = (displacement, n = 5) => {
     let lookPiece = board[lastMove];
     let count = 0;
-    console.log('inside checkVector', lastMove, lookPiece, board,)
+    console.log("inside checkVector", lastMove, lookPiece, board);
     while (board[lastMove] && lookPiece === board[lastMove] && count < n) {
       count++;
-      let lookMove = lastMove + (displacement * count);
+      let lookMove = lastMove + displacement * count;
       lookPiece = board[lookMove];
-      console.log(`count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`)
+      console.log(
+        `count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`
+      );
     }
 
     return count;
-  }
+  };
 
   const endGame = (winner) => {
     //need to get player_two data
@@ -219,7 +227,17 @@ const Board = () => {
         alt={players[0]}
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
-      <div className="board_stats">
+      <div className="board_stats_one">
+        <p>{players[0]?.wins}</p>
+        <p>{players[0]?.losses}</p>
+        <p>{players[0]?.draws}</p>
+      </div>
+      <img
+        src={players[0]?.sprite_url}
+        className="board_player_two"
+        alt={players[0]}
+      />
+      <div className="board_stats_two">
         <p>{players[0]?.wins}</p>
         <p>{players[0]?.losses}</p>
         <p>{players[0]?.draws}</p>

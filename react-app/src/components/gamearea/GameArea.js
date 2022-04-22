@@ -14,6 +14,7 @@ const GameArea = () => {
   // const sessionUserId = sessionUser.id;
   return (
     <div className="GameAreaContainer">
+      <h1>OWOK!!</h1>
       <Board />
       <Chat />
     </div>
