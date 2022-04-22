@@ -90,7 +90,7 @@ const ReplayBoard = () => {
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
-  const movesArr = game?.moves?.slice(1, -1).split(",");
+  const movesArr = game?.moves?.split(",");
 
   const swapPiece = () => {
     let temp = currPiece;
