@@ -69,6 +69,10 @@ const Board = () => {
     socket.on('leave_room', (data) => {
       console.log('useEffect, leave_room', data)
       console.log(data.players)
+      if (!gameOver && !notation.length && !Object.keys(board).length) {
+        if (!data.players[playerOneId]) endGame(playerTwoId)
+        else endGame(playerOneId)
+      }
       setPlayers(data.players)
     })
 
@@ -87,16 +91,12 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(()=>{},[players])
+  useEffect(() => { }, [players])
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
     console.log('didMount (dep lastMove):', lastMove)
     placePiece(lastMove)
-    setNotation([...notation, lastMove])
-    let addMove = {};
-    addMove[lastMove] = turn;
-    setBoard({ ...board, ...addMove });
   }, [lastMove])
 
   //make sure board updates/persists before checkGame
@@ -134,6 +134,10 @@ const Board = () => {
         console.log('current turn:', turn)
         img.setAttribute('src', pieces[turn])
       }
+      setNotation([...notation, lastMove])
+      let addMove = {};
+      addMove[lastMove] = turn;
+      setBoard({ ...board, ...addMove });
     } else {
       console.log("Game has finished!");
     }
@@ -195,7 +199,7 @@ const Board = () => {
       player_one_id: playerOneId,
       player_two_id: playerTwoId,
       winner_id: winnerId,
-      moves: notation.map(e=>('000'+e).slice(-4)).join(','),
+      moves: notation.map(e => ('000' + e).slice(-4)).join(','),
     };
 
     if (parseInt(winnerId) === user.id) {
