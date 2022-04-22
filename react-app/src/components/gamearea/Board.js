@@ -127,8 +127,8 @@ const Board = () => {
   const placePiece = (coordNum) => {
     console.log("Can Place?")
     if (!gameOver) {
-      console.log("Place!");
-      let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
+      console.log(`Place at ${coordNum}`);
+      let img = document.getElementById(`img-${('000' + coordNum).slice(-4)}`)
       console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
         console.log('current turn:', turn)
