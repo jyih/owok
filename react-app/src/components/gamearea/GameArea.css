@@ -33,7 +33,6 @@
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;
-    /* overflow-x: hidden; */
     word-wrap: break-word;
 }
 
