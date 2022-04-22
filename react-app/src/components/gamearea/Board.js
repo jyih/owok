@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
 
@@ -9,23 +9,24 @@ import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 let socket;
 
 const useDidMountEffect = (func, deps) => {
-  const didMount = useRef(false)
+  const didMount = useRef(false);
   useEffect(() => {
     if (didMount.current) {
       func();
     } else {
       didMount.current = true;
     }
-  }, deps)
-}
+  }, deps);
+};
 
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
+
   // const { roomId } = useParams()
   // const params = useParams();
   // const roomId = parseInt(params.roomId)
@@ -41,7 +42,8 @@ const Board = () => {
   const [lastMove, setLastMove] = useState(null)
   // const [isTurn, setIsTurn] = useState(parseInt(roomId) === parseInt(user.id))
 
-  const [players, setPlayers] = useState({})
+
+  const [players, setPlayers] = useState({});
 
   const pieces = {
     [playerOneId]: omok_piece_mushroom,
@@ -65,20 +67,19 @@ const Board = () => {
     })
 
     socket.on("place_piece", (move) => {
-      console.log("socket place piece, move:", move)
-      setLastMove(parseInt(move.coord))
-      console.log("socket place piece, players:", players)
-    })
+      console.log("socket place piece, move:", move);
+      setLastMove(parseInt(move.coord));
+      console.log("socket place piece, players:", players);
+    });
 
-    return (() => {
-      socket.disconnect()
-    })
-  }, [])
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // leaveRoom(prevRoom);
     joinRoom(socketRoom);
-
   }, [socketRoom]);
 
   //make sure lastMove updates/persists before setBoard
@@ -95,9 +96,9 @@ const Board = () => {
   useDidMountEffect(() => {
     console.log("notation:", notation);
     console.log("board:", board);
-    checkGame()
+    checkGame();
     console.log("gameStatus:", gameOver);
-  }, [board])
+  }, [board]);
 
   const joinRoom = (newRoom) => {
     socket.emit('join_room', { user: user, room: newRoom });
@@ -121,7 +122,6 @@ const Board = () => {
       if (img != null && !img.getAttribute('src')) {
         console.log('current turn:', turn)
         img.setAttribute('src', pieces[turn])
-
       }
     } else {
       console.log("Game has finished!");
@@ -155,21 +155,23 @@ const Board = () => {
     let countPos = checkVector(displacement, n);
     let countNeg = checkVector(-displacement, n);
     return countPos + countNeg - 1;
-  }
+  };
 
   const checkVector = (displacement, n = 5) => {
     let lookPiece = board[lastMove];
     let count = 0;
-    console.log('inside checkVector', lastMove, lookPiece, board,)
+    console.log("inside checkVector", lastMove, lookPiece, board);
     while (board[lastMove] && lookPiece === board[lastMove] && count < n) {
       count++;
-      let lookMove = lastMove + (displacement * count);
+      let lookMove = lastMove + displacement * count;
       lookPiece = board[lookMove];
-      console.log(`count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`)
+      console.log(
+        `count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`
+      );
     }
 
     return count;
-  }
+  };
 
   const endGame = (winnerId = players[board[lastMove]]) => {
     //need to get player_two data
@@ -214,10 +216,22 @@ const Board = () => {
         alt={players[playerOneId]}
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
-      <div className="board_stats">
+
+      <div className="board_stats_one">
         <p>{players[playerOneId]?.wins}</p>
         <p>{players[playerOneId]?.losses}</p>
         <p>{players[playerOneId]?.draws}</p>
+      </div>
+      <img
+        src={players[playerTwoId]?.sprite_url}
+        className="board_player_two"
+        alt={players[playerTwoId]}
+      />
+      <div className="board_stats_two">
+        <p>{players[playerTwoId]?.wins}</p>
+        <p>{players[playerTwoId]?.losses}</p>
+        <p>{players[playerTwoId]?.draws}</p>
+
       </div>
     </div>
   );

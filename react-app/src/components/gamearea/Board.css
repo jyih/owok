@@ -33,13 +33,7 @@
     right: 300px;
 }
 
-.board_player_two {
-    position: absolute;
-    top: 100px;
-    right: 215px;
-}
-
-.board_stats {
+.board_stats_one {
     display: flex;
     flex-direction: column;
     width: 30px;
@@ -48,7 +42,29 @@
     right: 310px;
 }
 
-.board_stats > p {
+.board_stats_one > p {
+    margin: 0;
+    width: 100%;
+    text-align: right;
+    font-size: 13px;
+}
+
+.board_player_two {
+    position: absolute;
+    top: 30px;
+    right: 170px;
+}
+
+.board_stats_two {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    position: absolute;
+    top: 219px;
+    right: 210px;
+}
+
+.board_stats_two > p {
     margin: 0;
     width: 100%;
     text-align: right;
