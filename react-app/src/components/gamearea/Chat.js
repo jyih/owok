@@ -8,6 +8,10 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const user = useSelector((state) => state.session.user);
 
+  //When someone joins: Username has joined!
+  //Every time a PLAYER (one or two) joins, send message:
+  //Owok: Place 5 pieces in a row to win!
+
   useEffect(() => {
     // open socket connection
     // create websocket
@@ -58,7 +62,9 @@ const Chat = () => {
         </div>
         <form onSubmit={sendChat} className="ChatInputBox">
           <input value={chatInput} onChange={updateChatInput} />
-          <button type="submit">Send</button>
+          <button type="submit">
+            <i className="fa-solid fa-arrow-turn-up"></i>
+          </button>
         </form>
       </div>
     )
