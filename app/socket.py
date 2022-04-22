@@ -13,6 +13,7 @@ else:
 # create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
 
+rooms = {}
 
 # handle chat messages
 @socketio.on("chat")
@@ -29,14 +30,20 @@ def handle_player_info(data):
 # handle place piece
 @socketio.on("place_piece")
 def handle_place_piece(data):
-    print('|*| PLACE_PIECE:', data)
+    print(f'''
+    |*| PLACE_PIECE: {data}
+    ''')
     emit("place_piece", data, broadcast=True, room=data['room'])
 
 @socketio.on('join_room')
 def on_join(data):
     room = data['room']
-    print('|*| JOIN_ROOM:', data['user'])
+    if not room in rooms:
+        rooms[room] = {}
+    rooms[room][data['user']['id']] = data['user']
     join_room(room)
+    data['players'] = rooms[room]
+    print('|*| JOIN_ROOM:', data)
     emit('open_room', data, broadcast=True)
 
 @socketio.on("leave_room")

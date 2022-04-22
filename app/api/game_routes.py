@@ -39,9 +39,12 @@ def game_create():
   # form = GameForm()
   # form['csrf_token'].data = request.cookies['csrf_token']
   # if form.validate_on_submit():
+  print(f'''
+  SHOW ME THE DATA {data}
+  ''')
   game = Game(
       player_one_id = data['player_one_id'],
-      player_two_id = data['player_one_id'],
+      player_two_id = data['player_two_id'],
       winner_id = data['winner_id'],
       moves = data['moves'],
   )

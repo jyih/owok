@@ -26,21 +26,28 @@ const useDidMountEffect = (func, deps) => {
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const { userId } = useParams();
-  const [socketRoom, setSocketRoom] = useState(parseInt(userId));
-  const [currPiece, setCurrPiece] = useState("mushroom");
-  const [oppPiece, setOppPiece] = useState("slime");
-  const [gameOver, setGameOver] = useState(false);
-  const [notation, setNotation] = useState([]);
-  const [board, setBoard] = useState({});
-  const [lastMove, setLastMove] = useState(null);
-  const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id));
+
+  // const { roomId } = useParams()
+  // const params = useParams();
+  // const roomId = parseInt(params.roomId)
+  const { playerOneId, playerTwoId } = useParams();
+  const [socketRoom, setSocketRoom] = useState(playerOneId);
+  // const [currPiece, setCurrPiece] = useState("mushroom");
+  // const [oppPiece, setOppPiece] = useState("slime");
+  // const [currTurn, setCurrTurn] = useState(0)
+  const [turn, setTurn] = useState(playerOneId)
+  const [gameOver, setGameOver] = useState(false)
+  const [notation, setNotation] = useState([])
+  const [board, setBoard] = useState({})
+  const [lastMove, setLastMove] = useState(null)
+  // const [isTurn, setIsTurn] = useState(parseInt(roomId) === parseInt(user.id))
+
 
   const [players, setPlayers] = useState({});
 
   const pieces = {
-    mushroom: omok_piece_mushroom,
-    slime: omok_piece_slime,
+    [playerOneId]: omok_piece_mushroom,
+    [playerTwoId]: omok_piece_slime,
   };
 
   const displace = {
@@ -52,6 +59,12 @@ const Board = () => {
 
   useEffect(() => {
     socket = io();
+
+    socket.on('open_room', (data) => {
+      console.log('useEffect, join_room, data.user.id', data)
+      console.log(data.players)
+      setPlayers(data.players)
+    })
 
     socket.on("place_piece", (move) => {
       console.log("socket place piece, move:", move);
@@ -69,54 +82,15 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => {
-    socket.on("open_room", (data) => {
-      console.log("useEffect, join_room, data.user.id", data);
-      if (data.user?.id === parseInt(userId)) {
-        let addPlayer = { 0: data.user };
-        setPlayers({
-          ...players,
-          ...addPlayer,
-        });
-      } else if (data.user?.id && !players[1]) {
-        let addPlayer = { 1: data.user };
-        setPlayers({
-          ...players,
-          ...addPlayer,
-        });
-      }
-      console.log("PLAYERS PLEASE WORK:", players);
-    });
-  }, [user]);
-
-  const joinRoom = (newRoom) => {
-    socket.emit("join_room", { user: user, room: newRoom });
-  };
-
-  const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === "DIV") {
-      console.log("sendMove", e);
-      socket.emit("place_piece", {
-        user: user.id,
-        coord: e.target.id,
-        room: parseInt(userId),
-      });
-    }
-  };
-
-  // const leaveRoom = (oldRoom) => {
-  //   socket.emit("leave_room", { room: oldRoom });
-  // };
-
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
-    placePiece(lastMove);
-    setNotation([...notation, lastMove]);
+    console.log('didMount (dep lastMove):', lastMove)
+    placePiece(lastMove)
+    setNotation([...notation, lastMove])
     let addMove = {};
-    addMove[lastMove] = currPiece;
+    addMove[lastMove] = turn;
     setBoard({ ...board, ...addMove });
-    swapPiece();
-  }, [lastMove]);
+  }, [lastMove])
 
   //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
@@ -126,14 +100,28 @@ const Board = () => {
     console.log("gameStatus:", gameOver);
   }, [board]);
 
+  const joinRoom = (newRoom) => {
+    socket.emit('join_room', { user: user, room: newRoom });
+  };
+
+  const sendMove = (e) => {
+    console.log('sendMove outside if', players, turn, players[turn], user.id, e.target.nodeName)
+    console.log('sendMove if cond', parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV')
+    if (!gameOver && parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV') {
+      console.log('sendMove', e.target.id)
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: playerOneId })
+    }
+  }
+
   const placePiece = (coordNum) => {
+    console.log("Can Place?")
     if (!gameOver) {
       console.log("Place!");
-      let img = document.getElementById(`img-${("0" + coordNum).slice(-4)}`);
-      console.log(coordNum, img);
-      if (img != null && !img.getAttribute("src")) {
-        console.log("currPiece", currPiece);
-        img.setAttribute("src", pieces[currPiece]);
+      let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
+      console.log(coordNum, img)
+      if (img != null && !img.getAttribute('src')) {
+        console.log('current turn:', turn)
+        img.setAttribute('src', pieces[turn])
       }
     } else {
       console.log("Game has finished!");
@@ -142,27 +130,26 @@ const Board = () => {
 
   const swapPiece = () => {
     console.log("Swap!");
-    let temp = currPiece;
-    setCurrPiece(oppPiece);
-    setOppPiece(temp);
-    setIsTurn(!isTurn);
+    // let temp = currPiece;
+    // setCurrPiece(oppPiece);
+    // setOppPiece(temp);
+    // setIsTurn(!isTurn);
+    // setTurn((turn + 1) % 2)
+    if (!gameOver) setTurn(turn === playerOneId ? playerTwoId : playerOneId)
   };
 
   const checkGame = (n = 5) => {
-    let vertical = checkLine(displace.up, n);
-    let horizontal = checkLine(displace.right, n);
-    let forwardDiag = checkLine(displace.up + displace.right, n);
-    let backwardDiag = checkLine(displace.up + displace.left, n);
-    console.log("checkGame:", vertical, horizontal, forwardDiag, backwardDiag);
+    if (!gameOver) {
+      let vertical = checkLine(displace.up, n)
+      let horizontal = checkLine(displace.right, n)
+      let forwardDiag = checkLine(displace.up + displace.right, n)
+      let backwardDiag = checkLine(displace.up + displace.left, n)
+      console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
 
-    if (
-      vertical >= n ||
-      horizontal >= n ||
-      forwardDiag >= n ||
-      backwardDiag >= n
-    )
-      endGame();
-  };
+      if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame(turn);
+      else swapPiece()
+    }
+  }
 
   const checkLine = (displacement, n = 5) => {
     let countPos = checkVector(displacement, n);
@@ -186,7 +173,7 @@ const Board = () => {
     return count;
   };
 
-  const endGame = (winner) => {
+  const endGame = (winnerId = players[board[lastMove]]) => {
     //need to get player_two data
     //increment winner win count
     //increment loser loss count
@@ -194,23 +181,25 @@ const Board = () => {
     setGameOver(true);
 
     const gameData = {
-      player_one_id: players[0]?.id,
-      player_two_id: players[1]?.id,
-      winner_id: players[winner],
+      player_one_id: playerOneId,
+      player_two_id: playerTwoId,
+      winner_id: winnerId,
       moves: notation,
     };
 
-    const data = dispatch(replayActions.saveGame(gameData));
-
-    if (data?.errors) {
-      console.log(data.errors);
+    if (parseInt(winnerId) === user.id) {
+      const data = dispatch(replayActions.saveGame(gameData));
+      if (data?.errors) {
+        console.log(data.errors);
+      }
     }
+
   };
 
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((obj, index) => (
+        {GridData.map((obj) => (
           <div
             key={obj.coord}
             id={`${obj.coord}`}
@@ -222,25 +211,27 @@ const Board = () => {
         ))}
       </div>
       <img
-        src={players[0]?.sprite_url}
+        src={players[playerOneId]?.sprite_url}
         className="board_player_one"
-        alt={players[0]}
+        alt={players[playerOneId]}
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
+
       <div className="board_stats_one">
-        <p>{players[0]?.wins}</p>
-        <p>{players[0]?.losses}</p>
-        <p>{players[0]?.draws}</p>
+        <p>{players[playerOneId]?.wins}</p>
+        <p>{players[playerOneId]?.losses}</p>
+        <p>{players[playerOneId]?.draws}</p>
       </div>
       <img
-        src={players[0]?.sprite_url}
+        src={players[playerTwoId]?.sprite_url}
         className="board_player_two"
-        alt={players[0]}
+        alt={players[playerTwoId]}
       />
       <div className="board_stats_two">
-        <p>{players[0]?.wins}</p>
-        <p>{players[0]?.losses}</p>
-        <p>{players[0]?.draws}</p>
+        <p>{players[playerTwoId]?.wins}</p>
+        <p>{players[playerTwoId]?.losses}</p>
+        <p>{players[playerTwoId]?.draws}</p>
+
       </div>
     </div>
   );
