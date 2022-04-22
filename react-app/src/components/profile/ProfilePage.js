@@ -54,6 +54,10 @@ const ProfilePage = () => {
     return null;
   }
 
+  //challenge button: bring up modal that has a link to copy to challenge the player
+  //link will be /sessionuserid/userparamsid
+  //if the user is on their own profile, do not show challenge button
+
   // if user = session user, show all games
   const sessionUsersGamesComponent = games
     ?.sort((a, b) => b.id - a.id)
