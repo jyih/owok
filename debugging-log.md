@@ -17,6 +17,7 @@ _Solution:_
 Found that the new game moves were storing with curly braces wrapping the coordinates inside
 the string. Had to slice first and last character from string to remove curly braces
 const movesArr = game?.moves?.slice(1, -1).split(",");
+Standardized notation in database to have no curly braces; removed the above .slice(1,-1) in replays on 04/22/22.
 
 **[04-19-2022]**
 
@@ -41,3 +42,20 @@ Game would not save/create after completion. "Object not subscriptable"
 
 _Solution:_
 Needed to use dot notation (Python issue)
+
+
+**[04-22-2022]**
+
+_Issue:_
+Player sprite remains after disconnecting
+
+_Solution:_
+Keep log of who joins and remove those who disconnect
+
+**[04-22-2022]**
+
+_Issue:_
+Cannot place pieces on board edge
+
+_Solution:_
+Standardized all coordinate placements into quad digit string
