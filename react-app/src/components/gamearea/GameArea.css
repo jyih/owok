@@ -11,8 +11,8 @@
 
 .ChatContainer {
     position: absolute;
-    bottom: 302px;
-    right: 100px;
+    bottom: 40px;
+    right: 8px;
     width: 375px;
     height: 128px;
     background-color: none;

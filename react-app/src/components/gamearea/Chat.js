@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 let socket;
@@ -22,6 +22,21 @@ const Chat = () => {
     };
   }, []);
 
+  // function scrollToBottom() {
+  //   messages.scrollTop = messages.scrollHeight;
+  // }
+  // scrollToBottom();
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
   };
@@ -39,6 +54,7 @@ const Chat = () => {
           {messages.map((message, ind) => (
             <div key={ind}>{`${message.user}: ${message.msg}`}</div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
         <form onSubmit={sendChat} className="ChatInputBox">
           <input value={chatInput} onChange={updateChatInput} />
