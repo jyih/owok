@@ -18,7 +18,7 @@ const Chat = () => {
     socket = io();
 
     socket.on("chat", (chat) => {
-      if (data[players]) {
+      if (chat.players) {
         /**
          * logic if initial join
          */
