@@ -61,7 +61,13 @@ const Board = () => {
     socket = io();
 
     socket.on('open_room', (data) => {
-      console.log('useEffect, join_room, data.user.id', data)
+      console.log('useEffect, join_room', data)
+      console.log(data.players)
+      setPlayers(data.players)
+    })
+
+    socket.on('leave_room', (data) => {
+      console.log('useEffect, leave_room', data)
       console.log(data.players)
       setPlayers(data.players)
     })
@@ -78,9 +84,10 @@ const Board = () => {
   }, []);
 
   useEffect(() => {
-    // leaveRoom(prevRoom);
     joinRoom(socketRoom);
   }, [socketRoom]);
+
+  useEffect(()=>{},[players])
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
@@ -100,9 +107,13 @@ const Board = () => {
     console.log("gameStatus:", gameOver);
   }, [board]);
 
-  const joinRoom = (newRoom) => {
-    socket.emit('join_room', { user: user, room: newRoom });
+  const joinRoom = (room) => {
+    socket.emit('join_room', { user: user, room: room });
   };
+
+  // const leaveRoom = (room = socketRoom) => {
+  //   socket.emit('leave_room', {user: user, room: room})
+  // }
 
   const sendMove = (e) => {
     console.log('sendMove outside if', players, turn, players[turn], user.id, e.target.nodeName)
