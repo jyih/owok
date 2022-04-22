@@ -195,7 +195,7 @@ const Board = () => {
       player_one_id: playerOneId,
       player_two_id: playerTwoId,
       winner_id: winnerId,
-      moves: notation.map(e=>('0'+e).slice(-4)).join(''),
+      moves: notation.map(e=>('000'+e).slice(-4)).join(','),
     };
 
     if (parseInt(winnerId) === user.id) {
