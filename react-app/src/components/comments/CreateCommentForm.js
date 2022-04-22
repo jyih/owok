@@ -17,7 +17,9 @@ const CreateCommentForm = () => {
   useEffect(() => {
     const validationErrors = [];
 
-    if (content.length === 0) validationErrors.push("");
+    let contentTrimmed = content.trim();
+
+    if (contentTrimmed.length === 0) validationErrors.push("");
 
     if (content.length > 12000)
       validationErrors.push("s-senpai.. it's too long.. uwu");

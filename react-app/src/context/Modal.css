@@ -16,11 +16,19 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: none;
+    backdrop-filter: blur(1px);
   }
 
   #modal-content {
     position: absolute;
-    /* background-color:white;
-    border-radius: 100px; */
+    background-color:white;
+    border-radius: 100px;
+  }
+
+  .ChallengeModal {
+    width: 500px;
+    height: 300px;
+    text-align: center;
+    font-family: MaplestoryOTFLight;
   }
