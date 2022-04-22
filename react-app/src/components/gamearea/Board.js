@@ -26,21 +26,25 @@ const useDidMountEffect = (func, deps) => {
 const Board = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const { userId } = useParams()
-  const [socketRoom, setSocketRoom] = useState(parseInt(userId));
-  const [currPiece, setCurrPiece] = useState("mushroom");
-  const [oppPiece, setOppPiece] = useState("slime");
+  // const { roomId } = useParams()
+  const params = useParams();
+  const roomId = parseInt(params.roomId)
+  const [socketRoom, setSocketRoom] = useState(parseInt(roomId));
+  // const [currPiece, setCurrPiece] = useState("mushroom");
+  // const [oppPiece, setOppPiece] = useState("slime");
+  // const [currTurn, setCurrTurn] = useState(0)
+  const [turn, setTurn] = useState(0)
   const [gameOver, setGameOver] = useState(false)
   const [notation, setNotation] = useState([])
   const [board, setBoard] = useState({})
   const [lastMove, setLastMove] = useState(null)
-  const [isTurn, setIsTurn] = useState(parseInt(userId) === parseInt(user.id))
+  // const [isTurn, setIsTurn] = useState(parseInt(roomId) === parseInt(user.id))
 
-  const [players, setPlayers] = useState({})
+  const [players, setPlayers] = useState({ 0: null, 1: null })
 
   const pieces = {
-    mushroom: omok_piece_mushroom,
-    slime: omok_piece_slime,
+    0: omok_piece_mushroom,
+    1: omok_piece_slime,
   };
 
   const displace = {
@@ -62,7 +66,7 @@ const Board = () => {
     return (() => {
       socket.disconnect()
     })
-  }, [])
+  })
 
   useEffect(() => {
     // leaveRoom(prevRoom);
@@ -73,14 +77,21 @@ const Board = () => {
   useEffect(() => {
     socket.on('open_room', (data) => {
       console.log('useEffect, join_room, data.user.id', data)
-      if (data.user?.id === parseInt(userId)) {
-        let addPlayer = { 0: data.user }
-        setPlayers({
+      // if (data.user?.id === parseInt(roomId)) {
+      console.log('conditional check:', players[0], players[1])
+      if (data.user?.id && !players[0]) {
+        console.log('open_room: user.id matches roomId')
+        let addPlayer = { 0: { ...data.user } }
+        let temp = {
           ...players,
           ...addPlayer
-        })
+        }
+        console.log("temp players obj", temp)
+        setPlayers(temp
+        )
       } else if (data.user?.id && !players[1]) {
-        let addPlayer = { 1: data.user }
+        console.log('open_room: user.id !matches roomId')
+        let addPlayer = { 1: { ...data.user } }
         setPlayers({
           ...players,
           ...addPlayer
@@ -89,16 +100,37 @@ const Board = () => {
       console.log("PLAYERS PLEASE WORK:", players)
     })
 
-  }, [user])
+  })
+
+  //make sure lastMove updates/persists before setBoard
+  useDidMountEffect(() => {
+    console.log('didMount (dep lastMove)')
+    placePiece(lastMove)
+    setNotation([...notation, lastMove])
+    let addMove = {};
+    addMove[lastMove] = turn;
+    setBoard({ ...board, ...addMove });
+  }, [lastMove])
+  
+  //make sure board updates/persists before checkGame
+  useDidMountEffect(() => {
+    console.log("notation:", notation);
+    console.log("board:", board);
+    checkGame()
+    swapPiece()
+    console.log("gameStatus:", gameOver);
+  }, [board])
 
   const joinRoom = (newRoom) => {
     socket.emit('join_room', { user: user, room: newRoom });
   };
 
   const sendMove = (e) => {
-    if (isTurn && e.target.nodeName === 'DIV') {
+    console.log('sendMove outside if', players, turn, players[turn], user.id, e.target.nodeName)
+    console.log('sendMove if cond', players[turn]?.id === user.id && e.target.nodeName === 'DIV')
+    if (players[turn]?.id === user.id && e.target.nodeName === 'DIV') {
       console.log('sendMove', e)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: parseInt(userId) })
+      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: roomId })
     }
   }
 
@@ -107,32 +139,15 @@ const Board = () => {
   // };
 
 
-  //make sure lastMove updates/persists before setBoard
-  useDidMountEffect(() => {
-    placePiece(lastMove)
-    setNotation([...notation, lastMove])
-    let addMove = {};
-    addMove[lastMove] = currPiece;
-    setBoard({ ...board, ...addMove });
-    swapPiece()
-  }, [lastMove])
-
-  //make sure board updates/persists before checkGame
-  useDidMountEffect(() => {
-    console.log("notation:", notation);
-    console.log("board:", board);
-    checkGame()
-    console.log("gameStatus:", gameOver);
-  }, [board])
-
   const placePiece = (coordNum) => {
+    console.log("Can Place?")
     if (!gameOver) {
       console.log("Place!");
       let img = document.getElementById(`img-${('0' + coordNum).slice(-4)}`)
       console.log(coordNum, img)
       if (img != null && !img.getAttribute('src')) {
-        console.log('currPiece', currPiece)
-        img.setAttribute('src', pieces[currPiece])
+        console.log('current turn:', turn)
+        img.setAttribute('src', pieces[turn])
 
       }
     } else {
@@ -142,10 +157,11 @@ const Board = () => {
 
   const swapPiece = () => {
     console.log("Swap!");
-    let temp = currPiece;
-    setCurrPiece(oppPiece);
-    setOppPiece(temp);
-    setIsTurn(!isTurn);
+    // let temp = currPiece;
+    // setCurrPiece(oppPiece);
+    // setOppPiece(temp);
+    // setIsTurn(!isTurn);
+    setTurn((turn + 1) % 2)
   };
 
   const checkGame = (n = 5) => {
@@ -155,7 +171,7 @@ const Board = () => {
     let backwardDiag = checkLine(displace.up + displace.left, n)
     console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
 
-    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
+    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame(turn);
   }
 
   const checkLine = (displacement, n = 5) => {

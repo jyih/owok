@@ -29,15 +29,19 @@ def handle_player_info(data):
 # handle place piece
 @socketio.on("place_piece")
 def handle_place_piece(data):
-    print('|*| PLACE_PIECE:', data)
+    print(f'''
+    |*| PLACE_PIECE: data
+    ''')
     emit("place_piece", data, broadcast=True, room=data['room'])
 
 @socketio.on('join_room')
 def on_join(data):
     room = data['room']
-    print('|*| JOIN_ROOM:', data['user'])
+    print(f'''
+    |*| JOIN_ROOM: {data}
+    ''')
     join_room(room)
-    emit('open_room', data, broadcast=True)
+    emit('open_room', {'user': data['user']}, room=room, broadcast=True)
 
 @socketio.on("leave_room")
 def leave(data):
