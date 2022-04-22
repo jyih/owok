@@ -11,8 +11,8 @@
 
 .ChatContainer {
     position: absolute;
-    bottom: 302px;
-    right: 100px;
+    bottom: 40px;
+    right: 8px;
     width: 375px;
     height: 128px;
     background-color: none;
@@ -47,4 +47,13 @@
     background-color: none;
     border: none;
     outline: none;
+    position: relative;
+    bottom: -7px;
+    right: -12px;
+    color: rgb(66, 66, 66);
+}
+
+.ChatInputBox > button:hover {
+    cursor: pointer;
+    color: black;
 }

@@ -6,10 +6,6 @@
     width: 100vw;
     height: 100vh;
     font-family: MaplestoryOTFLight;
-    background-image: url("../images/mulung.jpg");
-    /* background-image: url("../images/herbtown.jpg"); */
-    background-size: cover;
-    background-repeat: repeat-y;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -48,7 +44,7 @@
 .SingleGameContainer {
     min-width: 300px;
     height: 160px;
-    background-color: rgba(255, 255, 255, 0.253);
+    background-color: rgba(255, 255, 255, 0.384);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -57,7 +53,7 @@
 }
 
 .SingleGameContainer:hover {
-    background-color: rgba(255, 255, 255, 0.596);
+    background-color: rgba(255, 255, 255, 0.705);
     cursor: pointer;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 let socket;
@@ -7,6 +7,10 @@ const Chat = () => {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState([]);
   const user = useSelector((state) => state.session.user);
+
+  //When someone joins: Username has joined!
+  //Every time a PLAYER (one or two) joins, send message:
+  //Owok: Place 5 pieces in a row to win!
 
   useEffect(() => {
     // open socket connection
@@ -21,6 +25,21 @@ const Chat = () => {
       socket.disconnect();
     };
   }, []);
+
+  // function scrollToBottom() {
+  //   messages.scrollTop = messages.scrollHeight;
+  // }
+  // scrollToBottom();
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const updateChatInput = (e) => {
     setChatInput(e.target.value);
@@ -39,10 +58,13 @@ const Chat = () => {
           {messages.map((message, ind) => (
             <div key={ind}>{`${message.user}: ${message.msg}`}</div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
         <form onSubmit={sendChat} className="ChatInputBox">
           <input value={chatInput} onChange={updateChatInput} />
-          <button type="submit">Send</button>
+          <button type="submit">
+            <i className="fa-solid fa-arrow-turn-up"></i>
+          </button>
         </form>
       </div>
     )

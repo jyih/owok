@@ -35,6 +35,12 @@
     width: 100%;
 }
 
+.ProfileLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .ProfileCard {
     height: 200px;
     width: 300px;
@@ -77,6 +83,28 @@
     padding-left: 10px;
     border-radius: 5px;
     border-bottom: 2px dotted black;
+}
+
+.ProfileChallengeButton > button {
+    background-color: #FCCDD9;
+    font-family: MaplestoryOTFLight;
+    border: none;
+    color: #111;
+    font-weight: bolder;
+    padding: 17px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 16px;
+    box-shadow: 0px 6px 0px #EDA6BB;
+    margin-top: 25px;
+}
+
+.ProfileChallengeButton > button:hover {
+    background-color: #FCD7D2;
+    box-shadow: 0px 6px 0px #EEA094;
 }
 
 .ProfileGames {

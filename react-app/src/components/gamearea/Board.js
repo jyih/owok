@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as replayActions from "../../store/replays";
 import { GridData } from "./GridData";
+import Chat from "./Chat";
 
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
 import omok_piece_slime from "../images/omok_piece_slime.png";
@@ -35,13 +36,12 @@ const Board = () => {
   // const [currPiece, setCurrPiece] = useState("mushroom");
   // const [oppPiece, setOppPiece] = useState("slime");
   // const [currTurn, setCurrTurn] = useState(0)
-  const [turn, setTurn] = useState(playerOneId)
-  const [gameOver, setGameOver] = useState(false)
-  const [notation, setNotation] = useState([])
-  const [board, setBoard] = useState({})
-  const [lastMove, setLastMove] = useState(null)
+  const [turn, setTurn] = useState(playerOneId);
+  const [gameOver, setGameOver] = useState(false);
+  const [notation, setNotation] = useState([]);
+  const [board, setBoard] = useState({});
+  const [lastMove, setLastMove] = useState(null);
   // const [isTurn, setIsTurn] = useState(parseInt(roomId) === parseInt(user.id))
-
 
   const [players, setPlayers] = useState({});
 
@@ -116,16 +116,34 @@ const Board = () => {
   // }
 
   const sendMove = (e) => {
-    console.log('sendMove outside if', players, turn, players[turn], user.id, e.target.nodeName)
-    console.log('sendMove if cond', parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV')
-    if (!gameOver && parseInt(players[turn]?.id) === user.id && e.target.nodeName === 'DIV') {
-      console.log('sendMove', e.target.id)
-      socket.emit("place_piece", { user: user.id, coord: e.target.id, room: playerOneId })
+    console.log(
+      "sendMove outside if",
+      players,
+      turn,
+      players[turn],
+      user.id,
+      e.target.nodeName
+    );
+    console.log(
+      "sendMove if cond",
+      parseInt(players[turn]?.id) === user.id && e.target.nodeName === "DIV"
+    );
+    if (
+      !gameOver &&
+      parseInt(players[turn]?.id) === user.id &&
+      e.target.nodeName === "DIV"
+    ) {
+      console.log("sendMove", e.target.id);
+      socket.emit("place_piece", {
+        user: user.id,
+        coord: e.target.id,
+        room: playerOneId,
+      });
     }
-  }
+  };
 
   const placePiece = (coordNum) => {
-    console.log("Can Place?")
+    console.log("Can Place?");
     if (!gameOver) {
       console.log(`Place at ${coordNum}`);
       let img = document.getElementById(`img-${('000' + coordNum).slice(-4)}`)
@@ -150,21 +168,33 @@ const Board = () => {
     // setOppPiece(temp);
     // setIsTurn(!isTurn);
     // setTurn((turn + 1) % 2)
-    if (!gameOver) setTurn(turn === playerOneId ? playerTwoId : playerOneId)
+    if (!gameOver) setTurn(turn === playerOneId ? playerTwoId : playerOneId);
   };
 
   const checkGame = (n = 5) => {
     if (!gameOver) {
-      let vertical = checkLine(displace.up, n)
-      let horizontal = checkLine(displace.right, n)
-      let forwardDiag = checkLine(displace.up + displace.right, n)
-      let backwardDiag = checkLine(displace.up + displace.left, n)
-      console.log('checkGame:', vertical, horizontal, forwardDiag, backwardDiag)
+      let vertical = checkLine(displace.up, n);
+      let horizontal = checkLine(displace.right, n);
+      let forwardDiag = checkLine(displace.up + displace.right, n);
+      let backwardDiag = checkLine(displace.up + displace.left, n);
+      console.log(
+        "checkGame:",
+        vertical,
+        horizontal,
+        forwardDiag,
+        backwardDiag
+      );
 
-      if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame(turn);
-      else swapPiece()
+      if (
+        vertical >= n ||
+        horizontal >= n ||
+        forwardDiag >= n ||
+        backwardDiag >= n
+      )
+        endGame(turn);
+      else swapPiece();
     }
-  }
+  };
 
   const checkLine = (displacement, n = 5) => {
     let countPos = checkVector(displacement, n);
@@ -208,7 +238,6 @@ const Board = () => {
         console.log(data.errors);
       }
     }
-
   };
 
   return (
@@ -246,8 +275,8 @@ const Board = () => {
         <p>{players[playerTwoId]?.wins}</p>
         <p>{players[playerTwoId]?.losses}</p>
         <p>{players[playerTwoId]?.draws}</p>
-
       </div>
+      <Chat />
     </div>
   );
 };

@@ -5,8 +5,8 @@ import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/navbar/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/User";
+import UsersList from "./components/userslist/UsersList";
+// import User from "./components/User";
 import GameArea from "./components/gamearea/GameArea";
 import { authenticate } from "./store/session";
 import BrowseReplays from "./components/replays/BrowseReplays";
@@ -39,12 +39,12 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/users" exact={true}>
+        {/* <ProtectedRoute path="/users" exact={true}>
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
         <ProtectedRoute path="/browse" exact={true}>
           <BrowseReplays />
         </ProtectedRoute>
@@ -53,6 +53,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/profile/:userId" exact={true}>
           <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/play" exact={true}>
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/play/:playerOneId/:playerTwoId" exact={true}>
           <GameArea />
