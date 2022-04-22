@@ -41,3 +41,20 @@ Game would not save/create after completion. "Object not subscriptable"
 
 _Solution:_
 Needed to use dot notation (Python issue)
+
+
+**[04-22-2022]**
+
+_Issue:_
+Player sprite remains after disconnecting
+
+_Solution:_
+Keep log of who joins and remove those who disconnect
+
+**[04-22-2022]**
+
+_Issue:_
+Cannot place pieces on board edge
+
+_Solution:_
+Standardized all coordinate placements into quad digit string
