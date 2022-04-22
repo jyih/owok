@@ -17,6 +17,7 @@ _Solution:_
 Found that the new game moves were storing with curly braces wrapping the coordinates inside
 the string. Had to slice first and last character from string to remove curly braces
 const movesArr = game?.moves?.slice(1, -1).split(",");
+Standardized notation in database to have no curly braces; removed the above .slice(1,-1) in replays on 04/22/22.
 
 **[04-19-2022]**
 
