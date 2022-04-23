@@ -90,7 +90,7 @@ def disconnect():
     |*| DELETED:
     {rooms}
     ''')
-    emit('leave_room', {'players': rooms[dc_user['room']]}, broadcast=True)
+    emit('leave_room', {'players': rooms[dc_user['room']]}, room=dc_user['room'])
 
 
 # @socketio.on('message')

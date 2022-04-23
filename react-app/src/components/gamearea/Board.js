@@ -79,10 +79,11 @@ const Board = () => {
     socket.on("leave_room", (data) => {
       console.log("useEffect, leave_room", data);
       console.log(data.players);
-      if (!gameOver && !notation.length && !Object.keys(board).length) {
-        if (!data.players[playerOneId]) endGame(playerTwoId);
-        else endGame(playerOneId);
-      }
+      console.log("initial check", !gameOver && !notation.length && !Object.keys(board).length)
+      // if (!gameOver && !notation.length && !Object.keys(board).length) {
+      //   if (!data.players[playerOneId]) endGame(playerTwoId); 
+      //   else endGame(playerOneId);
+      // }
       setPlayers(data.players);
     });
 
@@ -94,15 +95,7 @@ const Board = () => {
 
     socket.on("chat", (chat) => {
       console.log("@@@", chat);
-      // if (chat.players) {
-      //   /**
-      //    * logic if initial join
-      //    */
-      // }
-      // if (chat.room === socketRoom) {
       setMessages((messages) => [...messages, chat]);
-      // }
-      // setMessages((messages) => [...messages, chat]);
     });
 
     return () => {
@@ -159,6 +152,7 @@ const Board = () => {
     );
     console.log(
       "sendMove if cond",
+      !gameOver,
       parseInt(players[turn]?.id) === user.id && e.target.nodeName === "DIV"
     );
     if (
@@ -170,7 +164,7 @@ const Board = () => {
       socket.emit("place_piece", {
         user: user.id,
         coord: e.target.id,
-        room: playerOneId,
+        room: socketRoom,
       });
     }
   };
@@ -256,6 +250,7 @@ const Board = () => {
     //increment winner win count
     //increment loser loss count
     //if draw, increment both players' draw count
+    console.log("in endGame")
     setGameOver(true);
 
     const gameData = {
