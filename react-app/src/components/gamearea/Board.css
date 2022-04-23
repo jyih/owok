@@ -5,7 +5,7 @@
     width: 855px;
     height: 500px;
     position: absolute;
-    top: 200px;
+    top: 150px;
 }
 
 .board_layout {
@@ -33,6 +33,16 @@
     right: 300px;
 }
 
+.board_player_one_username {
+    position: absolute;
+    top: 163px;
+    right: 295px;
+    width: 90px;
+    text-align: center;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .board_stats_one {
     display: flex;
     flex-direction: column;
@@ -53,6 +63,16 @@
     position: absolute;
     top: 30px;
     right: 170px;
+}
+
+.board_player_two_username {
+    position: absolute;
+    top: 163px;
+    right: 195px;
+    width: 90px;
+    text-align: center;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .board_stats_two {

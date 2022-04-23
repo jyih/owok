@@ -64,8 +64,7 @@ const Board = () => {
     setSocketRoom(`${playerOneId}${playerTwoId}`);
   }, [playerOneId, playerTwoId]);
 
-  useEffect(() => {
-  }, [messages])
+  useEffect(() => {}, [messages]);
 
   useEffect(() => {
     socket = io();
@@ -79,9 +78,12 @@ const Board = () => {
     socket.on("leave_room", (data) => {
       console.log("useEffect, leave_room", data);
       console.log(data.players);
-      console.log("initial check", !gameOver && !notation.length && !Object.keys(board).length)
+      console.log(
+        "initial check",
+        !gameOver && !notation.length && !Object.keys(board).length
+      );
       // if (!gameOver && !notation.length && !Object.keys(board).length) {
-      //   if (!data.players[playerOneId]) endGame(playerTwoId); 
+      //   if (!data.players[playerOneId]) endGame(playerTwoId);
       //   else endGame(playerOneId);
       // }
       setPlayers(data.players);
@@ -117,7 +119,7 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => { }, [players]);
+  useEffect(() => {}, [players]);
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
@@ -250,7 +252,7 @@ const Board = () => {
     //increment winner win count
     //increment loser loss count
     //if draw, increment both players' draw count
-    console.log("in endGame")
+    console.log("in endGame");
     setGameOver(true);
 
     const gameData = {
@@ -288,7 +290,9 @@ const Board = () => {
         alt={players[playerOneId]}
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
-
+      <p className="board_player_one_username">
+        {players[playerOneId]?.username}
+      </p>
       <div className="board_stats_one">
         <p>{players[playerOneId]?.wins}</p>
         <p>{players[playerOneId]?.losses}</p>
@@ -299,6 +303,9 @@ const Board = () => {
         className="board_player_two"
         alt={players[playerTwoId]}
       />
+      <p className="board_player_two_username">
+        {players[playerTwoId]?.username}
+      </p>
       <div className="board_stats_two">
         <p>{players[playerTwoId]?.wins}</p>
         <p>{players[playerTwoId]?.losses}</p>

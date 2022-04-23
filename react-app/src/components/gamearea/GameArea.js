@@ -14,7 +14,7 @@ const GameArea = () => {
   // const sessionUserId = sessionUser.id;
   return (
     <div className="GameAreaContainer">
-      <h1>OWOK!!</h1>
+      <h1>MATCH START!</h1>
       <Board />
     </div>
   );

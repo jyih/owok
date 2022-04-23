@@ -9,6 +9,14 @@
     height: calc(100vh - 100px);
 }
 
+.GameAreaContainer > h1 {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
+    font-family: MaplestoryOTFLight;
+    margin-bottom: 0;
+}
+
 .ChatContainer {
     position: absolute;
     bottom: 40px;
