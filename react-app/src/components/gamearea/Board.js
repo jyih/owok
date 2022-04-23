@@ -45,6 +45,9 @@ const Board = () => {
 
   const [players, setPlayers] = useState({});
 
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
+
   const pieces = {
     [playerOneId]: omok_piece_mushroom,
     [playerTwoId]: omok_piece_slime,
@@ -57,9 +60,12 @@ const Board = () => {
     right: 1,
   };
 
-  // useEffect(() => {
-  //   setSocketRoom(`${playerOneId}${playerTwoId}`);
-  // }, [playerOneId, playerTwoId]);
+  useEffect(() => {
+    setSocketRoom(`${playerOneId}${playerTwoId}`);
+  }, [playerOneId, playerTwoId]);
+
+  useEffect(() => {
+  }, [messages])
 
   useEffect(() => {
     socket = io();
@@ -86,16 +92,39 @@ const Board = () => {
       console.log("socket place piece, players:", players);
     });
 
+    socket.on("chat", (chat) => {
+      console.log("@@@", chat);
+      // if (chat.players) {
+      //   /**
+      //    * logic if initial join
+      //    */
+      // }
+      // if (chat.room === socketRoom) {
+      setMessages((messages) => [...messages, chat]);
+      // }
+      // setMessages((messages) => [...messages, chat]);
+    });
+
     return () => {
       socket.disconnect();
     };
   }, []);
 
+  const sendChat = (e) => {
+    e.preventDefault();
+    socket.emit("chat", {
+      user: user.username,
+      msg: chatInput,
+      room: socketRoom,
+    });
+    setChatInput("");
+  };
+
   useEffect(() => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => {}, [players]);
+  useEffect(() => { }, [players]);
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
@@ -280,7 +309,13 @@ const Board = () => {
         <p>{players[playerTwoId]?.losses}</p>
         <p>{players[playerTwoId]?.draws}</p>
       </div>
-      <Chat socketRoom={socketRoom} />
+      <Chat
+        socketRoom={socketRoom}
+        messages={messages}
+        chatInput={chatInput}
+        setChatInput={setChatInput}
+        sendChat={sendChat}
+      />
     </div>
   );
 };

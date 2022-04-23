@@ -3,38 +3,38 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 let socket;
 
-const Chat = ({ socketRoom }) => {
-  const [chatInput, setChatInput] = useState("");
-  const [messages, setMessages] = useState([]);
+const Chat = ({ messages, sendChat, chatInput, setChatInput }) => {
+  // const [chatInput, setChatInput] = useState("");
+  // const [messages, setMessages] = useState([]);
   const user = useSelector((state) => state.session.user);
 
   //When someone joins: Username has joined!
   //Every time a PLAYER (one or two) joins, send message:
   //Owok: Place 5 pieces in a row to win!
 
-  useEffect(() => {
-    // open socket connection
-    // create websocket
-    socket = io();
-    console.log("is this working socket chat");
+  // useEffect(() => {
+  //   // open socket connection
+  //   // create websocket
+  //   socket = io();
+  //   console.log("is this working socket chat");
 
-    socket.on("chat", (chat) => {
-      console.log("@@@", chat);
-      // if (chat.players) {
-      //   /**
-      //    * logic if initial join
-      //    */
-      // }
-      // if (chat.room === socketRoom) {
-      setMessages((messages) => [...messages, chat]);
-      // }
-      // setMessages((messages) => [...messages, chat]);
-    });
-    // when component unmounts, disconnect
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   socket.on("chat", (chat) => {
+  //     console.log("@@@", chat);
+  //     // if (chat.players) {
+  //     //   /**
+  //     //    * logic if initial join
+  //     //    */
+  //     // }
+  //     // if (chat.room === socketRoom) {
+  //     setMessages((messages) => [...messages, chat]);
+  //     // }
+  //     // setMessages((messages) => [...messages, chat]);
+  //   });
+  //   // when component unmounts, disconnect
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   // function scrollToBottom() {
   //   messages.scrollTop = messages.scrollHeight;
@@ -55,15 +55,15 @@ const Chat = ({ socketRoom }) => {
     setChatInput(e.target.value);
   };
 
-  const sendChat = (e) => {
-    e.preventDefault();
-    socket.emit("chat", {
-      user: user.username,
-      msg: chatInput,
-      room: socketRoom,
-    });
-    setChatInput("");
-  };
+  // const sendChat = (e) => {
+  //   e.preventDefault();
+  //   socket.emit("chat", {
+  //     user: user.username,
+  //     msg: chatInput,
+  //     room: socketRoom,
+  //   });
+  //   setChatInput("");
+  // };
 
   return (
     user && (

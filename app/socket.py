@@ -22,7 +22,7 @@ user_sid = {}
 def handle_chat(data):
     print('|*| CHAT:', data)
     # emit("chat", {"user": data["user"], "msg": data["msg"]})
-    emit("chat", data, broadcast=True)
+    emit("chat", data, room=data['room'])
     # emit("chat", data, to=data['room'])
 
 # handle player info
