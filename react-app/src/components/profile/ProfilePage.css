@@ -20,3 +20,66 @@
     color: #ffffff;
     font-size: 55px;
 }
+
+.ProfileSearchingText {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    top: 400px;
+}
+
+.ProfileWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ProfileCard {
+    height: 200px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(164, 210, 248);
+    border-radius: 30px;
+}
+
+.ProfileCardLeft {
+    /* background-color: white; */
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ProfileCardLeft > img {
+    position: relative;
+    top: -30px;
+    left: 18px;
+}
+
+.ProfileCardLeft > p {
+    position: relative;
+    top: -40px;
+}
+
+.ProfileCardRight {
+    width: 100%;
+}
+
+.ProfileCardRight > p {
+    background-color: white;
+    width: 150px;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 5px;
+    border-bottom: 2px dotted black;
+}
+
+.ProfileGames {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 360px);
+}

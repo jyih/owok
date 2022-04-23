@@ -1,5 +1,5 @@
 .board_container {
-    background-image: url("../images/board.jpg");
+    background-image: url("../images/boardoccupied.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     width: 855px;
@@ -16,7 +16,6 @@
     grid-template-rows: repeat(15, 1fr);
     margin-left: 21px;
     padding-top: 28px;
-    /* background-color: white; */
 }
 
 .grid {

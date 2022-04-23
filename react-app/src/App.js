@@ -12,6 +12,7 @@ import { authenticate } from "./store/session";
 import BrowseReplays from "./components/replays/BrowseReplays";
 import SingleReplay from "./components/replays/SingleReplay";
 import ProfilePage from "./components/profile/ProfilePage";
+import { Redirect } from "react-router-dom";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -53,8 +54,11 @@ function App() {
         <ProtectedRoute path="/profile/:userId" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/:userId" exact={true}>
+        <ProtectedRoute path="/play/:userId" exact={true}>
           <GameArea />
+        </ProtectedRoute>
+        <ProtectedRoute path="*">
+          <Redirect to="/browse" />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
