@@ -17,6 +17,20 @@
 // //   game,
 // // });
 
+// export const fetchGame = (game_id) => async (dispatch) => {
+//     const res = await fetch(`/api/games.${game_id}`);
+
+//     if (res.ok) {
+//         const game = await res.json();
+
+//         dispatch (loadGame(game));
+//         return game;
+//     } else {
+//         const errors = await res.json();
+//         return errors;
+//     }
+// }
+
 // export const createGame = (game) => async (dispatch) => {
 //   const res = await fetch(`/api/games/`, {
 //     method: "POST",
