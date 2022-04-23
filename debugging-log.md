@@ -59,3 +59,11 @@ Cannot place pieces on board edge
 
 _Solution:_
 Standardized all coordinate placements into quad digit string
+
+**[04-22-2022]**
+
+_Issue:_
+Couldn't send messages only to specific rooms. Either broadcast to all or to none.
+
+_Solution:_
+Moved the socket.on to the parent component and passed down the React useState for messages to the Chat (child) component.
