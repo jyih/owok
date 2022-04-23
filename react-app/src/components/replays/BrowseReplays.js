@@ -10,7 +10,7 @@ const BrowseReplays = () => {
 
   useEffect(() => {
     async function fetchGames() {
-      const res = await fetch("/api/games/");
+      const res = await fetch("/api/replays/");
       const resData = await res.json();
       const replays = Object.values(resData);
       setGames(replays);

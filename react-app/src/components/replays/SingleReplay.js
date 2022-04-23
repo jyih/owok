@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchGame } from "../../store/replays";
+import { fetchReplay } from "../../store/replays";
 import ReplayBoard from "./ReplayBoard";
 import Comments from "../comments/Comments";
 
@@ -12,7 +12,7 @@ const SingleReplay = () => {
   const { gameId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchGame(gameId));
+    dispatch(fetchReplay(gameId));
   }, [dispatch, gameId]);
 
   return (

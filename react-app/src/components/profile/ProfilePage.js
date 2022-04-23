@@ -37,7 +37,7 @@ const ProfilePage = () => {
       return;
     }
     async function fetchUsersGames() {
-      const res = await fetch(`/api/games/user/${userId}`);
+      const res = await fetch(`/api/replays/user/${userId}`);
       if (res.ok) {
         const resData = await res.json();
         const replays = Object.values(resData);

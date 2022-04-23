@@ -9,7 +9,7 @@ import "./Comments.css";
 const Comments = () => {
   //state = formVisible true and false onclick change state to true or false
   const sessionUser = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
   const commentsObj = game?.comments;
   const comments = commentsObj && Object.values(commentsObj);
 

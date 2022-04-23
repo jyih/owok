@@ -92,11 +92,11 @@ const LoginForm = () => {
           <p>Contact uwu</p>
           <div className="contact-dropup-content">
             <a href="https://www.linkedin.com/in/sharonfang8/" id="linkedin">
-              <i class="fa-brands fa-linkedin"></i>
+              <i className="fa-brands fa-linkedin"></i>
               Linkedin
             </a>
             <a href="https://github.com/milkyomo/owok" id="github">
-              <i class="fa-brands fa-github-alt"></i>
+              <i className="fa-brands fa-github-alt"></i>
               Github
             </a>
           </div>

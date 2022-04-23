@@ -7,7 +7,7 @@ import "./CreateCommentForm.css";
 const CreateCommentForm = () => {
   const dispatch = useDispatch();
   const player = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
 
   const [errors, setErrors] = useState([]);
   const [content, setContent] = useState("");

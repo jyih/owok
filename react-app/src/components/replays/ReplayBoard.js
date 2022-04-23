@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 const ReplayBoard = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
 
   //privacy
   let privateButton = <></>;
@@ -31,7 +31,7 @@ const ReplayBoard = () => {
     if (sessionUser.id === game.player_two_id) {
       privateData.change = "is_private_two";
     }
-    dispatch(replayActions.editGame(privateData));
+    dispatch(replayActions.editReplay(privateData));
     window.alert(`Privacy was changed! 😊`);
   };
 

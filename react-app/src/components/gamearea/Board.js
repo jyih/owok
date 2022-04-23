@@ -263,7 +263,7 @@ const Board = () => {
     };
 
     if (parseInt(winnerId) === user.id) {
-      const data = dispatch(replayActions.saveGame(gameData));
+      const data = dispatch(replayActions.saveReplay(gameData));
       if (data?.errors) {
         console.log(data.errors);
       }

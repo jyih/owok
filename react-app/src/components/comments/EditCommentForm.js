@@ -6,7 +6,7 @@ import "./EditCommentForm.css";
 
 const EditCommentForm = ({ commentId, resetId }) => {
   const dispatch = useDispatch();
-  const game = useSelector((state) => state.current_game?.comments);
+  const game = useSelector((state) => state.current_replay?.comments);
   const commentToEdit = game[commentId];
 
   const [errors, setErrors] = useState([]);
@@ -56,12 +56,12 @@ const EditCommentForm = ({ commentId, resetId }) => {
           onChange={updateContent}
         />
         <button type="submit" disabled={errors.length > 0}>
-          <i class="fa-solid fa-square-check" title="Confirm edit"></i>
+          <i className="fa-solid fa-square-check" title="Confirm edit"></i>
         </button>
         {/* </div> */}
       </form>
       <i
-        class="fa-solid fa-trash-can"
+        className="fa-solid fa-trash-can"
         title="Delete"
         onClick={async (e) => {
           e.preventDefault();

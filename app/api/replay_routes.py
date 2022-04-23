@@ -3,16 +3,16 @@ from flask_login import login_required
 from app.models import db, Game, User
 # from app.forms import GameForm
 
-game_routes = Blueprint('games', __name__)
+replay_routes = Blueprint('replays', __name__)
 
-@game_routes.route('/')
-def games():
+@replay_routes.route('/')
+def replays():
   games = Game.query.all()
   return {game.to_dict()['id']:game.to_dict() for game in games}
 
 
-@game_routes.route('/<int:id>')
-def game(id):
+@replay_routes.route('/<int:id>')
+def replay(id):
   #Get specific game via id
   game = Game.query.get(id)
   print('game:', game)
@@ -21,8 +21,8 @@ def game(id):
   return {**game.to_dict()}
 
 
-@game_routes.route('/user/<int:user_id>')
-def games_user(user_id):
+@replay_routes.route('/user/<int:user_id>')
+def replays_user(user_id):
   #Get all games played by user_id
   user = User.query.get(user_id)
   games = user.get_games()
@@ -32,9 +32,9 @@ def games_user(user_id):
   return {game['id']:game for game in games}
 
 
-@game_routes.route('/', methods=['POST'])
+@replay_routes.route('/', methods=['POST'])
 # @login_required
-def game_create():
+def replay_create():
   data = request.json
   # form = GameForm()
   # form['csrf_token'].data = request.cookies['csrf_token']
@@ -67,8 +67,8 @@ def game_create():
   return game.to_dict()
 
 
-@game_routes.route('/<int:id>', methods=['PUT'])
-def game_update(id):
+@replay_routes.route('/<int:id>', methods=['PUT'])
+def replay_update(id):
   data = request.json
   game = Game.query.get(id)
 
