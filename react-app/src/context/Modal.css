@@ -1,34 +1,125 @@
 #modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-  }
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
 
-  #modal-background {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: none;
-    backdrop-filter: blur(1px);
-  }
+#modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: none;
+  backdrop-filter: blur(1px);
+}
 
-  #modal-content {
-    position: absolute;
-    background-color:white;
-    border-radius: 100px;
-  }
+#modal-content {
+  position: absolute;
+  background-color:rgb(118, 228, 255);
+  border-radius: 100px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
 
-  .ChallengeModal {
-    width: 500px;
-    height: 300px;
-    text-align: center;
-    font-family: MaplestoryOTFLight;
-  }
+.ChallengeModal {
+  width: 500px;
+  height: 320px;
+  text-align: center;
+  font-family: MaplestoryOTFLight;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 10px 40px 10px;
+}
+
+.ChallengeModal > h1 {
+  text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+  color: #ffffff;
+  /* font-size: 40px; */
+}
+
+/* .ChallengeText {
+  color: rgb(24, 24, 24);
+} */
+
+.ChallengeLink {
+  background-color: white;
+  width: 430px;
+  height: 40px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding-left: 25px; */
+  border-radius: 10px;
+}
+
+.ChallengeLink > i {
+  position: absolute;
+  right: 50px;
+  color: gray;
+}
+
+.ChallengeLink > i:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.CopiedText {
+  position: absolute;
+  background-color: rgb(80, 80, 80);
+  color: white;
+  right: 17px;
+  bottom: 150px;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.CopiedText::before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+
+	left: 1.5em;
+	border: .45rem solid transparent;
+	border-top: none;
+
+	border-bottom-color: rgb(80, 80, 80);
+	/* border-bottom-color: #FCCDD9; */
+	/* filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1)); */
+}
+
+.ChallengeModal > a {
+  background-color: rgb(253, 244, 68);
+  /* background-color: #FCCDD9; */
+  font-family: MaplestoryOTFLight;
+  border: none;
+  color: #111;
+  font-weight: bolder;
+  padding: 17px 9px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0px 6px 0px rgb(165, 159, 40);
+  /* box-shadow: 0px 6px 0px #EDA6BB; */
+  margin-top: 10px;
+}
+
+.ChallengeModal > a:hover {
+  background-color: rgb(255, 245, 47);
+  box-shadow: 0px 6px 0px rgb(201, 193, 52);
+  /* background-color: #FCD7D2;
+  box-shadow: 0px 6px 0px #EEA094; */
+}

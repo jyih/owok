@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Challenge = ({ sessionUser, user }) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   let linkToCopy = `${window.location.origin}/play/${sessionUser.id}/${user.id}`;
+
+  useEffect(() => {
+    copyNotify();
+  });
 
   const updateClipboard = (newClip) => {
     navigator.clipboard.writeText(newClip).then(
@@ -22,7 +26,7 @@ const Challenge = ({ sessionUser, user }) => {
     if (copySuccess === true) {
       setTimeout(() => {
         setCopySuccess(false);
-      }, 2500);
+      }, 1500);
     }
   };
 
@@ -37,18 +41,17 @@ const Challenge = ({ sessionUser, user }) => {
   return (
     <div className="ChallengeModal">
       <h1>Challenge {user.username}</h1>
-      <p>Send the following link to your chosen opponent to play!</p>
-      <p id="newClip">
-        {window.location.origin}/play/{sessionUser.id}/{user.id}
+      <p className="ChallengeText">
+        Send the following link to your chosen opponent to play:
       </p>
-      {copySuccess && (
-        <div>
-          {copyNotify()}
-          <p>Copied!</p>
-        </div>
-      )}
-      <button onClick={copyLink}>Copy</button>
-      <p>When you're ready, click the button to go to the room</p>
+      {copySuccess && <div className="CopiedText">Copied!</div>}
+      <p className="ChallengeLink" id="newClip">
+        {window.location.origin}/play/{sessionUser.id}/{user.id}
+        <i className="fa-regular fa-copy" onClick={copyLink}></i>
+      </p>
+      <p className="ChallengeText">
+        When you're ready, click the button to go to the room!
+      </p>
       <NavLink to={`/play/${sessionUser.id}/${user.id}`}>Let's play!</NavLink>
     </div>
   );

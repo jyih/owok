@@ -183,7 +183,9 @@ const ProfilePage = () => {
                     <p>draws: {user.draws}</p>
                   </div>
                 </div>
-                <ChallengeModal sessionUser={sessionUser} user={user} />
+                {sessionUser.id !== user.id && (
+                  <ChallengeModal sessionUser={sessionUser} user={user} />
+                )}
               </div>
               <div className="ProfileGames">
                 {sessionUser.id === user.id
