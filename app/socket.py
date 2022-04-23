@@ -21,7 +21,8 @@ user_sid = {}
 @socketio.on("chat")
 def handle_chat(data):
     print('|*| CHAT:', data)
-    emit("chat", data, broadcast=True, room=data['room'])
+    emit("chat", data, room=data['room'])
+    # emit("chat", data, to=data['room'])
 
 # handle player info
 @socketio.on("player_info")
@@ -55,6 +56,7 @@ def on_join(data):
     if not request.sid in user_sid:
         user_sid[request.sid] = {'id': user['id'], 'room': room}
 
+    print(f"client {user} wants to join: {room}")
     rooms[room][user['id']] = user
     join_room(room)
     data['players'] = rooms[room]

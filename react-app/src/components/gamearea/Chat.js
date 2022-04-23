@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 let socket;
 
-const Chat = () => {
+const Chat = ({ socketRoom }) => {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState([]);
   const user = useSelector((state) => state.session.user);
@@ -18,11 +18,14 @@ const Chat = () => {
     socket = io();
 
     socket.on("chat", (chat) => {
-      if (chat.players) {
-        /**
-         * logic if initial join
-         */
-      }
+      // if (chat.players) {
+      //   /**
+      //    * logic if initial join
+      //    */
+      // }
+      // if (chat.room === socketRoom) {
+      //   setMessages((messages) => [...messages, chat]);
+      // }
       setMessages((messages) => [...messages, chat]);
     });
     // when component unmounts, disconnect
@@ -52,7 +55,11 @@ const Chat = () => {
 
   const sendChat = (e) => {
     e.preventDefault();
-    socket.emit("chat", { user: user.username, msg: chatInput });
+    socket.emit("chat", {
+      room: socketRoom,
+      user: user.username,
+      msg: chatInput,
+    });
     setChatInput("");
   };
 
