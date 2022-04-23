@@ -21,7 +21,8 @@ user_sid = {}
 @socketio.on("chat")
 def handle_chat(data):
     print('|*| CHAT:', data)
-    emit("chat", data, room=data['room'])
+    # emit("chat", {"user": data["user"], "msg": data["msg"]})
+    emit("chat", data, broadcast=True)
     # emit("chat", data, to=data['room'])
 
 # handle player info
@@ -62,7 +63,7 @@ def on_join(data):
     data['players'] = rooms[room]
 
     emit('open_room', data, broadcast=True)
-    emit("chat", data, broadcast=True)
+    # emit("chat", data, broadcast=True)
 
 # @socketio.on('leave_room')
 # def on_leave(data):

@@ -16,17 +16,19 @@ const Chat = ({ socketRoom }) => {
     // open socket connection
     // create websocket
     socket = io();
+    console.log("is this working socket chat");
 
     socket.on("chat", (chat) => {
+      console.log("@@@", chat);
       // if (chat.players) {
       //   /**
       //    * logic if initial join
       //    */
       // }
       // if (chat.room === socketRoom) {
-      //   setMessages((messages) => [...messages, chat]);
-      // }
       setMessages((messages) => [...messages, chat]);
+      // }
+      // setMessages((messages) => [...messages, chat]);
     });
     // when component unmounts, disconnect
     return () => {
@@ -56,9 +58,9 @@ const Chat = ({ socketRoom }) => {
   const sendChat = (e) => {
     e.preventDefault();
     socket.emit("chat", {
-      room: socketRoom,
       user: user.username,
       msg: chatInput,
+      room: socketRoom,
     });
     setChatInput("");
   };

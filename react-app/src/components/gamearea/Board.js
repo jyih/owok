@@ -32,7 +32,7 @@ const Board = () => {
   // const params = useParams();
   // const roomId = parseInt(params.roomId)
   const { playerOneId, playerTwoId } = useParams();
-  const [socketRoom, setSocketRoom] = useState(playerOneId);
+  const [socketRoom, setSocketRoom] = useState(`${playerOneId}${playerTwoId}`);
   // const [currPiece, setCurrPiece] = useState("mushroom");
   // const [oppPiece, setOppPiece] = useState("slime");
   // const [currTurn, setCurrTurn] = useState(0)
@@ -56,6 +56,10 @@ const Board = () => {
     left: -1,
     right: 1,
   };
+
+  // useEffect(() => {
+  //   setSocketRoom(`${playerOneId}${playerTwoId}`);
+  // }, [playerOneId, playerTwoId]);
 
   useEffect(() => {
     socket = io();
@@ -107,8 +111,8 @@ const Board = () => {
     console.log("gameStatus:", gameOver);
   }, [board]);
 
-  const joinRoom = (room) => {
-    socket.emit("join_room", { user: user, room: room });
+  const joinRoom = (newRoom) => {
+    socket.emit("join_room", { user: user, room: newRoom });
   };
 
   // const leaveRoom = (room = socketRoom) => {
