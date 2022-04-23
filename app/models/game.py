@@ -1,7 +1,10 @@
 from email.policy import default
 from .db import db
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSONB
 
+def default_turn(context):
+    return context.get_current_parameters()['player_one_id']
 
 class Game(db.Model):
     __tablename__ = 'games'
@@ -10,7 +13,9 @@ class Game(db.Model):
     player_one_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     player_two_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     winner_id = db.Column(db.Integer, nullable=True)
-    moves = db.Column(db.String(12000), nullable=False)
+    moves = db.Column(db.String(12000), nullable=False, default="")
+    board = db.Column(JSONB, nullable=True, default={})
+    turn = db.Column(db.Integer, default=default_turn)
 
     is_private_one = db.Column(db.Boolean, nullable=False, default=False)
     is_private_two = db.Column(db.Boolean, nullable=False, default=False)
@@ -42,6 +47,9 @@ class Game(db.Model):
             'player_two_id': self.player_two_id,
             'winner_id': self.winner_id,
             'moves': self.moves,
+            'board_one': self.board_one,
+            'board_two': self.board_two,
+            'turn': self.turn,
             'is_private_one': self.is_private_one,
             'is_private_two': self.is_private_two,
             'created_at': self.created_at,
