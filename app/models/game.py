@@ -14,10 +14,10 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     player_one_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     player_two_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    winner_id = db.Column(db.Integer, nullable=True)
+    winner_id = db.Column(db.Integer, nullable=True, default=None)
     moves = db.Column(db.String(12000), nullable=False, default="")
     board = db.Column(JSONB, nullable=True, default={})
-    turn = db.Column(db.Integer, default=default_turn)
+    turn = db.Column(db.Integer, default=0)
 
     is_private_one = db.Column(db.Boolean, nullable=False, default=False)
     is_private_two = db.Column(db.Boolean, nullable=False, default=False)
@@ -57,3 +57,9 @@ class Game(db.Model):
             "user_player_two": self.player_two.to_dict(),
             "comments": {c.to_dict()["id"]: c.to_dict() for c in self.comments},
         }
+
+    def get_players(self):
+        return (
+            self.player_one_id,
+            self.player_two_id
+        )

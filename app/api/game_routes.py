@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, Game, User
+from sqlalchemy.orm.attributes import flag_modified
 
 game_routes = Blueprint("games", __name__)
 
@@ -27,8 +28,8 @@ def create_game():
     data = request.json
     print(
         f"""
-  SHOW ME THE DATA {data}
-  """
+        SHOW ME THE DATA {data}
+        """
     )
     game = Game(
         player_one_id=data["player_one_id"],
@@ -49,22 +50,20 @@ def update_game(id):
     if not game:
         return {"errors": "Game not found"}
     else:
-        print(
-            f"""
-    PLACE PIECE:
-    {type(game.board)}
-    """
-        )
-
-        place_piece(game, move)
-        return {**game.to_dict()}
+        if game.winner_id is not None:
+            return {"errors": "Game is over"}
+        else:
+            place_piece(game, move)
+            flag_modified(game, "board")
+            db.session.commit()
+            return {**game.to_dict()}
 
 
 # ==========
 # Game Logic
 # ==========
 
-displace = {
+DISPLACE = {
     "up": -100,
     "down": 100,
     "left": -1,
@@ -75,27 +74,33 @@ displace = {
 def place_piece(game, move):
     if move not in game.board:
         game.board[move] = game.turn
-        game.moves += f",{move}" if games.moves.length >= 0 else f"{move}"
+        game.moves = game.moves + f",{move}" if len(game.moves) > 0 else f"{move}"
         check_game(game, move)
 
 
 def check_game(game, move, n=5):
-    if game.winner_id is not None:
-        vertical = check_line(game, move, displace.up, n)
-        horizontal = check_line(game, move, displace.right, n)
-        forward_diag = check_line(game, move, displace.up + displace.right, n)
-        backward_diag = check_line(game, move, displace.up + displace.left, n)
+    vertical = check_line(game, move, DISPLACE["up"], n)
+    horizontal = check_line(game, move, DISPLACE["right"], n)
+    forward_diag = check_line(game, move, DISPLACE["up"] + DISPLACE["right"], n)
+    backward_diag = check_line(game, move, DISPLACE["up"] + DISPLACE["left"], n)
 
-        if vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
-            end_game(game)
-        else:
-            swap_piece(game)
+    print(
+        f"""
+    ARE WE CHECKING THE GAME OR NOT BRUH
+    {vertical} {horizontal} {forward_diag} {backward_diag}
+    """
+    )
+    
+    if vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
+        end_game(game)
+    else:
+        swap_piece(game)
 
 
 def check_line(game, move, displacement, n=5):
     return (
         check_vector(game, move, displacement, n)
-        + checkVector(game, move, -displacement, n)
+        + check_vector(game, move, -displacement, n)
         - 1
     )
 
@@ -104,22 +109,41 @@ def check_vector(game, move, displacement, n=5):
     look_piece = game.board[move]
     count = 0
 
-    while game.board[move] and look_piece == game.board[move] and count < n:
+    while look_piece == game.board[move] and count < n:
         count += 1
-        look_move = move + (displacement * count)
-        look_piece = game.board[look_move]
+        print(
+        f"""
+        convert: {move} by {displacement}*{count} to {f'{int(move) + (displacement * count):04}'}
+        """
+        )
+        look_move = f"{int(move) + (displacement * count):04}"
+        if look_move in game.board:
+            print(
+            f'''
+            look_piece: {game.board[look_move]}
+            '''
+            )
+            look_piece = game.board[look_move]
+        else:
+            break
 
     return count
 
 
 def end_game(game):
-    if game.winner_id is not None:
-        if game.moves.split(",").length == 225:
-            game.winner_id = -1  # tie
-        else:
-            game.winner_id = game.turn
-    db.session.commit()
+    # if game.winner_id is None:
+    if len(game.moves.split(",")) == 225:
+        game.winner_id = -1  # tie
+    else:
+        game.winner_id = game.get_players()[game.turn]
 
 
 def swap_piece(game, players=2):
+    # print(
+    #     f"""
+    #   TRYNA SWAP OUT HERE BRUH
+    #   {game.turn} to {(game.turn + 1) % players}
+    # """
+    # )
     game.turn = (game.turn + 1) % players
+    # game.turn = game.player_one_id if game.turn == game.player_two_id else game.
