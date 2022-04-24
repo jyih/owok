@@ -247,6 +247,8 @@ const Board = () => {
     return count;
   };
 
+  let gameStatusMessage = <p className="GameStatusMessage"></p>;
+
   const endGame = (winnerId = players[board[lastMove]]) => {
     //need to get player_two data
     //increment winner win count
@@ -268,6 +270,22 @@ const Board = () => {
         console.log(data.errors);
       }
     }
+
+    if (winnerId === playerOneId) {
+      gameStatusMessage = (
+        <p className="GameStatusMessage">
+          {players[playerOneId]?.username} won!
+        </p>
+      );
+    } else if (winnerId === playerTwoId) {
+      gameStatusMessage = (
+        <p className="GameStatusMessage">
+          {players[playerTwoId]?.username} won!
+        </p>
+      );
+    } else if (winnerId === -1) {
+      gameStatusMessage = <p className="GameStatusMessage">It's a draw!</p>;
+    }
   };
 
   return (
@@ -284,6 +302,7 @@ const Board = () => {
           </div>
         ))}
       </div>
+      {gameStatusMessage}
       <img
         src={players[playerOneId]?.sprite_url}
         className="board_player_one"
