@@ -73,7 +73,7 @@ const Board = () => {
       console.log(data.players);
       // console.log(
       //   "initial check",
-      //   !gameOver && !notation.length && !Object.keys(board).length
+      //   gameOver && !notation.length && !Object.keys(board).length
       // );
 
       setPlayers(data.players);
@@ -149,6 +149,16 @@ const Board = () => {
   }
 
 
+
+  let gameStatusMessage = (
+    <p className="GameStatusMessage">
+      {game?.winner_id === -1
+        ? "It's a draw!"
+        : `${players[game?.winner_id]?.username} won!`}
+    </p>
+  )
+
+
   return (
     <div className="board_container">
       <div className="board_layout">
@@ -163,6 +173,7 @@ const Board = () => {
           </div>
         ))}
       </div>
+      {game?.winner_id && gameStatusMessage}
       <img
         src={players[playerOneId]?.sprite_url}
         className="board_player_one"
