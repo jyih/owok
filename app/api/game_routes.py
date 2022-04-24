@@ -47,13 +47,14 @@ def update_game(id):
     data = request.json
     # move = data["move"]
     game = Game.query.get(id)
+    move = "c" + data["move"]
     if not game:
         return {"errors": "Game not found"}
     else:
         if game.winner_id is not None:
             return {"errors": "Game is over"}
         else:
-            place_piece(game, data['move'], data['player_id'])
+            place_piece(game, move, data["player_id"])
             flag_modified(game, "board")
             db.session.commit()
             return {**game.to_dict()}
@@ -72,9 +73,9 @@ DISPLACE = {
 
 
 def place_piece(game, move, player_id):
-    if game.board[move]['piece'] == "" and game.turn == player_id:
-        game.board[move]['piece'] = game.turn
-        game.moves = game.moves + f",{move}" if len(game.moves) > 0 else f"{move}"
+    if game.board[move]["piece"] == "" and game.turn == player_id:
+        game.board[move]["piece"] = game.turn
+        game.moves = game.moves + f",{move[1:]}" if len(game.moves) > 0 else f"{move[1:]}"
         check_game(game, move)
 
 
@@ -106,18 +107,13 @@ def check_line(game, move, displacement, n=5):
 
 
 def check_vector(game, move, displacement, n=5):
-    look_piece = game.board[move]['piece']
+    look_piece = game.board[move]["piece"]
     count = 0
 
-    while look_piece == game.board[move]['piece'] and count < n:
+    while look_piece == game.board[move]["piece"] and count < n:
         count += 1
-        print(
-            f"""
-        convert: {move} by {displacement}*{count} to {f'{int(move) + (displacement * count):04}'}
-        """
-        )
-        look_move = f"{int(move) + (displacement * count):04}"
-        if game.board[look_move]['piece'] == "":
+        look_move = "c" + f"{int(move[1:]) + (displacement * count):04}"
+        if game.board[look_move]["piece"] == "":
             break
         else:
             print(
@@ -125,13 +121,12 @@ def check_vector(game, move, displacement, n=5):
             look_piece: {game.board[look_move]['piece']}
             """
             )
-            look_piece = game.board[look_move]['piece']
+            look_piece = game.board[look_move]["piece"]
 
     return count
 
 
 def end_game(game):
-    # if game.winner_id is None:
     if len(game.moves.split(",")) == 225:
         game.winner_id = -1  # tie
     else:
@@ -139,11 +134,4 @@ def end_game(game):
 
 
 def swap_piece(game, players=2):
-    # print(
-    #     f"""
-    #   TRYNA SWAP OUT HERE BRUH
-    #   {game.turn} to {(game.turn + 1) % players}
-    # """
-    # )
     game.turn = (game.turn + 1) % players
-    # game.turn = game.player_one_id if game.turn == game.player_two_id else game.

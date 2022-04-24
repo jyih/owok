@@ -30,7 +30,10 @@ const Board = () => {
   const { gameId, playerOneId, playerTwoId } = useParams();
 
   const user = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.games[gameId])
+  const game = useSelector((state) => state.current_games[gameId])
+  // const board = useSelector((state) => Object.values(state.current_games[gameId].board))
+  // const board = Object.values(game?.board)
+  const [board, setBoard] = useState([])
 
   const [socketRoom, setSocketRoom] = useState(`${playerOneId}${playerTwoId}`);
   const [players, setPlayers] = useState({});
@@ -48,9 +51,13 @@ const Board = () => {
     setSocketRoom(`${playerOneId}${playerTwoId}`);
   }, [playerOneId, playerTwoId]);
 
-  useEffect(() => { 
+  useEffect(() => {
     dispatch(gameActions.fetchGame(gameId))
   }, []);
+
+  useDidMountEffect(() => {
+    setBoard(Object.values(game.board))
+  }, [game])
 
   useEffect(() => {
     socket = io();
@@ -64,10 +71,10 @@ const Board = () => {
     socket.on("leave_room", (data) => {
       console.log("useEffect, leave_room", data);
       console.log(data.players);
-      console.log(
-        "initial check",
-        !gameOver && !notation.length && !Object.keys(board).length
-      );
+      // console.log(
+      //   "initial check",
+      //   !gameOver && !notation.length && !Object.keys(board).length
+      // );
 
       setPlayers(data.players);
     });
@@ -118,19 +125,34 @@ const Board = () => {
   //   console.log("gameStatus:", gameOver);
   // }, [board]);
 
-  // const joinRoom = (newRoom) => {
-  //   socket.emit("join_room", { user: user, room: newRoom });
-  // };
+  const joinRoom = (newRoom) => {
+    socket.emit("join_room", { user: user, room: newRoom });
+  };
 
   // const leaveRoom = (room = socketRoom) => {
   //   socket.emit('leave_room', {user: user, room: room})
   // }
 
+  const sendMove = (e) => {
+    e.preventDefault()
+    console.log('inside sendMove', game.turn, user.id, playerOneId, playerTwoId)
+    console.log(game.turn ? user.id === parseInt(playerTwoId) : user.id === parseInt(playerOneId))
+    if (game.turn ? user.id === parseInt(playerTwoId) : user.id === parseInt(playerOneId)) {
+      console.log("Try movee")
+      const game_move = {
+        id: gameId,
+        move: e.target.id,
+        player_id: user.id
+      }
+      dispatch(gameActions.updateGame(game_move))
+    }
+  }
+
 
   return (
     <div className="board_container">
       <div className="board_layout">
-        {game?.board.map((obj) => (
+        {board?.map((obj) => (
           <div
             key={obj.coord}
             id={`${obj.coord}`}
