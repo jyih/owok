@@ -207,13 +207,15 @@
    
    This was the first time that we ever tried to implement game logic! There were definitely a lot of struggles throughout this whole process, especially when it came to implementing sockets to make the game actually playable between two people. We began the project with very simple logic with a hardcoded second player, but that all had to change when it came down to integrating sockets with the website. Just being able to place a piece was a great accomplishment, and the next came with calculating wins, and the final "aha!" moment came when a second player could finally successfully join the room! Of course, there is a LOT of room for improvement.. but that comes with anything in life! 😊
 
-In the future, We want to move the game logic to the backend for more efficiency. We also want to implement more features to improve user experience, such as creating actual rooms with unique links so people can't just join a room by typing in a simple url. We also want to add moderator priveledges to better monitor comments and chats.
+In the future, we want to implement more features to improve user experience, such as having a time limit for turns so players can't take forever to think, and having a forfeit button, as well as a draw button where both players can agree to draw the game. We also want to add moderator priveledges to better monitor comments and chats.
 
 ## To-do
 
-- [ ] Refactor game logic
-- [ ] Link to private rooms
+- [x] Refactor game logic
+- [x] Link to private rooms
 - [ ] Mod priveledges
+- [ ] Add forfeit button
+- [ ] Add draw button
 - [ ] More piece sets (pink teddy and panda!!)
 
 <br>
@@ -253,3 +255,37 @@ In the future, We want to move the game logic to the backend for more efficiency
 
    *Solution:*
    Added a custom hook useDidMountEffect to ensure that the useEffect does not trigger on page load. Added useState to ensure that the moves persist before setting the board and checking for win. joinRoom(socketRoom) useEffect.
+     
+   **[04-21-2022]**
+
+   _Issue:_
+   Game would not save/create after completion. "Object not subscriptable"
+
+   _Solution:_
+   Needed to use dot notation (Python issue)
+
+
+   **[04-22-2022]**
+
+   _Issue:_
+   Player sprite remains after disconnecting
+
+   _Solution:_
+   Keep log of who joins and remove those who disconnect
+
+   **[04-22-2022]**
+
+   _Issue:_
+   Cannot place pieces on board edge
+
+   _Solution:_
+   Standardized all coordinate placements into quad digit string
+
+   **[04-22-2022]**
+
+   _Issue:_
+   Couldn't send messages only to specific rooms. Either broadcast to all or to none.
+
+   _Solution:_
+   Moved the socket.on to the parent component and passed down the React useState for messages to the Chat (child) component.
+
