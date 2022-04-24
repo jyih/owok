@@ -237,7 +237,7 @@ def default_board(context):
         "c1414": {"coord": "1414", "piece": ""},
     }
     notation = context.get_current_parameters()['moves']
-    if notation is not None:
+    if len(notation) > 0:
         moves = notation.split(',')
         for idx, move in enumerate(moves):
             board[f'c{move}']["piece"] = idx % 2
@@ -251,7 +251,7 @@ class Game(db.Model):
     player_one_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     player_two_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     winner_id = db.Column(db.Integer, nullable=True, default=None)
-    moves = db.Column(db.String(12000), nullable=True)
+    moves = db.Column(db.String(12000), nullable=True, default="")
     board = db.Column(JSONB, nullable=True, default=default_board)
     turn = db.Column(db.Integer, default=0)
 

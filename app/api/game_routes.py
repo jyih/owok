@@ -73,7 +73,9 @@ DISPLACE = {
 
 
 def place_piece(game, move, player_id):
-    if game.board[move]["piece"] == "" and game.turn == player_id:
+    print(f'INSIDE PLACE_PIECE')
+    if game.board[move]["piece"] == "" and game.get_players()[game.turn] == player_id:
+        print(f'TRY PLACE_PIECE')
         game.board[move]["piece"] = game.turn
         game.moves = game.moves + f",{move[1:]}" if len(game.moves) > 0 else f"{move[1:]}"
         check_game(game, move)
@@ -99,6 +101,7 @@ def check_game(game, move, n=5):
 
 
 def check_line(game, move, displacement, n=5):
+    print(f'INSIDE CHECK_LINE')
     return (
         check_vector(game, move, displacement, n)
         + check_vector(game, move, -displacement, n)
