@@ -29,7 +29,8 @@ def handle_chat(data):
 @socketio.on("player_info")
 def handle_player_info(data):
     print('|*| PLAYER_INFO:', data)
-    emit("player_info", data, broadcast=True)
+    # emit("player_info", data, broadcast=True)
+    emit("player_info", data, room=data['room'])
 
 # handle place piece
 @socketio.on('place_piece')
@@ -62,7 +63,8 @@ def on_join(data):
     join_room(room)
     data['players'] = rooms[room]
 
-    emit('open_room', data, broadcast=True)
+    # emit('open_room', data, broadcast=True)
+    emit('open_room', data, room=data['room'])
     # emit("chat", data, broadcast=True)
 
 # @socketio.on('leave_room')

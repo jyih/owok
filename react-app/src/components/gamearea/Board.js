@@ -98,7 +98,7 @@ const Board = () => {
     socket.emit("chat", {
       user: user.username,
       msg: chatInput,
-      room: socketRoom,
+      room: socketRoom, 
     });
     setChatInput("");
   };
