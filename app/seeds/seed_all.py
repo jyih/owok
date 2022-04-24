@@ -32,16 +32,36 @@ def seed_all():
     db.session.add(alyssa)
 
     # seed games
-    game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
+    game1 = Game(player_one_id=2, player_two_id=1, winner_id=2, turn=2,
                  moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512", is_private_one=False, is_private_two=False)
-    game2 = Game(player_one_id=1, player_two_id=3, winner_id=1,
+    game2 = Game(player_one_id=1, player_two_id=3, winner_id=1, turn=1,
                  moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707", is_private_one=False, is_private_two=False)
-    game3 = Game(player_one_id=4, player_two_id=1, winner_id=1,
+    game3 = Game(player_one_id=4, player_two_id=1, winner_id=1, turn=1,
                  moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810", is_private_one=False, is_private_two=False)
+    game4 = Game(player_one_id=4, player_two_id=1, turn=1,
+                 moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805", 
+                 board={
+                    "0909":0,
+                    "0908":1,
+                    "1009":0,
+                    "0808":1,
+                    "1008":0,
+                    "0807":1,
+                    "1007":0,
+                    "1006":1,
+                    "1107":0,
+                    "1206":1,
+                    "1108":0,
+                    "0809":1,
+                    "1208":0,
+                    "0806":1,
+                    "0805":0,
+                    })
 
     db.session.add(game1)
     db.session.add(game2)
     db.session.add(game3)
+    db.session.add(game4)
 
     # seed comments
     comment1 = Comment(game_id=1, player_id=1,
