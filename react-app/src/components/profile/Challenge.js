@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const Challenge = ({ sessionUser, user }) => {
+const Challenge = ({ sessionUser, user, gameId }) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
-  let linkToCopy = `${window.location.origin}/play/${sessionUser.id}/${user.id}`;
+  let linkToCopy = `${window.location.origin}/play/${gameId}/${sessionUser.id}/${user.id}`;
 
   useEffect(() => {
     copyNotify();
@@ -46,13 +46,15 @@ const Challenge = ({ sessionUser, user }) => {
       </p>
       {copySuccess && <div className="CopiedText">Copied!</div>}
       <p className="ChallengeLink" id="newClip">
-        {window.location.origin}/play/{sessionUser.id}/{user.id}
+        {window.location.origin}/play/{gameId}/{sessionUser.id}/{user.id}
         <i className="fa-regular fa-copy" onClick={copyLink}></i>
       </p>
       <p className="ChallengeText">
         When you're ready, click the button to go to the room!
       </p>
-      <NavLink to={`/play/${sessionUser.id}/${user.id}`}>Let's play!</NavLink>
+      <NavLink to={`/play/${gameId}/${sessionUser.id}/${user.id}`}>
+        Let's play!
+      </NavLink>
     </div>
   );
 };

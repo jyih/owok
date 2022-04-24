@@ -57,7 +57,10 @@ function App() {
         <ProtectedRoute path="/play" exact={true}>
           <UsersList />
         </ProtectedRoute>
-        <ProtectedRoute path="/play/:gameId/:playerOneId/:playerTwoId" exact={true}>
+        <ProtectedRoute
+          path="/play/:gameId/:playerOneId/:playerTwoId"
+          exact={true}
+        >
           <GameArea />
         </ProtectedRoute>
         <ProtectedRoute path="*">

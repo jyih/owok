@@ -60,48 +60,155 @@ const ProfilePage = () => {
   //if the user is on their own profile, do not show challenge button
 
   // if user = session user, show all games
-  const sessionUsersGamesComponent = games
-    ?.sort((a, b) => b.id - a.id)
-    .map((game) => {
-      return (
-        <div key={game?.id} className="SingleGameContainer">
-          <NavLink to={`/replays/${game.id}`}>
-            <div className="BrowsePlayerImages">
-              <div className="BrowseSprites">
-                <div className="BrowsePlayerOne">
-                  <img
-                    src={game.user_player_one?.sprite_url}
-                    className="player_one_rotate"
-                    alt="player one sprite"
-                  />
-                  <p>
-                    {sessionUser.id === game.player_one_id ||
-                    sessionUser.id === game.player_two_id ||
-                    !game?.is_private_one
-                      ? game?.user_player_one?.username
-                      : "???"}
-                  </p>
-                </div>
-                <p className="BrowseVsP">vs.</p>
-                <div className="BrowsePlayerTwo">
-                  <img
-                    src={game.user_player_two?.sprite_url}
-                    alt="player two sprite"
-                  />
-                  <p>
-                    {sessionUser.id === game.player_one_id ||
-                    sessionUser.id === game.player_two_id ||
-                    !game?.is_private_two
-                      ? game?.user_player_two?.username
-                      : "???"}
-                  </p>
-                </div>
+  let gamesComponent = <></>;
+
+  if (games.length && sessionUser.id === user.id) {
+    gamesComponent = games
+      ?.sort((a, b) => b.id - a.id)
+      .map((game) => {
+        return (
+          <section key={"" + game?.id}>
+            {game?.winner_id !== null ? (
+              <div className="SingleGameContainer">
+                <NavLink to={`/replays/${game.id}`}>
+                  <div className="BrowsePlayerImages">
+                    <div className="BrowseSprites">
+                      <div className="BrowsePlayerOne">
+                        <img
+                          src={game.user_player_one?.sprite_url}
+                          className="player_one_rotate"
+                          alt="player one sprite"
+                        />
+                        <p>
+                          {sessionUser.id === game.player_one_id ||
+                          sessionUser.id === game.player_two_id ||
+                          !game?.is_private_one
+                            ? game?.user_player_one?.username
+                            : "???"}
+                        </p>
+                      </div>
+                      <p className="BrowseVsP">vs.</p>
+                      <div className="BrowsePlayerTwo">
+                        <img
+                          src={game.user_player_two?.sprite_url}
+                          alt="player two sprite"
+                        />
+                        <p>
+                          {sessionUser.id === game.player_one_id ||
+                          sessionUser.id === game.player_two_id ||
+                          !game?.is_private_two
+                            ? game?.user_player_two?.username
+                            : "???"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </NavLink>
               </div>
-            </div>
-          </NavLink>
-        </div>
-      );
-    });
+            ) : (
+              <></>
+            )}
+          </section>
+        );
+      });
+  } else if (games.length && sessionUser.id !== user.id) {
+    gamesComponent = games
+      ?.sort((a, b) => b.id - a.id)
+      .map((game) => {
+        return (
+          <section key={"" + game?.id}>
+            {(game?.winner_id !== null &&
+              !game?.is_private_one &&
+              game?.player_one_id === user?.id) ||
+            (game?.winner_id !== null &&
+              !game?.is_private_two &&
+              game?.player_two_id === user?.id) ? (
+              <div className="SingleGameContainer">
+                <NavLink to={`/replays/${game?.id}`}>
+                  <div className="BrowsePlayerImages">
+                    <div className="BrowseSprites">
+                      <div className="BrowsePlayerOne">
+                        <img
+                          src={game.user_player_one?.sprite_url}
+                          className="player_one_rotate"
+                          alt="player one sprite"
+                        />
+                        <p>
+                          {sessionUser?.id === game?.player_one_id ||
+                          sessionUser?.id === game?.player_two_id ||
+                          !game?.is_private_one
+                            ? game?.user_player_one?.username
+                            : "???"}
+                        </p>
+                      </div>
+                      <p className="BrowseVsP">vs.</p>
+                      <div className="BrowsePlayerTwo">
+                        <img
+                          src={game.user_player_two?.sprite_url}
+                          alt="player two sprite"
+                        />
+                        <p>
+                          {sessionUser?.id === game?.player_one_id ||
+                          sessionUser?.id === game?.player_two_id ||
+                          !game?.is_private_two
+                            ? game?.user_player_two?.username
+                            : "???"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
+            )}
+          </section>
+        );
+      });
+  }
+
+  // const sessionUsersGamesComponent = games
+  //   ?.sort((a, b) => b.id - a.id)
+  //   .map((game) => {
+  //     return (
+  //       <div key={game?.id} className="SingleGameContainer">
+  //         <NavLink to={`/replays/${game.id}`}>
+  //           <div className="BrowsePlayerImages">
+  //             <div className="BrowseSprites">
+  //               <div className="BrowsePlayerOne">
+  //                 <img
+  //                   src={game.user_player_one?.sprite_url}
+  //                   className="player_one_rotate"
+  //                   alt="player one sprite"
+  //                 />
+  //                 <p>
+  //                   {sessionUser.id === game.player_one_id ||
+  //                   sessionUser.id === game.player_two_id ||
+  //                   !game?.is_private_one
+  //                     ? game?.user_player_one?.username
+  //                     : "???"}
+  //                 </p>
+  //               </div>
+  //               <p className="BrowseVsP">vs.</p>
+  //               <div className="BrowsePlayerTwo">
+  //                 <img
+  //                   src={game.user_player_two?.sprite_url}
+  //                   alt="player two sprite"
+  //                 />
+  //                 <p>
+  //                   {sessionUser.id === game.player_one_id ||
+  //                   sessionUser.id === game.player_two_id ||
+  //                   !game?.is_private_two
+  //                     ? game?.user_player_two?.username
+  //                     : "???"}
+  //                 </p>
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </NavLink>
+  //       </div>
+  //     );
+  //   });
 
   // if user != session user, don't show privated games of user
   // if is_private_one is true, player_one_id is user, don't show game
@@ -111,55 +218,55 @@ const ProfilePage = () => {
   // if is_private_one is false, player_one_id is user, show game
   // if is_private_two is false, player_two_id is user, show game
   // if ((!game.is_private_one && game.player_one_id === user.id) || (!game.is_private_two && game.player_two_id === user.id)) show game
-  const usersGamesComponent = games
-    ?.sort((a, b) => b.id - a.id)
-    .map((game) => {
-      return (
-        <section key={game.id}>
-          {(!game.is_private_one && game.player_one_id === user.id) ||
-          (!game.is_private_two && game.player_two_id === user.id) ? (
-            <div className="SingleGameContainer">
-              <NavLink to={`/replays/${game.id}`}>
-                <div className="BrowsePlayerImages">
-                  <div className="BrowseSprites">
-                    <div className="BrowsePlayerOne">
-                      <img
-                        src={game.user_player_one?.sprite_url}
-                        className="player_one_rotate"
-                        alt="player one sprite"
-                      />
-                      <p>
-                        {sessionUser.id === game.player_one_id ||
-                        sessionUser.id === game.player_two_id ||
-                        !game?.is_private_one
-                          ? game?.user_player_one?.username
-                          : "???"}
-                      </p>
-                    </div>
-                    <p className="BrowseVsP">vs.</p>
-                    <div className="BrowsePlayerTwo">
-                      <img
-                        src={game.user_player_two.sprite_url}
-                        alt="player two sprite"
-                      />
-                      <p>
-                        {sessionUser.id === game.player_one_id ||
-                        sessionUser.id === game.player_two_id ||
-                        !game?.is_private_two
-                          ? game?.user_player_two?.username
-                          : "???"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <></>
-          )}
-        </section>
-      );
-    });
+  // const usersGamesComponent = games
+  //   ?.sort((a, b) => b.id - a.id)
+  //   .map((game) => {
+  //     return (
+  //       <section key={game?.id}>
+  //         {(!game?.is_private_one && game?.player_one_id === user?.id) ||
+  //         (!game?.is_private_two && game?.player_two_id === user?.id) ? (
+  //           <div className="SingleGameContainer">
+  //             <NavLink to={`/replays/${game?.id}`}>
+  //               <div className="BrowsePlayerImages">
+  //                 <div className="BrowseSprites">
+  //                   <div className="BrowsePlayerOne">
+  //                     <img
+  //                       src={game.user_player_one?.sprite_url}
+  //                       className="player_one_rotate"
+  //                       alt="player one sprite"
+  //                     />
+  //                     <p>
+  //                       {sessionUser?.id === game?.player_one_id ||
+  //                       sessionUser?.id === game?.player_two_id ||
+  //                       !game?.is_private_one
+  //                         ? game?.user_player_one?.username
+  //                         : "???"}
+  //                     </p>
+  //                   </div>
+  //                   <p className="BrowseVsP">vs.</p>
+  //                   <div className="BrowsePlayerTwo">
+  //                     <img
+  //                       src={game.user_player_two?.sprite_url}
+  //                       alt="player two sprite"
+  //                     />
+  //                     <p>
+  //                       {sessionUser?.id === game?.player_one_id ||
+  //                       sessionUser?.id === game?.player_two_id ||
+  //                       !game?.is_private_two
+  //                         ? game?.user_player_two?.username
+  //                         : "???"}
+  //                     </p>
+  //                   </div>
+  //                 </div>
+  //               </div>
+  //             </NavLink>
+  //           </div>
+  //         ) : (
+  //           <></>
+  //         )}
+  //       </section>
+  //     );
+  //   });
 
   return (
     <>
@@ -188,9 +295,10 @@ const ProfilePage = () => {
                 )}
               </div>
               <div className="ProfileGames">
-                {sessionUser.id === user.id
+                {/* {sessionUser.id === user.id
                   ? sessionUsersGamesComponent
-                  : usersGamesComponent}
+                  : usersGamesComponent} */}
+                {gamesComponent}
               </div>
             </div>
           </div>

@@ -17,14 +17,14 @@ const NavBar = () => {
           exact={true}
           // activeClassName="active"
         >
-          Play Owok
+          Browse
         </NavLink>
         <NavLink
           to="/browse"
           exact={true}
           // activeClassName="active"
         >
-          Browse
+          Replays
         </NavLink>
         <NavLink
           to={`/profile/${sessionUser.id}`}
