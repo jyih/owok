@@ -75,11 +75,6 @@ const Board = () => {
     socket.on("leave_room", (data) => {
       console.log("useEffect, leave_room", data);
       console.log(data.players);
-      // console.log(
-      //   "initial check",
-      //   gameOver && !notation.length && !Object.keys(board).length
-      // );
-
       setPlayers(data.players);
     });
 
@@ -97,21 +92,11 @@ const Board = () => {
     };
   }, []);
 
-  const sendChat = (e) => {
-    e.preventDefault();
-    socket.emit("chat", {
-      user: user.username,
-      msg: chatInput,
-      room: socketRoom,
-    });
-    setChatInput("");
-  };
-
   useEffect(() => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => {}, [players]);
+  useEffect(() => { }, [players]);
 
   //make sure lastMove updates/persists before setBoard
   // useDidMountEffect(() => {
@@ -129,6 +114,16 @@ const Board = () => {
 
   const joinRoom = (newRoom) => {
     socket.emit("join_room", { user: user, room: newRoom });
+  };
+
+  const sendChat = (e) => {
+    e.preventDefault();
+    socket.emit("chat", {
+      username: user.username,
+      msg: chatInput,
+      room: socketRoom,
+    });
+    setChatInput("");
   };
 
   // const leaveRoom = (room = socketRoom) => {
@@ -161,13 +156,6 @@ const Board = () => {
         player_id: user.id,
       };
       dispatch(gameActions.updateGame(game_move));
-
-      // socket.emit('place_piece', { room: socketRoom })
-      // let data = dispatch(gameActions.updateGame(game_move))
-      // if (data) socket.emit('place_piece', { room: socketRoom })
-      // dispatch(gameActions.updateGame(game_move)).then(
-      //   socket.emit('place_piece', { room: socketRoom })
-      // )
     }
   };
 

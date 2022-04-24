@@ -70,7 +70,7 @@ const Chat = ({ messages, sendChat, chatInput, setChatInput }) => {
       <div className="ChatContainer">
         <div className="ChatMessages">
           {messages.map((message, ind) => (
-            <div key={ind}>{`${message.user}: ${message.msg}`}</div>
+            <div key={ind}>{`${message.username ? `${message.username}: ` : ''}${message.msg}`}</div>
           ))}
           <div ref={messagesEndRef} />
         </div>
