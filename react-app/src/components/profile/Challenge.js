@@ -47,7 +47,11 @@ const Challenge = ({ sessionUser, user, gameId }) => {
       {copySuccess && <div className="CopiedText">Copied!</div>}
       <p className="ChallengeLink" id="newClip">
         {window.location.origin}/play/{gameId}/{sessionUser.id}/{user.id}
-        <i className="fa-regular fa-copy" onClick={copyLink}></i>
+        <i
+          className="fa-regular fa-copy"
+          onClick={copyLink}
+          title="Copy to clipboard"
+        ></i>
       </p>
       <p className="ChallengeText">
         When you're ready, click the button to go to the room!

@@ -68,7 +68,7 @@ const ProfilePage = () => {
       .map((game) => {
         return (
           <section key={"" + game?.id}>
-            {game?.winner_id !== null ? (
+            {game?.winner_id ? (
               <div className="SingleGameContainer">
                 <NavLink to={`/replays/${game.id}`}>
                   <div className="BrowsePlayerImages">
@@ -117,10 +117,10 @@ const ProfilePage = () => {
       .map((game) => {
         return (
           <section key={"" + game?.id}>
-            {(game?.winner_id !== null &&
+            {(game?.winner_id &&
               !game?.is_private_one &&
               game?.player_one_id === user?.id) ||
-            (game?.winner_id !== null &&
+            (game?.winner_id &&
               !game?.is_private_two &&
               game?.player_two_id === user?.id) ? (
               <div className="SingleGameContainer">

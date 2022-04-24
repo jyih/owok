@@ -134,10 +134,20 @@ def check_vector(game, move, displacement, n=5):
 
 
 def end_game(game):
+    player_one = User.query.get(game.player_one_id)
+    player_two = User.query.get(game.player_two_id)
     if len(game.moves.split(",")) == 225:
         game.winner_id = -1  # tie
+        player_one.draws += 1
+        player_two.draws += 1
     else:
         game.winner_id = game.get_players()[game.turn]
+        if game.winner_id == player_one.id:
+            player_one.wins += 1
+            player_two.losses += 1
+        if game.winner_id == player_two.id:
+            player_two.wins += 1
+            player_one.losses += 1
 
 
 def swap_piece(game, players=2):

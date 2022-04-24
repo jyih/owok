@@ -50,9 +50,9 @@
 
 .ChallengeLink {
   background-color: white;
-  width: 430px;
+  width: 440px;
   height: 40px;
-  font-size: 18px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +62,7 @@
 
 .ChallengeLink > i {
   position: absolute;
-  right: 50px;
+  right: 45px;
   color: gray;
 }
 
