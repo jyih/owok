@@ -18,7 +18,7 @@ const loadGame = (game) => ({
 // });
 
 export const fetchGame = (game_id) => async (dispatch) => {
-  const res = await fetch(`/api/games.${game_id}`);
+  const res = await fetch(`/api/games/${game_id}/`);
 
   if (res.ok) {
     const game = await res.json();
@@ -48,7 +48,7 @@ export const createGame = (game) => async (dispatch) => {
 };
 
 export const updateGame = (game) => async (dispatch) => {
-  const res = await fetch(`/api/games/${game.id}`, {
+  const res = await fetch(`/api/games/${game.id}/`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(game),

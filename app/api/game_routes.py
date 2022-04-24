@@ -45,7 +45,7 @@ def create_game():
 # @login_required
 def update_game(id):
     data = request.json
-    move = data["move"]
+    # move = data["move"]
     game = Game.query.get(id)
     if not game:
         return {"errors": "Game not found"}
@@ -53,7 +53,7 @@ def update_game(id):
         if game.winner_id is not None:
             return {"errors": "Game is over"}
         else:
-            place_piece(game, move)
+            place_piece(game, data['move'], data['player_id'])
             flag_modified(game, "board")
             db.session.commit()
             return {**game.to_dict()}
@@ -71,9 +71,9 @@ DISPLACE = {
 }
 
 
-def place_piece(game, move):
-    if move not in game.board:
-        game.board[move] = game.turn
+def place_piece(game, move, player_id):
+    if game.board[move]['piece'] == "" and game.turn == player_id:
+        game.board[move]['piece'] = game.turn
         game.moves = game.moves + f",{move}" if len(game.moves) > 0 else f"{move}"
         check_game(game, move)
 
@@ -106,10 +106,10 @@ def check_line(game, move, displacement, n=5):
 
 
 def check_vector(game, move, displacement, n=5):
-    look_piece = game.board[move]
+    look_piece = game.board[move]['piece']
     count = 0
 
-    while look_piece == game.board[move] and count < n:
+    while look_piece == game.board[move]['piece'] and count < n:
         count += 1
         print(
             f"""
@@ -117,15 +117,15 @@ def check_vector(game, move, displacement, n=5):
         """
         )
         look_move = f"{int(move) + (displacement * count):04}"
-        if look_move in game.board:
+        if game.board[look_move]['piece'] == "":
+            break
+        else:
             print(
                 f"""
-            look_piece: {game.board[look_move]}
+            look_piece: {game.board[look_move]['piece']}
             """
             )
-            look_piece = game.board[look_move]
-        else:
-            break
+            look_piece = game.board[look_move]['piece']
 
     return count
 
