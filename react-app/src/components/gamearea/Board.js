@@ -79,10 +79,8 @@ const Board = () => {
       setPlayers(data.players);
     });
 
-    socket.on("place_piece", (move) => {
-      console.log("socket place piece, move:", move);
-      setLastMove(parseInt(move.coord));
-      console.log("socket place piece, players:", players);
+    socket.on("place_piece", (data) => {
+      dispatch(gameActions.fetchGame(gameId))
     });
 
     socket.on("chat", (chat) => {
@@ -145,6 +143,12 @@ const Board = () => {
         player_id: user.id
       }
       dispatch(gameActions.updateGame(game_move))
+      // socket.emit('place_piece', { room: socketRoom })
+      // let data = dispatch(gameActions.updateGame(game_move))
+      // if (data) socket.emit('place_piece', { room: socketRoom })
+      // dispatch(gameActions.updateGame(game_move)).then(
+      //   socket.emit('place_piece', { room: socketRoom })
+      // )
     }
   }
 

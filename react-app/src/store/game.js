@@ -62,6 +62,7 @@ export const updateGame = (game) => async (dispatch) => {
     const data = await res.json();
     console.log('UPDATE GAME RESOK', data)
     dispatch(loadGame(data));
+    return data;
   } else {
     const errors = await res.json();
     return errors;

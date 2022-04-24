@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, Game, User
 from sqlalchemy.orm.attributes import flag_modified
+from app.socket import socketio
 
 game_routes = Blueprint("games", __name__)
 
@@ -57,6 +58,7 @@ def update_game(id):
             place_piece(game, move, data["player_id"])
             flag_modified(game, "board")
             db.session.commit()
+            socketio.emit('place_piece', broadcast=True, room=f'{game.player_one_id}{game.player_two_id}')
             return {**game.to_dict()}
 
 
@@ -116,8 +118,8 @@ def check_vector(game, move, displacement, n=5):
     while look_piece == game.board[move]["piece"] and count < n:
         count += 1
         look_move = "c" + f"{int(move[1:]) + (displacement * count):04}"
-        if game.board[look_move]["piece"] == "":
-            break
+        if not look_move in game.board or game.board[look_move]["piece"] == "":
+              break
         else:
             print(
                 f"""
