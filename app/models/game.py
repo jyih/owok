@@ -9,7 +9,6 @@ def default_turn(context):
 
 
 def default_board(context):
-    moves = context.get_current_parameters()['moves'].split(',')
     board = {
         "c0000": {"coord": "0000", "piece": ""},
         "c0001": {"coord": "0001", "piece": ""},
@@ -237,8 +236,11 @@ def default_board(context):
         "c1413": {"coord": "1413", "piece": ""},
         "c1414": {"coord": "1414", "piece": ""},
     }
-    for idx, move in enumerate(moves):
-        board[f'c{move}']["piece"] = idx % 2
+    notation = context.get_current_parameters()['moves']
+    if notation is not None:
+        moves = notation.split(',')
+        for idx, move in enumerate(moves):
+            board[f'c{move}']["piece"] = idx % 2
     return board
 
 
@@ -249,7 +251,7 @@ class Game(db.Model):
     player_one_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     player_two_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     winner_id = db.Column(db.Integer, nullable=True, default=None)
-    moves = db.Column(db.String(12000), nullable=False, default="")
+    moves = db.Column(db.String(12000), nullable=True)
     board = db.Column(JSONB, nullable=True, default=default_board)
     turn = db.Column(db.Integer, default=0)
 
