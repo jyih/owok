@@ -29,7 +29,7 @@ export const fetchGame = (game_id) => async (dispatch) => {
     const errors = await res.json();
     return errors;
   }
-}
+};
 
 export const createGame = (game) => async (dispatch) => {
   const res = await fetch(`/api/games/`, {
@@ -39,8 +39,9 @@ export const createGame = (game) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await res.json();
-    dispatch(loadGame(data));
+    const game = await res.json();
+    dispatch(loadGame(game));
+    return game;
   } else {
     const errors = await res.json();
     return errors;
@@ -69,7 +70,7 @@ const gamesReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case GET_GAME:
-      newState.current_games[action.game.id] = action.game;
+      newState[action.game.id] = action.game;
     default:
       return state;
   }
