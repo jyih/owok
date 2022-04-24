@@ -1,13 +1,13 @@
 import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import * as replayActions from "../../store/replays";
+// import * as replayActions from "../../store/replays";
 import * as gameActions from "../../store/game";
-import { GridData } from "./GridData";
+// import { GridData } from "./GridData";
 import Chat from "./Chat";
 
-import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
-import omok_piece_slime from "../images/omok_piece_slime.png";
+// import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
+// import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
@@ -30,17 +30,21 @@ const Board = () => {
   const { gameId, playerOneId, playerTwoId } = useParams();
 
   const user = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_games[gameId])
+  const game = useSelector((state) => state.current_games[gameId]);
   // const board = useSelector((state) => Object.values(state.current_games[gameId].board))
   // const board = Object.values(game?.board)
-  const [board, setBoard] = useState([])
+  const [board, setBoard] = useState([]);
 
   const [socketRoom, setSocketRoom] = useState(`${playerOneId}${playerTwoId}`);
   const [players, setPlayers] = useState({});
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
 
-  const [lastMove, setLastMove] = useState(null);
+  // const [lastMove, setLastMove] = useState(null);
+  const omok_piece_mushroom =
+    "https://owok.s3.us-west-1.amazonaws.com/omok_piece_mushroom.png";
+  const omok_piece_slime =
+    "https://owok.s3.us-west-1.amazonaws.com/omok_piece_slime.png";
 
   const pieces = {
     0: omok_piece_mushroom,
@@ -52,12 +56,12 @@ const Board = () => {
   }, [playerOneId, playerTwoId]);
 
   useEffect(() => {
-    dispatch(gameActions.fetchGame(gameId))
+    dispatch(gameActions.fetchGame(gameId));
   }, []);
 
   useDidMountEffect(() => {
-    setBoard(Object.values(game.board))
-  }, [game])
+    setBoard(Object.values(game.board));
+  }, [game]);
 
   useEffect(() => {
     socket = io();
@@ -80,7 +84,7 @@ const Board = () => {
     });
 
     socket.on("place_piece", (data) => {
-      dispatch(gameActions.fetchGame(gameId))
+      dispatch(gameActions.fetchGame(gameId));
     });
 
     socket.on("chat", (chat) => {
@@ -98,7 +102,7 @@ const Board = () => {
     socket.emit("chat", {
       user: user.username,
       msg: chatInput,
-      room: socketRoom, 
+      room: socketRoom,
     });
     setChatInput("");
   };
@@ -107,7 +111,7 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => { }, [players]);
+  useEffect(() => {}, [players]);
 
   //make sure lastMove updates/persists before setBoard
   // useDidMountEffect(() => {
@@ -132,17 +136,32 @@ const Board = () => {
   // }
 
   const sendMove = (e) => {
-    e.preventDefault()
-    console.log('inside sendMove', game.turn, user.id, playerOneId, playerTwoId)
-    console.log(game.turn ? user.id === parseInt(playerTwoId) : user.id === parseInt(playerOneId))
-    if (game.turn ? user.id === parseInt(playerTwoId) : user.id === parseInt(playerOneId)) {
-      console.log("Try movee")
+    e.preventDefault();
+    console.log(
+      "inside sendMove",
+      game.turn,
+      user.id,
+      playerOneId,
+      playerTwoId
+    );
+    console.log(
+      game.turn
+        ? user.id === parseInt(playerTwoId)
+        : user.id === parseInt(playerOneId)
+    );
+    if (
+      game.turn
+        ? user.id === parseInt(playerTwoId)
+        : user.id === parseInt(playerOneId)
+    ) {
+      console.log("Try movee");
       const game_move = {
         id: gameId,
         move: e.target.id,
-        player_id: user.id
-      }
-      dispatch(gameActions.updateGame(game_move))
+        player_id: user.id,
+      };
+      dispatch(gameActions.updateGame(game_move));
+
       // socket.emit('place_piece', { room: socketRoom })
       // let data = dispatch(gameActions.updateGame(game_move))
       // if (data) socket.emit('place_piece', { room: socketRoom })
@@ -150,9 +169,27 @@ const Board = () => {
       //   socket.emit('place_piece', { room: socketRoom })
       // )
     }
+  };
+
+  let currentTurn = (
+    <p className="CurrentTurn">It's {players[playerOneId]?.username}'s turn.</p>
+  );
+
+  if (game?.turn === 0) {
+    currentTurn = (
+      <p className="CurrentTurn">
+        It's {players[playerOneId]?.username}'s turn.
+      </p>
+    );
   }
 
-
+  if (game?.turn === 1) {
+    currentTurn = (
+      <p className="CurrentTurn">
+        It's {players[playerTwoId]?.username}'s turn.
+      </p>
+    );
+  }
 
   let gameStatusMessage = (
     <p className="GameStatusMessage">
@@ -160,8 +197,7 @@ const Board = () => {
         ? "It's a draw!"
         : `${players[game?.winner_id]?.username} won!`}
     </p>
-  )
-
+  );
 
   return (
     <div className="board_container">
@@ -173,7 +209,13 @@ const Board = () => {
             className={`grid ${obj.coord}`}
             onClick={(e) => sendMove(e)}
           >
-            <img id={`img-${obj.coord}`} src={pieces[obj?.piece]} />
+            {pieces[obj?.piece] && (
+              <img
+                id={`img-${obj.coord}`}
+                src={pieces[obj?.piece]}
+                alt="boardgrid"
+              />
+            )}
           </div>
         ))}
       </div>
@@ -212,6 +254,7 @@ const Board = () => {
         setChatInput={setChatInput}
         sendChat={sendChat}
       />
+      {currentTurn}
     </div>
   );
 };

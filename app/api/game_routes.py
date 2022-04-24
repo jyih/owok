@@ -8,12 +8,14 @@ game_routes = Blueprint("games", __name__)
 
 
 @game_routes.route("/")
+@login_required
 def all_games():
     games = Game.query.all()
     return {game.to_dict()["id"]: game.to_dict() for game in games}
 
 
 @game_routes.route("/<int:id>")
+@login_required
 def get_game(id):
     # Get specific game via id
     game = Game.query.get(id)
@@ -24,7 +26,7 @@ def get_game(id):
 
 
 @game_routes.route("/", methods=["POST"])
-# @login_required
+@login_required
 def create_game():
     data = request.json
     print(
@@ -43,7 +45,7 @@ def create_game():
 
 
 @game_routes.route("/<int:id>", methods=["PUT"])
-# @login_required
+@login_required
 def update_game(id):
     data = request.json
     # move = data["move"]

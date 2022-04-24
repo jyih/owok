@@ -64,7 +64,7 @@ const Board = () => {
     setSocketRoom(`${playerOneId}${playerTwoId}`);
   }, [playerOneId, playerTwoId]);
 
-  useEffect(() => { }, [messages]);
+  useEffect(() => {}, [messages]);
 
   useEffect(() => {
     socket = io();
@@ -119,7 +119,7 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => { }, [players]);
+  useEffect(() => {}, [players]);
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
@@ -197,6 +197,7 @@ const Board = () => {
     // setOppPiece(temp);
     // setIsTurn(!isTurn);
     // setTurn((turn + 1) % 2)
+    //
     if (!gameOver) setTurn(turn === playerOneId ? playerTwoId : playerOneId);
   };
 

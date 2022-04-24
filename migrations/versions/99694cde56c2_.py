@@ -1,16 +1,16 @@
 """empty message
 
-Revision ID: aa2791a9a6e9
+Revision ID: 99694cde56c2
 Revises: 
-Create Date: 2022-04-19 10:12:27.865630
+Create Date: 2022-04-23 23:40:35.769628
 
 """
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = 'aa2791a9a6e9'
+revision = '99694cde56c2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,7 +38,9 @@ def upgrade():
     sa.Column('player_one_id', sa.Integer(), nullable=False),
     sa.Column('player_two_id', sa.Integer(), nullable=False),
     sa.Column('winner_id', sa.Integer(), nullable=True),
-    sa.Column('moves', sa.String(length=12000), nullable=False),
+    sa.Column('moves', sa.String(length=12000), nullable=True),
+    sa.Column('board', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
+    sa.Column('turn', sa.Integer(), nullable=True),
     sa.Column('is_private_one', sa.Boolean(), nullable=False),
     sa.Column('is_private_two', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),

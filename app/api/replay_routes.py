@@ -6,12 +6,14 @@ from app.models import db, Game, User
 replay_routes = Blueprint('replays', __name__)
 
 @replay_routes.route('/')
+@login_required
 def replays():
   games = Game.query.all()
   return {game.to_dict()['id']:game.to_dict() for game in games}
 
 
 @replay_routes.route('/<int:id>')
+@login_required
 def replay(id):
   #Get specific game via id
   game = Game.query.get(id)
@@ -22,6 +24,7 @@ def replay(id):
 
 
 @replay_routes.route('/user/<int:user_id>')
+@login_required
 def replays_user(user_id):
   #Get all games played by user_id
   user = User.query.get(user_id)
@@ -33,7 +36,7 @@ def replays_user(user_id):
 
 
 @replay_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def replay_create():
   data = request.json
   # form = GameForm()
@@ -68,6 +71,7 @@ def replay_create():
 
 
 @replay_routes.route('/<int:id>', methods=['PUT'])
+@login_required
 def replay_update(id):
   data = request.json
   game = Game.query.get(id)
