@@ -59,9 +59,9 @@ def update_game(id):
             return {**game.to_dict()}
 
 
-# ==========
-# Game Logic
-# ==========
+# ============
+#  Game Logic
+# ============
 
 DISPLACE = {
     "up": -100,
@@ -90,7 +90,7 @@ def check_game(game, move, n=5):
     {vertical} {horizontal} {forward_diag} {backward_diag}
     """
     )
-    
+
     if vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
         end_game(game)
     else:
@@ -112,16 +112,16 @@ def check_vector(game, move, displacement, n=5):
     while look_piece == game.board[move] and count < n:
         count += 1
         print(
-        f"""
+            f"""
         convert: {move} by {displacement}*{count} to {f'{int(move) + (displacement * count):04}'}
         """
         )
         look_move = f"{int(move) + (displacement * count):04}"
         if look_move in game.board:
             print(
-            f'''
+                f"""
             look_piece: {game.board[look_move]}
-            '''
+            """
             )
             look_piece = game.board[look_move]
         else:
