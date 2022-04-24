@@ -60,8 +60,8 @@ def on_join(data):
     user = data["user"]
     username = user['username']
     message = {
-        msg: f'{username} has joined.',
-        room: room,
+        'msg': f'{username} has joined the chat.',
+        'room': room,
     }
 
     if not room in rooms:

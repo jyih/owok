@@ -160,10 +160,10 @@ const Board = () => {
   };
 
   let currentTurn = (
-    <p className="CurrentTurn">It's {players[playerOneId]?.username}'s turn.</p>
+    <p className="CurrentTurn">Game over!</p>
   );
 
-  if (game?.turn === 0) {
+  if (!game?.winner_id && game?.turn === 0 && players[playerOneId]?.username) {
     currentTurn = (
       <p className="CurrentTurn">
         It's {players[playerOneId]?.username}'s turn.
@@ -171,7 +171,7 @@ const Board = () => {
     );
   }
 
-  if (game?.turn === 1) {
+  if (!game?.winner_id && game?.turn === 1 && players[playerTwoId]?.username) {
     currentTurn = (
       <p className="CurrentTurn">
         It's {players[playerTwoId]?.username}'s turn.
@@ -183,7 +183,7 @@ const Board = () => {
     <p className="GameStatusMessage">
       {game?.winner_id === -1
         ? "It's a draw!"
-        : `${players[game?.winner_id]?.username} won!`}
+        : players[game?.winner_id]?.username ? `${players[game?.winner_id]?.username} won!` : ''}
     </p>
   );
 
