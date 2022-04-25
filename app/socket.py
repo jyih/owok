@@ -102,6 +102,25 @@ def disconnect():
     """
     )
     dc_user = user_sid[request.sid]
+    user = rooms[dc_user["room"]][dc_user["id"]]
+    print(
+        f"""
+        |*| USER IN DISCONNECT:
+        {user}
+        """
+    )
+
+    message = {
+        'msg': f'{user["username"]} has left the chat.',
+    }
+
+    print(
+        f"""
+        |*| MESSAGE IN DISCONNECT:
+        {message}
+        """
+    )
+
     del rooms[dc_user["room"]][dc_user["id"]]
     print(
         f"""
@@ -109,6 +128,7 @@ def disconnect():
     {rooms}
     """
     )
+    emit("chat", message, room=dc_user["room"])
     emit("leave_room", {"players": rooms[dc_user["room"]]}, room=dc_user["room"])
 
 

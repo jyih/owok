@@ -94,7 +94,7 @@
 .GameStatusMessage {
     position: absolute;
     top: 8px;
-    right: 195px;
+    left: 590px;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 2;
 }

@@ -2,7 +2,7 @@ import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import * as replayActions from "../../store/replays";
-import * as gameActions from "../../store/game";
+import gamesReducer, * as gameActions from "../../store/game";
 // import { GridData } from "./GridData";
 import Chat from "./Chat";
 
@@ -96,7 +96,7 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => { }, [players]);
+  useEffect(() => {}, [players]);
 
   //make sure lastMove updates/persists before setBoard
   // useDidMountEffect(() => {
@@ -159,9 +159,7 @@ const Board = () => {
     }
   };
 
-  let currentTurn = (
-    <p className="CurrentTurn">Game over!</p>
-  );
+  let currentTurn = <p className="CurrentTurn">Game over!</p>;
 
   if (!game?.winner_id && game?.turn === 0 && players[playerOneId]?.username) {
     currentTurn = (
@@ -183,7 +181,9 @@ const Board = () => {
     <p className="GameStatusMessage">
       {game?.winner_id === -1
         ? "It's a draw!"
-        : players[game?.winner_id]?.username ? `${players[game?.winner_id]?.username} won!` : ''}
+        : players[game?.winner_id]?.username
+        ? `${players[game?.winner_id]?.username} won!`
+        : ""}
     </p>
   );
 
@@ -217,11 +217,16 @@ const Board = () => {
       <p className="board_player_one_username">
         {players[playerOneId]?.username}
       </p>
-      <div className="board_stats_one">
-        <p>{players[playerOneId]?.wins}</p>
+      {players[playerOneId] && (
+        <div className="board_stats_one">
+          <p>{game?.user_player_one?.wins}</p>
+          <p>{game?.user_player_one?.losses}</p>
+          <p>{game?.user_player_one?.draws}</p>
+          {/* <p>{players[playerOneId]?.wins}</p>
         <p>{players[playerOneId]?.losses}</p>
-        <p>{players[playerOneId]?.draws}</p>
-      </div>
+        <p>{players[playerOneId]?.draws}</p> */}
+        </div>
+      )}
       <img
         src={players[playerTwoId]?.sprite_url}
         className="board_player_two"
@@ -230,11 +235,16 @@ const Board = () => {
       <p className="board_player_two_username">
         {players[playerTwoId]?.username}
       </p>
-      <div className="board_stats_two">
-        <p>{players[playerTwoId]?.wins}</p>
+      {players[playerTwoId] && (
+        <div className="board_stats_two">
+          <p>{game?.user_player_two?.wins}</p>
+          <p>{game?.user_player_two?.losses}</p>
+          <p>{game?.user_player_two?.draws}</p>
+          {/* <p>{players[playerTwoId]?.wins}</p>
         <p>{players[playerTwoId]?.losses}</p>
-        <p>{players[playerTwoId]?.draws}</p>
-      </div>
+        <p>{players[playerTwoId]?.draws}</p> */}
+        </div>
+      )}
       <Chat
         socketRoom={socketRoom}
         messages={messages}
