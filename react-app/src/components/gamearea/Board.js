@@ -96,7 +96,7 @@ const Board = () => {
     joinRoom(socketRoom);
   }, [socketRoom]);
 
-  useEffect(() => {}, [players]);
+  useEffect(() => { }, [players]);
 
   //make sure lastMove updates/persists before setBoard
   // useDidMountEffect(() => {
@@ -159,7 +159,7 @@ const Board = () => {
     }
   };
 
-  let currentTurn = <p className="CurrentTurn">Game over!</p>;
+  let currentTurn = <p className="CurrentTurn">{!game?.winner_id ? '' : 'Game over'}!</p>;
 
   if (!game?.winner_id && game?.turn === 0 && players[playerOneId]?.username) {
     currentTurn = (
@@ -182,8 +182,8 @@ const Board = () => {
       {game?.winner_id === -1
         ? "It's a draw!"
         : players[game?.winner_id]?.username
-        ? `${players[game?.winner_id]?.username} won!`
-        : ""}
+          ? `${players[game?.winner_id]?.username} won!`
+          : ""}
     </p>
   );
 
