@@ -98,7 +98,7 @@ def check_game(game, move, n=5):
     """
     )
 
-    if vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
+    if len(game.moves) >= 1124 or vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
         end_game(game)
     else:
         swap_piece(game)
@@ -136,6 +136,9 @@ def check_vector(game, move, displacement, n=5):
 def end_game(game):
     player_one = User.query.get(game.player_one_id)
     player_two = User.query.get(game.player_two_id)
+    print(f'''WHY NOT WORK
+    {len(game.moves)}
+    ''')
     if len(game.moves) >= 1124:
         game.winner_id = -1  # tie
         player_one.draws += 1
