@@ -136,7 +136,7 @@ def check_vector(game, move, displacement, n=5):
 def end_game(game):
     player_one = User.query.get(game.player_one_id)
     player_two = User.query.get(game.player_two_id)
-    if len(game.moves.split(",")) == 225:
+    if len(game.moves.split(",")) >= 1124:
         game.winner_id = -1  # tie
         player_one.draws += 1
         player_two.draws += 1
