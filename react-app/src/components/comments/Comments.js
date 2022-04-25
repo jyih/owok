@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import CreateCommentForm from "./CreateCommentForm";
 import EditCommentForm from "./EditCommentForm";
 
@@ -8,7 +9,7 @@ import "./Comments.css";
 const Comments = () => {
   //state = formVisible true and false onclick change state to true or false
   const sessionUser = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
   const commentsObj = game?.comments;
   const comments = commentsObj && Object.values(commentsObj);
 
@@ -58,7 +59,9 @@ const Comments = () => {
                   index
                 )}`}
               >
-                <h3>{comment.username}</h3>
+                <NavLink to={`/profile/${comment.player_id}`}>
+                  <h3>{comment.username}</h3>
+                </NavLink>
                 <div
                   className="CommentTime"
                   title={formatDate(comment.created_at)}

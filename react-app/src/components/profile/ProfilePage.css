@@ -14,3 +14,101 @@
     position: absolute;
     top: 100px;
 }
+
+.ProfilePageBody > h1 {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
+}
+
+.ProfileSearchingText {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    top: 400px;
+}
+
+.ProfileWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ProfileLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ProfileCard {
+    height: 200px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(164, 210, 248);
+    border-radius: 30px;
+}
+
+.ProfileCardLeft {
+    /* background-color: white; */
+    height: 150px;
+    padding: 0 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ProfileCardLeft > img {
+    position: relative;
+    top: -30px;
+    left: 18px;
+}
+
+.ProfileCardLeft > p {
+    position: relative;
+    top: -40px;
+}
+
+.ProfileCardRight {
+    width: 100%;
+}
+
+.ProfileCardRight > p {
+    background-color: white;
+    width: 150px;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 5px;
+    border-bottom: 2px dotted black;
+}
+
+.ProfileChallengeButton > button {
+    background-color: #FCCDD9;
+    font-family: MaplestoryOTFLight;
+    border: none;
+    color: #111;
+    font-weight: bolder;
+    padding: 17px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 16px;
+    box-shadow: 0px 6px 0px #EDA6BB;
+    margin-top: 25px;
+}
+
+.ProfileChallengeButton > button:hover {
+    background-color: #FCD7D2;
+    box-shadow: 0px 6px 0px #EEA094;
+}
+
+.ProfileGames {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 360px);
+}

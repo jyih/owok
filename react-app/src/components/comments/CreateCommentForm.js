@@ -7,7 +7,7 @@ import "./CreateCommentForm.css";
 const CreateCommentForm = () => {
   const dispatch = useDispatch();
   const player = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
 
   const [errors, setErrors] = useState([]);
   const [content, setContent] = useState("");
@@ -17,7 +17,9 @@ const CreateCommentForm = () => {
   useEffect(() => {
     const validationErrors = [];
 
-    if (content.length === 0) validationErrors.push("");
+    let contentTrimmed = content.trim();
+
+    if (contentTrimmed.length === 0) validationErrors.push("");
 
     if (content.length > 12000)
       validationErrors.push("s-senpai.. it's too long.. uwu");
@@ -50,7 +52,7 @@ const CreateCommentForm = () => {
           <textarea
             type="text"
             required
-            placeholder="Comment"
+            placeholder="Write a comment"
             value={content}
             onChange={updateContent}
           />

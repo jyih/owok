@@ -8,9 +8,9 @@ def seed_all():
     demo = User(
         username='xD3m0', email='demo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/noobm1_2.png")
     jojo = User(
-        username='jojo', email='jojo@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoem3_2.png")
+        username='jojo', email='jojo@aa.io', password='omokmaster', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/jojo2.png")
     sharon = User(
-        username='uwu', email='sharon@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
+        username='uwu', email='uwunuzzlesnya@aa.io', password='sharonspassword', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/sharon2.png")
     jason = User(
         username='xXj0ngyXx', email='jongy@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/jason2.png")
     paul = User(
@@ -32,16 +32,19 @@ def seed_all():
     db.session.add(alyssa)
 
     # seed games
-    game1 = Game(player_one_id=2, player_two_id=1, winner_id=2,
-                 moves="{0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512}", is_private_one=False, is_private_two=False)
-    game2 = Game(player_one_id=1, player_two_id=3, winner_id=1,
-                 moves="{0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707}", is_private_one=False, is_private_two=False)
-    game3 = Game(player_one_id=4, player_two_id=1, winner_id=1,
-                 moves="{0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810}", is_private_one=False, is_private_two=False)
+    game1 = Game(player_one_id=2, player_two_id=1, winner_id=2, turn=2,
+                 moves="0909,1010,1009,0910,0809,0709,1109,1209,0808,1110,0810,1210,1310,0807,0811,0812,1008,1107,0908,0708,0711,0612,0611,0511,0710,1007,0512", is_private_one=False, is_private_two=False)
+    game2 = Game(player_one_id=1, player_two_id=3, winner_id=1, turn=1,
+                 moves="0909,1009,0908,1008,0910,0907,0911,0912,0810,1109,0806,1210,1311,1209,1010,1309,1409,0710,1111,1211,0808,1212,0707", is_private_one=False, is_private_two=False)
+    game3 = Game(player_one_id=4, player_two_id=1, winner_id=1, turn=1,
+                 moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805,0810", is_private_one=False, is_private_two=False)
+    game4 = Game(player_one_id=4, player_two_id=1, turn=1,
+                 moves="0909,0908,1009,0808,1008,0807,1007,1006,1107,1206,1108,0809,1208,0806,0805")
 
     db.session.add(game1)
     db.session.add(game2)
     db.session.add(game3)
+    db.session.add(game4)
 
     # seed comments
     comment1 = Comment(game_id=1, player_id=1,

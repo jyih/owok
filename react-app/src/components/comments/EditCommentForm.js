@@ -6,7 +6,7 @@ import "./EditCommentForm.css";
 
 const EditCommentForm = ({ commentId, resetId }) => {
   const dispatch = useDispatch();
-  const game = useSelector((state) => state.current_game?.comments);
+  const game = useSelector((state) => state.current_replay?.comments);
   const commentToEdit = game[commentId];
 
   const [errors, setErrors] = useState([]);
@@ -17,7 +17,9 @@ const EditCommentForm = ({ commentId, resetId }) => {
   useEffect(() => {
     const validationErrors = [];
 
-    if (content.length === 0) validationErrors.push("");
+    let contentTrimmed = content.trim();
+
+    if (contentTrimmed.length === 0) validationErrors.push("");
 
     if (content.length > 12000)
       validationErrors.push("s-senpai.. it's too long.. uwu");
@@ -54,20 +56,22 @@ const EditCommentForm = ({ commentId, resetId }) => {
           onChange={updateContent}
         />
         <button type="submit" disabled={errors.length > 0}>
-          Edit
+          <i className="fa-solid fa-square-check" title="Confirm edit"></i>
         </button>
         {/* </div> */}
       </form>
-      <button
+      <i
+        className="fa-solid fa-trash-can"
+        title="Delete"
         onClick={async (e) => {
           e.preventDefault();
-          if (window.confirm("Are you sure you want to delete this? uwu")) {
+          if (
+            window.confirm("a-are you sure you want to delete me..? -sad uwu-")
+          ) {
             await dispatch(replayActions.deleteComment(commentId));
           }
         }}
-      >
-        Delete
-      </button>
+      ></i>
     </div>
   );
 };

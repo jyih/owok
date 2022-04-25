@@ -4,11 +4,12 @@ import { GridData } from "../gamearea/GridData";
 import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
 import omok_piece_slime from "../images/omok_piece_slime.png";
 import * as replayActions from "../../store/replays";
+import { NavLink } from "react-router-dom";
 
 const ReplayBoard = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const game = useSelector((state) => state.current_game);
+  const game = useSelector((state) => state.current_replay);
 
   //privacy
   let privateButton = <></>;
@@ -30,16 +31,13 @@ const ReplayBoard = () => {
     if (sessionUser.id === game.player_two_id) {
       privateData.change = "is_private_two";
     }
-    dispatch(replayActions.editGame(privateData));
-    console.log("PrivateData", privateData);
+    dispatch(replayActions.editReplay(privateData));
+    window.alert(`Privacy was changed! 😊`);
   };
 
   //display button
-  if (
-    sessionUser.id === game.player_one_id ||
-    sessionUser.id === game.player_two_id
-  ) {
-    if (game.is_private_one === false || game.is_private_two === false) {
+  if (sessionUser.id === game.player_one_id) {
+    if (game.is_private_one === false) {
       privateButton = (
         // <button onClick={(e) => handlePrivateClick(e)}>Private</button>
         <i
@@ -50,7 +48,32 @@ const ReplayBoard = () => {
         ></i>
       );
     }
-    if (game.is_private_one === true || game.is_private_two === true) {
+    if (game.is_private_one === true) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>un-Private</button>
+        <i
+          className="fa-solid fa-lock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to unprivate"
+        ></i>
+      );
+    }
+  }
+
+  if (sessionUser.id === game.player_two_id) {
+    if (game.is_private_two === false) {
+      privateButton = (
+        // <button onClick={(e) => handlePrivateClick(e)}>Private</button>
+        <i
+          className="fa-solid fa-unlock"
+          onClick={(e) => handlePrivateClick(e)}
+          id="privateButton"
+          title="click to private"
+        ></i>
+      );
+    }
+    if (game.is_private_two === true) {
       privateButton = (
         // <button onClick={(e) => handlePrivateClick(e)}>un-Private</button>
         <i
@@ -67,7 +90,7 @@ const ReplayBoard = () => {
   let currPiece = omok_piece_mushroom;
   let oppPiece = omok_piece_slime;
 
-  const movesArr = game?.moves?.slice(1, -1).split(",");
+  const movesArr = game?.moves?.split(",");
 
   const swapPiece = () => {
     let temp = currPiece;
@@ -119,11 +142,11 @@ const ReplayBoard = () => {
       </h1>
       <div className="replay_board_container">
         <div className="replay_board_layout">
-          {GridData.map((coord, index) => (
+          {GridData.map((obj, index) => (
             <div
-              key={coord}
-              id={`${coord}`}
-              className={`replay_grid ${coord}`}
+              key={obj.coord}
+              id={`${obj.coord}`}
+              className={`replay_grid ${obj.coord}`}
             ></div>
           ))}
         </div>
@@ -141,24 +164,35 @@ const ReplayBoard = () => {
             alt="player two sprite"
           />
         </div>
+
         <div className="replay_player_one_username">
           <p>
             {sessionUser.id === game.player_one_id ||
             sessionUser.id === game.player_two_id ||
-            !game?.is_private_one
-              ? game?.user_player_one?.username
-              : "???"}
+            !game?.is_private_one ? (
+              <NavLink to={`/profile/${game.player_one_id}`}>
+                {game?.user_player_one?.username}
+              </NavLink>
+            ) : (
+              "???"
+            )}
           </p>
         </div>
+
         <div className="replay_player_two_username">
           <p>
             {sessionUser.id === game.player_one_id ||
             sessionUser.id === game.player_two_id ||
-            !game?.is_private_two
-              ? game?.user_player_two?.username
-              : "???"}
+            !game?.is_private_two ? (
+              <NavLink to={`/profile/${game.player_two_id}`}>
+                {game?.user_player_two?.username}
+              </NavLink>
+            ) : (
+              "???"
+            )}
           </p>
         </div>
+
         <div className="replay_board_stats_one">
           <p>{game?.user_player_one?.wins}</p>
           <p>{game?.user_player_one?.losses}</p>

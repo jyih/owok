@@ -12,13 +12,25 @@ const NavBar = () => {
   if (sessionUser) {
     sessionElements = (
       <div className="NavBarContainer">
-        <NavLink to="/" exact={true} activeClassName="active">
-          Home
-        </NavLink>
-        <NavLink to="/browse" exact={true} activeClassName="active">
+        <NavLink
+          to={`/play`}
+          exact={true}
+          // activeClassName="active"
+        >
           Browse
         </NavLink>
-        <NavLink to="/profile/:userId" exact={true} activeClassName="active">
+        <NavLink
+          to="/browse"
+          exact={true}
+          // activeClassName="active"
+        >
+          Replays
+        </NavLink>
+        <NavLink
+          to={`/profile/${sessionUser.id}`}
+          exact={true}
+          // activeClassName="active"
+        >
           Profile
         </NavLink>
         {/* <li>

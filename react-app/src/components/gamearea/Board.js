@@ -1,156 +1,258 @@
-import React from "react";
+import { React, useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as replayActions from "../../store/replays";
-import { GridData } from "./GridData";
+import { useParams } from "react-router-dom";
+// import * as replayActions from "../../store/replays";
+import gamesReducer, * as gameActions from "../../store/game";
+// import { GridData } from "./GridData";
+import Chat from "./Chat";
 
-import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
-import omok_piece_slime from "../images/omok_piece_slime.png";
+// import omok_piece_mushroom from "../images/omok_piece_mushroom.png";
+// import omok_piece_slime from "../images/omok_piece_slime.png";
 
 import "./Board.css";
 
+import { io } from "socket.io-client";
+let socket;
+
+const useDidMountEffect = (func, deps) => {
+  const didMount = useRef(false);
+  useEffect(() => {
+    if (didMount.current) {
+      func();
+    } else {
+      didMount.current = true;
+    }
+  }, deps);
+};
+
 const Board = () => {
   const dispatch = useDispatch();
+  const { gameId, playerOneId, playerTwoId } = useParams();
+
   const user = useSelector((state) => state.session.user);
-  // function for player one and player two placing moves taking turns
-  // this function also pushes each players moves to their own moves array for win calculations
-  // win calculator function
+  const game = useSelector((state) => state.current_games[gameId]);
+  // const board = useSelector((state) => Object.values(state.current_games[gameId].board))
+  // const board = Object.values(game?.board)
+  const [board, setBoard] = useState([]);
 
-  // 3 boards, 1 main board with both moves and that the player clicks, when a player's turn clicks
-  // on the main board, record the move on the corresponding player's personal board
-  // every move, run checks for horizontal, vertical, and diagonal wins (bit based board so 0 and 1?)
-  // for diagonal, need to shift every i-th row (have to do once left and once right?)
-  // by i squares to make it all line up and be vertical.
+  const [socketRoom, setSocketRoom] = useState(`${playerOneId}${playerTwoId}`);
+  const [players, setPlayers] = useState({});
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
 
-  // mathmatical vectors, define array that is eight 0 and 1 and -1 combinations, calculate neighbors
-  // with map of vectors added to indecies of the board grid, and then do the test. return number
-  // of neighbors and do this (after doing second paragraph)
+  // const [lastMove, setLastMove] = useState(null);
+  const omok_piece_mushroom =
+    "https://owok.s3.us-west-1.amazonaws.com/omok_piece_mushroom.png";
+  const omok_piece_slime =
+    "https://owok.s3.us-west-1.amazonaws.com/omok_piece_slime.png";
 
-  let currPiece = "mushroom";
-  let oppPiece = "slime";
-  let gameOver = false;
-  let lastMove = null;
-  const notation = [];
   const pieces = {
-    mushroom: omok_piece_mushroom,
-    slime: omok_piece_slime,
-  };
-  const board = {};
-  const move = {
-    up: -100,
-    down: 100,
-    left: -1,
-    right: 1,
-  };
-  // const board = Array(15*15).fill('');
-
-  const placePiece = (coord) => {
-    if (!gameOver) {
-      console.log("Place!");
-      let square = document.getElementById(coord);
-      if (square && !square.children.length) {
-        let piece = document.createElement("img");
-        // change style background image to the img (might be better for performance)
-        // bc not adding nodes to dom, just updating the node's style
-        piece.src = pieces[currPiece];
-        square.appendChild(piece);
-
-        lastMove = parseInt(coord);
-
-        notation.push(coord);
-        board[lastMove] = currPiece;
-
-        console.log("moves:", notation);
-        console.log("board:", board);
-        swapPiece();
-        checkGame();
-        console.log("gameStatus:", gameOver);
-      }
-    } else {
-      console.log("Game has finished!");
-    }
+    0: omok_piece_mushroom,
+    1: omok_piece_slime,
   };
 
-  const swapPiece = () => {
-    console.log("Swap!");
-    let temp = currPiece;
-    currPiece = oppPiece;
-    oppPiece = temp;
-  };
+  useEffect(() => {
+    setSocketRoom(`${playerOneId}${playerTwoId}`);
+  }, [playerOneId, playerTwoId]);
 
-  const checkGame = (n = 5) => {
-    let vertical = checkLine(move.up, n)
-    let horizontal = checkLine(move.right, n)
-    let forwardDiag = checkLine(move.up + move.right, n)
-    let backwardDiag = checkLine(move.up + move.left, n)
-    console.log(vertical, horizontal, forwardDiag, backwardDiag)
+  useEffect(() => {
+    dispatch(gameActions.fetchGame(gameId));
+  }, []);
 
-    if (vertical >= n || horizontal >= n || forwardDiag >= n || backwardDiag >= n) endGame();
-  }
+  useDidMountEffect(() => {
+    setBoard(Object.values(game.board));
+  }, [game]);
 
-  const checkLine = (displace, n = 5) => {
-    let countPos = checkVector(displace, n);
-    let countNeg = checkVector(-displace, n);
-    return countPos + countNeg - 1;
-  }
+  useEffect(() => {
+    socket = io();
 
-  const checkVector = (displace, n = 5) => {
-    let lookPiece = board[lastMove];
-    let count = 0;
+    socket.on("open_room", (data) => {
+      console.log("useEffect, join_room", data);
+      console.log(data.players);
+      setPlayers(data.players);
+    });
 
-    while (lookPiece === board[lastMove] && count < n) {
-      count++;
-      let lookMove = lastMove + (displace * count);
-      lookPiece = board[lookMove];
-      console.log(`pos:${count}, ${lookMove}: ${lookPiece}`)
-    }
+    socket.on("leave_room", (data) => {
+      console.log("useEffect, leave_room", data);
+      console.log(data.players);
+      setPlayers(data.players);
+    });
 
-    return count;
-  }
+    socket.on("place_piece", (data) => {
+      dispatch(gameActions.fetchGame(gameId));
+    });
 
-  const endGame = () => {
-    //need to get player_two data
-    //increment winner win count
-    //increment loser loss count
-    //if draw, increment both players' draw count
-    gameOver = true;
+    socket.on("chat", (chat) => {
+      console.log("@@@", chat);
+      setMessages((messages) => [...messages, chat]);
+    });
 
-    const gameData = {
-      player_one_id: user.id,
-      player_two_id: user.id,
-      winner_id: user.id,
-      moves: notation,
+    return () => {
+      socket.disconnect();
     };
+  }, []);
 
-    const data = dispatch(replayActions.saveGame(gameData));
+  useEffect(() => {
+    joinRoom(socketRoom);
+  }, [socketRoom]);
 
-    if (data?.errors) {
-      console.log(data.errors);
+  useEffect(() => {}, [players]);
+
+  //make sure lastMove updates/persists before setBoard
+  // useDidMountEffect(() => {
+  //   console.log("didMount (dep lastMove):", lastMove);
+  //   placePiece(lastMove);
+  // }, [lastMove]);
+
+  // //make sure board updates/persists before checkGame
+  // useDidMountEffect(() => {
+  //   console.log("notation:", notation);
+  //   console.log("board:", board);
+  //   checkGame();
+  //   console.log("gameStatus:", gameOver);
+  // }, [board]);
+
+  const joinRoom = (newRoom) => {
+    socket.emit("join_room", { user: user, room: newRoom });
+  };
+
+  const sendChat = (e) => {
+    e.preventDefault();
+    socket.emit("chat", {
+      username: user.username,
+      msg: chatInput,
+      room: socketRoom,
+    });
+    setChatInput("");
+  };
+
+  // const leaveRoom = (room = socketRoom) => {
+  //   socket.emit('leave_room', {user: user, room: room})
+  // }
+
+  const sendMove = (e) => {
+    e.preventDefault();
+    console.log(
+      "inside sendMove",
+      game.turn,
+      user.id,
+      playerOneId,
+      playerTwoId
+    );
+    console.log(
+      game.turn
+        ? user.id === parseInt(playerTwoId)
+        : user.id === parseInt(playerOneId)
+    );
+    if (
+      game.turn
+        ? user.id === parseInt(playerTwoId)
+        : user.id === parseInt(playerOneId)
+    ) {
+      console.log("Try movee");
+      const game_move = {
+        id: gameId,
+        move: e.target.id,
+        player_id: user.id,
+      };
+      dispatch(gameActions.updateGame(game_move));
     }
   };
+
+  let currentTurn = <p className="CurrentTurn">Game over!</p>;
+
+  if (!game?.winner_id && game?.turn === 0 && players[playerOneId]?.username) {
+    currentTurn = (
+      <p className="CurrentTurn">
+        It's {players[playerOneId]?.username}'s turn.
+      </p>
+    );
+  }
+
+  if (!game?.winner_id && game?.turn === 1 && players[playerTwoId]?.username) {
+    currentTurn = (
+      <p className="CurrentTurn">
+        It's {players[playerTwoId]?.username}'s turn.
+      </p>
+    );
+  }
+
+  let gameStatusMessage = (
+    <p className="GameStatusMessage">
+      {game?.winner_id === -1
+        ? "It's a draw!"
+        : players[game?.winner_id]?.username
+        ? `${players[game?.winner_id]?.username} won!`
+        : ""}
+    </p>
+  );
 
   return (
     <div className="board_container">
       <div className="board_layout">
-        {GridData.map((coord, index) => (
+        {board?.map((obj) => (
           <div
-            key={coord}
-            id={`${coord}`}
-            className={`grid ${coord}`}
-            onClick={(e) => placePiece(e.target.id)}
-          ></div>
+            key={obj.coord}
+            id={`${obj.coord}`}
+            className={`grid ${obj.coord}`}
+            onClick={(e) => sendMove(e)}
+          >
+            {pieces[obj?.piece] && (
+              <img
+                id={`img-${obj.coord}`}
+                src={pieces[obj?.piece]}
+                alt="boardgrid"
+              />
+            )}
+          </div>
         ))}
       </div>
+      {game?.winner_id && gameStatusMessage}
       <img
-        src={user.sprite_url}
+        src={players[playerOneId]?.sprite_url}
         className="board_player_one"
-        alt="player one sprite"
+        alt={players[playerOneId]}
       />
       {/* <img src={user.sprite_url} className="board_player_two" alt="player two sprite" /> */}
-      <div className="board_stats">
-        <p>{user.wins}</p>
-        <p>{user.losses}</p>
-        <p>{user.draws}</p>
-      </div>
+      <p className="board_player_one_username">
+        {players[playerOneId]?.username}
+      </p>
+      {players[playerOneId] && (
+        <div className="board_stats_one">
+          <p>{game?.user_player_one?.wins}</p>
+          <p>{game?.user_player_one?.losses}</p>
+          <p>{game?.user_player_one?.draws}</p>
+          {/* <p>{players[playerOneId]?.wins}</p>
+        <p>{players[playerOneId]?.losses}</p>
+        <p>{players[playerOneId]?.draws}</p> */}
+        </div>
+      )}
+      <img
+        src={players[playerTwoId]?.sprite_url}
+        className="board_player_two"
+        alt={players[playerTwoId]}
+      />
+      <p className="board_player_two_username">
+        {players[playerTwoId]?.username}
+      </p>
+      {players[playerTwoId] && (
+        <div className="board_stats_two">
+          <p>{game?.user_player_two?.wins}</p>
+          <p>{game?.user_player_two?.losses}</p>
+          <p>{game?.user_player_two?.draws}</p>
+          {/* <p>{players[playerTwoId]?.wins}</p>
+        <p>{players[playerTwoId]?.losses}</p>
+        <p>{players[playerTwoId]?.draws}</p> */}
+        </div>
+      )}
+      <Chat
+        socketRoom={socketRoom}
+        messages={messages}
+        chatInput={chatInput}
+        setChatInput={setChatInput}
+        sendChat={sendChat}
+      />
+      {currentTurn}
     </div>
   );
 };

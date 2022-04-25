@@ -11,8 +11,8 @@ class Comment(db.Model):
     player_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     username = db.Column(db.String(20), nullable=False)
     content = db.Column(db.String(12000), nullable=False)
-    created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
-    updated_at = db.Column(db.DateTime(), default=datetime.utcnow(), onupdate=datetime.utcnow(), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     user = db.relationship('User', back_populates='comments')
 
     game = db.relationship('Game', back_populates='comments')

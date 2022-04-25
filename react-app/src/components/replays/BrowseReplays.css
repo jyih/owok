@@ -6,10 +6,6 @@
     width: 100vw;
     height: 100vh;
     font-family: MaplestoryOTFLight;
-    background-image: url("../images/mulung.jpg");
-    /* background-image: url("../images/herbtown.jpg"); */
-    background-size: cover;
-    background-repeat: repeat-y;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -25,6 +21,12 @@
     top: 100px;
 }
 
+.BrowseReplaysBody > h1 {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
+}
+
 .GamesContainer {
     display: flex;
     /* flex-wrap: wrap;
@@ -35,14 +37,14 @@
     overflow-y: scroll;
     max-height: calc(100vh - 220px);
     position: absolute;
-    top: 100px;
+    top: 150px;
     margin-left: 20px;
 }
 
 .SingleGameContainer {
     min-width: 300px;
     height: 160px;
-    background-color: rgba(255, 255, 255, 0.253);
+    background-color: rgba(255, 255, 255, 0.384);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -51,7 +53,7 @@
 }
 
 .SingleGameContainer:hover {
-    background-color: rgba(255, 255, 255, 0.596);
+    background-color: rgba(255, 255, 255, 0.705);
     cursor: pointer;
 }
 

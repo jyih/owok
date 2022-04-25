@@ -8,12 +8,15 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-from .api.game_routes import game_routes
+from .api.replay_routes import replay_routes
 from .api.comment_routes import comment_routes
+from .api.game_routes import game_routes
 
 from .seeds import seed_commands
 
 from .config import Config
+
+from .socket import socketio
 
 app = Flask(__name__)
 
@@ -33,11 +36,14 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(game_routes, url_prefix='/api/games')
+app.register_blueprint(replay_routes, url_prefix='/api/replays')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
+app.register_blueprint(game_routes, url_prefix='/api/games')
 
 db.init_app(app)
 Migrate(app, db)
+
+socketio.init_app(app)
 
 # Application Security
 CORS(app)
@@ -75,3 +81,6 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    socketio.run(app)

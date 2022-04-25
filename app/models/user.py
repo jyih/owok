@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     losses = db.Column(db.Integer, nullable=False, default=0)
     draws = db.Column(db.Integer, nullable=False, default=0)
     sprite_url = db.Column(db.String(255), nullable=False, default='https://islandracnh.s3.us-west-1.amazonaws.com/noobm1.png')
-    created_at = db.Column(db.DateTime(), default=datetime.utcnow(), nullable=False)
-    updated_at = db.Column(db.DateTime(), default=datetime.utcnow(), onupdate=datetime.utcnow(), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     comments = db.relationship(
         'Comment',

@@ -15,15 +15,45 @@
     width: 100%;
     height: 100%;
     resize: none;
-    /* box-sizing: border-box; */
-    /* display: block; */
-    /* width: 30em; */
-    /* position: relative; */
+    margin-top: 10px;
     box-sizing: border-box;
-
+    /* font-family: MaplestoryOTFLight; */
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+	/* font-weight: 300; */
 	background-color: #fff;
-	/* padding: 1.125em 1.5em;
-    margin-bottom: 25px; */
-	/* font-size: 1.25em; */
+	font-weight: bold;
 	font-size: 15px;
+}
+
+.EditCommentBox > form > button {
+    position: absolute;
+    bottom: -10px;
+    right: 0px;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    color: rgb(70, 70, 70);
+}
+
+.EditCommentBox > form > button:disabled {
+    cursor: not-allowed;
+}
+
+.EditCommentBox > form > button:hover:enabled {
+    color: rgb(11, 216, 38);
+    cursor: pointer;
+}
+
+.EditCommentBox > i {
+    position: absolute;
+    right: 5px;
+    top: -23px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(70, 70, 70);
+}
+
+.EditCommentBox > i:hover {
+    color: red;
 }

@@ -8,11 +8,13 @@ comment_routes = Blueprint('comments', __name__)
 #need to add backend validation for user
 
 @comment_routes.route('/')
+@login_required
 def comments():
   comments = Comment.query.all()
   return {comment.to_dict()['id']:comment.to_dict() for comment in comments}
 
 @comment_routes.route('/<int:id>')
+@login_required
 def comment(id):
   comment = Comment.query.get(id)
   print('comment:', comment)
@@ -21,7 +23,7 @@ def comment(id):
   return {**comment.to_dict()}
 
 @comment_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def comment_create():
   data = request.json
   comment = Comment(
@@ -35,7 +37,7 @@ def comment_create():
   return comment.to_dict()
 
 @comment_routes.route('/<int:id>', methods=['PUT'])
-# @login_required
+@login_required
 def comment_update(id):
   data = request.json
   comment = Comment.query.get(id)
@@ -46,7 +48,7 @@ def comment_update(id):
   return comment.to_dict()
 
 @comment_routes.route('/<int:id>', methods=['DELETE'])
-# @login_required
+@login_required
 def comment_delete(id):
   comment = Comment.query.get(id)
   if not comment:

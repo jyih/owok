@@ -1,5 +1,67 @@
 .GameAreaContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: calc(100vh - 100px);
+}
+
+.GameAreaContainer > h1 {
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 55px;
+    font-family: MaplestoryOTFLight;
+    margin-bottom: 0;
+}
+
+.ChatContainer {
+    position: absolute;
+    bottom: 40px;
+    right: 8px;
+    width: 375px;
+    height: 128px;
+    background-color: none;
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
+}
+
+.ChatMessages {
+    color: white;
+    /* background-color: gray; */
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    height: 90px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+.ChatInputBox > input {
+    position: relative;
+    bottom: -7px;
+    height: 21px;
+    width: 248px;
+}
+
+.ChatInputBox > button {
+    background-color: none;
+    border: none;
+    outline: none;
+    position: relative;
+    bottom: -7px;
+    right: -12px;
+    color: rgb(66, 66, 66);
+}
+
+.ChatInputBox > button:hover {
+    cursor: pointer;
+    color: black;
 }
