@@ -152,6 +152,7 @@
   cursor: not-allowed;
 } */
 
+
 .SignUpSpriteSelection {
     display: flex;
     flex-direction: column;
@@ -262,60 +263,6 @@
 
 .DemoButton > button:hover:not(:disabled) {
     filter: brightness(1.15);
-}
-
-.contact-dropup {
-    position: absolute;
-    bottom: 10px;
-    display: inline-block;
-    font-family: MaplestoryOTFLight;
-}
-
-.contact-dropup > p:hover {
-    color: #1264a3;
-    text-decoration: underline;
-    text-align: center;
-}
-
-.contact-dropup-content {
-    display: none;
-    position: absolute;
-    border-radius: 10px;
-    bottom: 40px;
-    right: -30px;
-    background-color: rgb(72, 200, 255);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.contact-dropup-content a {
-    padding: 12px 16px;
-    margin: 0;
-    text-decoration: none;
-    display: block;
-    color: rgb(44, 44, 44);
-    text-align: center;
-}
-
-.contact-dropup-content a:hover {
-    background-color: rgb(255, 247, 83);
-    color: #454245;
-}
-
-#linkedin:hover {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-#github:hover {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.contact-dropup:hover .contact-dropup-content {
-    display: block;
-    text-decoration: none;
 }
 
 ::-webkit-scrollbar {

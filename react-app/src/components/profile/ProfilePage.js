@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import ChallengeModal from "./ChallengeModal";
+import InfoModal from "../info/InfoModal";
 
 import "./ProfilePage.css";
 
@@ -306,6 +307,7 @@ const ProfilePage = () => {
           <h1 className="ProfileSearchingText">Searching..</h1>
         )}
       </div>
+      <InfoModal />
     </>
   );
 };

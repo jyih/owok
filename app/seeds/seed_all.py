@@ -21,6 +21,8 @@ def seed_all():
         username='xCecilia', email='cecilia@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/nxhoef1_2.png")
     alyssa = User(
         username='Aly', email='alyssasaccount@aa.io', password='alyspassword', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/alyssa2.png")
+    david = User(
+        username='9ziggy9', email='david@aa.io', password='password', wins=0, losses=0, draws=0, sprite_url="https://owok.s3.us-west-1.amazonaws.com/davidr2.png")
 
     db.session.add(demo)
     db.session.add(jojo)
@@ -30,6 +32,7 @@ def seed_all():
     db.session.add(chris)
     db.session.add(cecilia)
     db.session.add(alyssa)
+    db.session.add(david)
 
     # seed games
     game1 = Game(player_one_id=2, player_two_id=1, winner_id=2, turn=0,
