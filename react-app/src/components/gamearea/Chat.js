@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 // import { io } from "socket.io-client";
 // let socket;
@@ -8,6 +8,17 @@ const Chat = ({ messages, sendChat, chatInput, setChatInput }) => {
   // const [messages, setMessages] = useState([]);
   const user = useSelector((state) => state.session.user);
 
+  const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    const validationErrors = [];
+
+    let contentTrimmed = chatInput.trim();
+
+    if (contentTrimmed.length === 0) validationErrors.push("");
+
+    setErrors(validationErrors);
+  }, [chatInput]);
   //When someone joins: Username has joined!
   //Every time a PLAYER (one or two) joins, send message:
   //Owok: Place 5 pieces in a row to win!
@@ -70,13 +81,15 @@ const Chat = ({ messages, sendChat, chatInput, setChatInput }) => {
       <div className="ChatContainer">
         <div className="ChatMessages">
           {messages.map((message, ind) => (
-            <div key={ind}>{`${message.username ? `${message.username}: ` : ''}${message.msg}`}</div>
+            <div key={ind}>{`${
+              message.username ? `${message.username}: ` : ""
+            }${message.msg}`}</div>
           ))}
           <div ref={messagesEndRef} />
         </div>
         <form onSubmit={sendChat} className="ChatInputBox">
           <input value={chatInput} onChange={updateChatInput} />
-          <button type="submit">
+          <button type="submit" disabled={errors.length > 0}>
             <i className="fa-solid fa-arrow-turn-up"></i>
           </button>
         </form>

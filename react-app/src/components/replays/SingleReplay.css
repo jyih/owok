@@ -47,7 +47,7 @@
 }
 
 .replay_board_container {
-    background-image: url("../images/boardoccupied.jpg");
+    background-image: url("../images/boardnochat.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     width: 855px;

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchReplay } from "../../store/replays";
 import ReplayBoard from "./ReplayBoard";
 import Comments from "../comments/Comments";
+import InfoModal from "../info/InfoModal";
 
 import "./SingleReplay.css";
 
@@ -23,6 +24,7 @@ const SingleReplay = () => {
         </div>
         <Comments />
       </div>
+      <InfoModal />
     </div>
   );
 };

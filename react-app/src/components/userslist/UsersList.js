@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import InfoModal from "../info/InfoModal";
 
 import "./UsersList.css";
 
@@ -38,6 +39,7 @@ function UsersList() {
         <h1>Players</h1>
         <div className="PlayPlayersWrapper">{userComponents}</div>
       </div>
+      <InfoModal />
     </div>
   );
 }

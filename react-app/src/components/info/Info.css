@@ -1,0 +1,66 @@
+.InfoButton {
+    position: fixed;
+    bottom: 50px;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.InfoButton > h1 {
+    margin: 0;
+    font-size: 15px;
+    font-family: MaplestoryOTFLight;
+    /* animation: animate 1.5s alternate infinite; */
+}
+/*
+@keyframes animate{
+    0%{
+      color: black;
+    }
+    100%{
+      color: rgb(14, 35, 219);
+    }
+  } */
+
+.InfoModal {
+    width: 550px;
+    height: 80vh;
+    min-height: 320px;
+    font-family: MaplestoryOTFLight;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* text-align: center; */
+    line-height: 1em;
+    padding: 10px 10px 40px 10px;
+    overflow-y: scroll;
+    /* scrollbar-gutter: none; */
+    margin: 0 0 20px 20px;
+}
+
+.InfoModal > h1 {
+    margin: 50px 0 30px 0;
+    text-shadow: -2px -2px 0 #2c2c2c, 2px -2px 0 #2c2c2c, -2px 2px 0 #2c2c2c, 2px 2px 0 #2c2c2c;
+    color: #ffffff;
+    font-size: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.InfoModal > h2 {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.InfoModal > p {
+    padding: 0 40px;
+    line-height: 1.5rem;
+}
+
+.glitterface {
+    display: flex;
+    flex-direction: row;
+}
