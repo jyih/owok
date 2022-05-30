@@ -32,4 +32,4 @@ RUN pip install psycopg2
 # closing command to gunicorn app:app
 # CMD gunicorn app:app
 CMD gunicorn --worker-class eventlet -w 1 app:app
-CMD web: gunicorn app:app --preload --workers 1
+# CMD web: gunicorn app:app --preload --workers 1
