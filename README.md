@@ -3,7 +3,7 @@
 </p>
 
 
-[Owok](https://uwuowok.herokuapp.com/) is a two player, turn-based game based on Maplestory's popular, nostalgic mini-game: Omok. The rules of Owok are simple: successfully place 5 pieces in a row to win! 😋
+[Owok](https://owok.onrender.com/) is a two player, turn-based game based on Maplestory's popular, nostalgic mini-game: Omok. The rules of Owok are simple: successfully place 5 pieces in a row to win! 😋
 
 <p align="center">
   <img width="300" src="https://i.gyazo.com/cfbd0aa0c8553e2bfbe3b25f79704ec7.gif" alt="Owok">
