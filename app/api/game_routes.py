@@ -19,7 +19,6 @@ def all_games():
 def get_game(id):
     # Get specific game via id
     game = Game.query.get(id)
-    print("game:", game)
     if not game:
         return {"errors": "Game not found"}
     return {**game.to_dict()}
@@ -29,11 +28,6 @@ def get_game(id):
 @login_required
 def create_game():
     data = request.json
-    print(
-        f"""
-        SHOW ME THE DATA {data}
-        """
-    )
     game = Game(
         player_one_id=data["player_one_id"],
         player_two_id=data["player_two_id"],
@@ -77,9 +71,7 @@ DISPLACE = {
 
 
 def place_piece(game, move, player_id):
-    print(f'INSIDE PLACE_PIECE')
     if game.board[move]["piece"] == "" and game.get_players()[game.turn] == player_id:
-        print(f'TRY PLACE_PIECE')
         game.board[move]["piece"] = game.turn
         game.moves = game.moves + f",{move[1:]}" if len(game.moves) > 0 else f"{move[1:]}"
         check_game(game, move)
@@ -91,12 +83,6 @@ def check_game(game, move, n=5):
     forward_diag = check_line(game, move, DISPLACE["up"] + DISPLACE["right"], n)
     backward_diag = check_line(game, move, DISPLACE["up"] + DISPLACE["left"], n)
 
-    print(
-        f"""
-    ARE WE CHECKING THE GAME OR NOT BRUH
-    {vertical} {horizontal} {forward_diag} {backward_diag}
-    """
-    )
 
     if len(game.moves) >= 1124 or vertical >= n or horizontal >= n or forward_diag >= n or backward_diag >= n:
         end_game(game)
@@ -105,7 +91,6 @@ def check_game(game, move, n=5):
 
 
 def check_line(game, move, displacement, n=5):
-    print(f'INSIDE CHECK_LINE')
     return (
         check_vector(game, move, displacement, n)
         + check_vector(game, move, -displacement, n)
@@ -123,11 +108,6 @@ def check_vector(game, move, displacement, n=5):
         if not look_move in game.board or game.board[look_move]["piece"] == "":
               break
         else:
-            print(
-                f"""
-            look_piece: {game.board[look_move]['piece']}
-            """
-            )
             look_piece = game.board[look_move]["piece"]
 
     return count
@@ -136,9 +116,6 @@ def check_vector(game, move, displacement, n=5):
 def end_game(game):
     player_one = User.query.get(game.player_one_id)
     player_two = User.query.get(game.player_two_id)
-    print(f'''WHY NOT WORK
-    {len(game.moves)}
-    ''')
     if len(game.moves) >= 1124:
         game.winner_id = -1  # tie
         player_one.draws += 1

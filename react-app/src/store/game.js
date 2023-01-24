@@ -22,9 +22,6 @@ export const fetchGame = (game_id) => async (dispatch) => {
 
   if (res.ok) {
     const game = await res.json();
-    console.log()
-    console.log(`FETCH GAME THUNK: ${game.board}`)
-    console.log()
     dispatch(loadGame(game));
     return game;
   } else {
@@ -51,7 +48,6 @@ export const createGame = (game) => async (dispatch) => {
 };
 
 export const updateGame = (game) => async (dispatch) => {
-  console.log('UPDATE GAME, just inside', game)
   const res = await fetch(`/api/games/${game.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -60,7 +56,6 @@ export const updateGame = (game) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    console.log('UPDATE GAME RESOK', data)
     dispatch(loadGame(data));
     return data;
   } else {

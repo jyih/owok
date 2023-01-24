@@ -1,4 +1,4 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
@@ -6,6 +6,8 @@ from datetime import datetime
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(12), nullable=False, unique=True)
@@ -66,5 +68,4 @@ class User(db.Model, UserMixin):
         games_one = [g.to_dict() for g in self.games_player_one]
         games_two =  [g.to_dict() for g in self.games_player_two]
         games = games_one + games_two
-        print('games: ',games)
         return games

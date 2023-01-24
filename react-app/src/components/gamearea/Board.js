@@ -67,14 +67,10 @@ const Board = () => {
     socket = io();
 
     socket.on("open_room", (data) => {
-      console.log("useEffect, join_room", data);
-      console.log(data.players);
       setPlayers(data.players);
     });
 
     socket.on("leave_room", (data) => {
-      console.log("useEffect, leave_room", data);
-      console.log(data.players);
       setPlayers(data.players);
     });
 
@@ -83,9 +79,7 @@ const Board = () => {
     });
 
     socket.on("chat", (chat) => {
-      console.log("@@@", chat);
       setMessages((messages) => [...messages, chat]);
-      console.log(messages);
     });
 
     return () => {
@@ -133,24 +127,11 @@ const Board = () => {
 
   const sendMove = (e) => {
     e.preventDefault();
-    console.log(
-      "inside sendMove",
-      game.turn,
-      user.id,
-      playerOneId,
-      playerTwoId
-    );
-    console.log(
-      game.turn
-        ? user.id === parseInt(playerTwoId)
-        : user.id === parseInt(playerOneId)
-    );
     if (
       game.turn
         ? user.id === parseInt(playerTwoId)
         : user.id === parseInt(playerOneId)
     ) {
-      console.log("Try movee");
       const game_move = {
         id: gameId,
         move: e.target.id,

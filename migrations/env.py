@@ -7,6 +7,11 @@ from flask import current_app
 
 from alembic import context
 
+
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get('SCHEMA')
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -64,6 +69,30 @@ def run_migrations_online():
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
     # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
+
+    """
+    Old Heroku migrations
+    """
+    # def process_revision_directives(context, revision, directives):
+    #     if getattr(config.cmd_opts, 'autogenerate', False):
+    #         script = directives[0]
+    #         if script.upgrade_ops.is_empty():
+    #             directives[:] = []
+    #             logger.info('No changes in schema detected.')
+
+    # connectable = current_app.extensions['migrate'].db.get_engine()
+
+    # with connectable.connect() as connection:
+    #     context.configure(
+    #         connection=connection,
+    #         target_metadata=target_metadata,
+    #         process_revision_directives=process_revision_directives,
+    #         **current_app.extensions['migrate'].configure_args
+    #     )
+
+    #     with context.begin_transaction():
+    #         context.run_migrations()
+
     def process_revision_directives(context, revision, directives):
         if getattr(config.cmd_opts, 'autogenerate', False):
             script = directives[0]
@@ -71,7 +100,11 @@ def run_migrations_online():
                 directives[:] = []
                 logger.info('No changes in schema detected.')
 
-    connectable = current_app.extensions['migrate'].db.get_engine()
+    connectable = engine_from_config(
+        config.get_section(config.config_ini_section),
+        prefix='sqlalchemy.',
+        poolclass=pool.NullPool,
+    )
 
     with connectable.connect() as connection:
         context.configure(
@@ -81,7 +114,14 @@ def run_migrations_online():
             **current_app.extensions['migrate'].configure_args
         )
 
+        # Create a schema (only in production)
+        if environment == "production":
+            connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+
+        # Set search path to your schema (only in production)
         with context.begin_transaction():
+            if environment == "production":
+                context.execute(f"SET search_path TO {SCHEMA}")
             context.run_migrations()
 
 

@@ -70,18 +70,10 @@ const Board = () => {
     socket = io();
 
     socket.on("open_room", (data) => {
-      console.log("useEffect, join_room", data);
-      console.log(data.players);
       setPlayers(data.players);
     });
 
     socket.on("leave_room", (data) => {
-      console.log("useEffect, leave_room", data);
-      console.log(data.players);
-      console.log(
-        "initial check",
-        !gameOver && !notation.length && !Object.keys(board).length
-      );
       // if (!gameOver && !notation.length && !Object.keys(board).length) {
       //   if (!data.players[playerOneId]) endGame(playerTwoId);
       //   else endGame(playerOneId);
@@ -90,13 +82,10 @@ const Board = () => {
     });
 
     socket.on("place_piece", (move) => {
-      console.log("socket place piece, move:", move);
       setLastMove(parseInt(move.coord));
-      console.log("socket place piece, players:", players);
     });
 
     socket.on("chat", (chat) => {
-      console.log("@@@", chat);
       setMessages((messages) => [...messages, chat]);
     });
 
@@ -123,16 +112,12 @@ const Board = () => {
 
   //make sure lastMove updates/persists before setBoard
   useDidMountEffect(() => {
-    console.log("didMount (dep lastMove):", lastMove);
     placePiece(lastMove);
   }, [lastMove]);
 
   //make sure board updates/persists before checkGame
   useDidMountEffect(() => {
-    console.log("notation:", notation);
-    console.log("board:", board);
     checkGame();
-    console.log("gameStatus:", gameOver);
   }, [board]);
 
   const joinRoom = (newRoom) => {
@@ -144,25 +129,11 @@ const Board = () => {
   // }
 
   const sendMove = (e) => {
-    console.log(
-      "sendMove outside if",
-      players,
-      turn,
-      players[turn],
-      user.id,
-      e.target.nodeName
-    );
-    console.log(
-      "sendMove if cond",
-      !gameOver,
-      parseInt(players[turn]?.id) === user.id && e.target.nodeName === "DIV"
-    );
     if (
       !gameOver &&
       parseInt(players[turn]?.id) === user.id &&
       e.target.nodeName === "DIV"
     ) {
-      console.log("sendMove", e.target.id);
       socket.emit("place_piece", {
         user: user.id,
         coord: e.target.id,
@@ -172,13 +143,9 @@ const Board = () => {
   };
 
   const placePiece = (coordNum) => {
-    console.log("Can Place?");
     if (!gameOver) {
-      console.log(`Place at ${coordNum}`);
       let img = document.getElementById(`img-${("000" + coordNum).slice(-4)}`);
-      console.log(coordNum, img);
       if (img != null && !img.getAttribute("src")) {
-        console.log("current turn:", turn);
         img.setAttribute("src", pieces[turn]);
       }
       setNotation([...notation, lastMove]);
@@ -191,7 +158,7 @@ const Board = () => {
   };
 
   const swapPiece = () => {
-    console.log("Swap!");
+    // console.log("Swap!");
     // let temp = currPiece;
     // setCurrPiece(oppPiece);
     // setOppPiece(temp);
@@ -207,13 +174,6 @@ const Board = () => {
       let horizontal = checkLine(displace.right, n);
       let forwardDiag = checkLine(displace.up + displace.right, n);
       let backwardDiag = checkLine(displace.up + displace.left, n);
-      console.log(
-        "checkGame:",
-        vertical,
-        horizontal,
-        forwardDiag,
-        backwardDiag
-      );
 
       if (
         vertical >= n ||
@@ -235,14 +195,10 @@ const Board = () => {
   const checkVector = (displacement, n = 5) => {
     let lookPiece = board[lastMove];
     let count = 0;
-    console.log("inside checkVector", lastMove, lookPiece, board);
     while (board[lastMove] && lookPiece === board[lastMove] && count < n) {
       count++;
       let lookMove = lastMove + displacement * count;
       lookPiece = board[lookMove];
-      console.log(
-        `count:${count}, ${lookMove}: ${lookPiece}, ${lastMove}: ${board[lastMove]}, ${board}`
-      );
     }
 
     return count;
@@ -253,7 +209,7 @@ const Board = () => {
     //increment winner win count
     //increment loser loss count
     //if draw, increment both players' draw count
-    console.log("in endGame");
+    //console.log("in endGame");
     setGameOver(true);
 
     const gameData = {
@@ -266,7 +222,7 @@ const Board = () => {
     if (parseInt(winnerId) === user.id) {
       const data = dispatch(replayActions.saveReplay(gameData));
       if (data?.errors) {
-        console.log(data.errors);
+        // console.log(data.errors);
       }
     }
   };

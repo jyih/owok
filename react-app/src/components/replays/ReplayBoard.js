@@ -109,9 +109,7 @@ const ReplayBoard = () => {
   const replayClick = (e) => {
     e.preventDefault();
     let coord = movesArr[moveNumber];
-    // console.log("ReplayClick Coord", coord);
     let square = document.getElementById(coord);
-    // console.log("ReplayClick Square", square);
     if (square && !square.children.length) {
       let piece = document.createElement("img");
 

@@ -17,7 +17,6 @@ def replays():
 def replay(id):
   #Get specific game via id
   game = Game.query.get(id)
-  print('game:', game)
   if not game:
     return {'errors': 'Game not found'}
   return {**game.to_dict()}
@@ -29,7 +28,6 @@ def replays_user(user_id):
   #Get all games played by user_id
   user = User.query.get(user_id)
   games = user.get_games()
-  print('game:', games)
   if not games:
     return {'errors': 'Games not found'}
   return {game['id']:game for game in games}
@@ -42,9 +40,7 @@ def replay_create():
   # form = GameForm()
   # form['csrf_token'].data = request.cookies['csrf_token']
   # if form.validate_on_submit():
-  print(f'''
-  SHOW ME THE DATA {data}
-  ''')
+
   game = Game(
       player_one_id = data['player_one_id'],
       player_two_id = data['player_two_id'],

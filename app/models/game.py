@@ -1,5 +1,5 @@
 from email.policy import default
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import JSONB
 
@@ -246,10 +246,12 @@ def default_board(context):
 
 class Game(db.Model):
     __tablename__ = "games"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    player_one_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    player_two_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    player_one_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    player_two_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     winner_id = db.Column(db.Integer, nullable=True, default=None)
     moves = db.Column(db.String(12000), nullable=True, default="")
     board = db.Column(JSONB, nullable=True, default=default_board)

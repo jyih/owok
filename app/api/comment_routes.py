@@ -17,7 +17,6 @@ def comments():
 @login_required
 def comment(id):
   comment = Comment.query.get(id)
-  print('comment:', comment)
   if not comment:
     return {'errors': 'Comment not found'}
   return {**comment.to_dict()}
