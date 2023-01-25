@@ -30,8 +30,8 @@ function App() {
   }
 
   return (
-    // <BrowserRouter>
-    <HashRouter>
+    <BrowserRouter>
+    {/* <HashRouter> */}
       <NavBar />
       <Switch>
         <Route path="/login" exact={true}>
@@ -68,8 +68,8 @@ function App() {
           <Redirect to="/browse" />
         </ProtectedRoute>
       </Switch>
-    </HashRouter>
-    //</BrowserRouter>
+    {/* </HashRouter> */}
+    </BrowserRouter>
   );
 }
 
