@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -30,7 +30,8 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
+    <HashRouter>
       <NavBar />
       <Switch>
         <Route path="/login" exact={true}>
@@ -67,7 +68,8 @@ function App() {
           <Redirect to="/browse" />
         </ProtectedRoute>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
+    //</BrowserRouter>
   );
 }
 
