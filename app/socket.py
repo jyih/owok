@@ -14,7 +14,7 @@ else:
     origins = "*"
 
 # create your SocketIO instance
-socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
+socketio = SocketIO(cors_allowed_origins="*", logger=True, engineio_logger=True, debug=True)
 
 rooms = {}
 user_sid = {}

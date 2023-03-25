@@ -43,7 +43,7 @@ app.register_blueprint(game_routes, url_prefix='/api/games')
 db.init_app(app)
 Migrate(app, db, compare_type=True)
 
-socketio.init_app(app)
+socketio.init_app(app, cors_allowed_origins="*")
 # socketio.init_app(app, cors_allowed_origins=["https://owok.onrender.com/", "http://owok.onrender.com/"])
 
 # Application Security
