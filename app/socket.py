@@ -5,16 +5,14 @@ import os
 
 if os.environ.get("FLASK_ENV") == "production":
     origins = [
-        "https://play-owok.herokuapp.com",
-        "http://play-owok.herokuapp.com",
-        "https://owok.onrender.com/",
-        "http://owok.onrender.com/"
+        "https://owok.onrender.com",
+        "http://owok.onrender.com"
     ]
 else:
     origins = "*"
 
 # create your SocketIO instance
-socketio = SocketIO(cors_allowed_origins="*", logger=True, engineio_logger=True, debug=True)
+socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True, debug=True)
 
 rooms = {}
 user_sid = {}
