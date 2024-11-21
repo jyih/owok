@@ -64,7 +64,7 @@
 1. Clone this repo.
 
    ```bash
-   git clone git@github.com:milkyomo/owok.git
+   git clone git@github.com:jyih/owok.git
    ```
 
 2. Install dependencies from the root directory and update the contents of your requirements.txt file to match your Pipfile.lock
